@@ -1,2 +1,3 @@
-# machinery
-State machine done right
+# Machinery
+
+State machine done right.
