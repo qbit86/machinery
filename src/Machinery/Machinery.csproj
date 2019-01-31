@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>0.1</AssemblyVersion>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <Authors>Viktor T.</Authors>
+    <Title>Minimalistic state machine</Title>
+    <Description>Minimalistic state machine.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/qbit86/machinery</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageTags>state;machine;state-machine;dfa</PackageTags>
+    <RootNamespace>Machinery</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.6.3" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Text.Analyzers" Version="2.6.3" />
+  </ItemGroup>
+</Project>

@@ -1,3 +1,3 @@
 # Machinery
 
-State machine done right.
+Minimalistic state machine.

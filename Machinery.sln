@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D865A3DD-72FF-43BE-AD03-BA980DEFF126}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery", "src\Machinery\Machinery.csproj", "{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E} = {D865A3DD-72FF-43BE-AD03-BA980DEFF126}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
