@@ -1,7 +1,19 @@
 namespace Machinery
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Threading;
+
+    public static class StateMachine<TContext, TEvent>
+    {
+        [SuppressMessage("Design", "CA1000")]
+        public static StateMachine<TContext, TState, TEvent, TStatePolicy> Create<TState, TStatePolicy>(
+            TState initialState, TStatePolicy statePolicy)
+            where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
+        {
+            return new StateMachine<TContext, TState, TEvent, TStatePolicy>(initialState, statePolicy);
+        }
+    }
 
     public sealed class StateMachine<TContext, TState, TEvent, TStatePolicy>
         where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
