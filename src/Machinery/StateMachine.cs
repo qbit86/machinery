@@ -7,7 +7,7 @@ namespace Machinery
         where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
     {
         private readonly TStatePolicy _statePolicy;
-        
+
         private TState _currentState;
         private int _locked;
 
@@ -27,8 +27,8 @@ namespace Machinery
 
         public bool Process(TContext context, TEvent ev)
         {
-            int locked = Interlocked.Exchange(ref _locked, 1);
-            if (locked == 1)
+            int originalLocked = Interlocked.Exchange(ref _locked, 1);
+            if (originalLocked == 1)
                 return false;
 
             try
