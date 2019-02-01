@@ -1,13 +1,14 @@
-using System;
-using System.Threading;
-
 namespace Machinery
 {
+    using System;
+    using System.Threading;
+
     public sealed class StateMachine<TContext, TState, TEvent, TStatePolicy>
         where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
     {
-        private TState _currentState;
         private readonly TStatePolicy _statePolicy;
+        
+        private TState _currentState;
         private int _locked;
 
         public StateMachine(TState initialState, TStatePolicy statePolicy)
