@@ -4,7 +4,7 @@ using System.Threading;
 namespace Machinery
 {
     public sealed class StateMachine<TContext, TState, TEvent, TStatePolicy>
-    where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
+        where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
     {
         private TState _currentState;
         private readonly TStatePolicy _statePolicy;
