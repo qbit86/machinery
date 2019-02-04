@@ -1,12 +1,11 @@
 namespace Machinery
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    public readonly struct GenericStatePolicy<TContext, TState, TEvent> : IStatePolicy<TContext, TState, TEvent>,
-        IEquatable<GenericStatePolicy<TContext, TState, TEvent>>
-        where TState : IState<TContext, TState, TEvent>
+    public readonly struct GenericStatePolicy<TState, TEvent, TContext> : IStatePolicy<TState, TEvent, TContext>,
+        IEquatable<GenericStatePolicy<TState, TEvent, TContext>>
+        where TState : IState<TState, TEvent, TContext>
     {
         public bool TryCreateNewState(TContext context, TState currentState, TEvent ev, out TState newState)
         {
@@ -28,32 +27,32 @@ namespace Machinery
             stateToDispose.Dispose();
         }
 
-        public bool Equals(GenericStatePolicy<TContext, TState, TEvent> other)
+        public bool Equals(GenericStatePolicy<TState, TEvent, TContext> other)
         {
             return true;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is GenericStatePolicy<TContext, TState, TEvent>;
+            return obj is GenericStatePolicy<TState, TEvent, TContext>;
         }
 
         public override int GetHashCode()
         {
-            return typeof(GenericStatePolicy<TContext, TState, TEvent>).GetHashCode();
+            return typeof(GenericStatePolicy<TState, TEvent, TContext>).GetHashCode();
         }
 
 #pragma warning disable CA1801
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(GenericStatePolicy<TContext, TState, TEvent> left,
-            GenericStatePolicy<TContext, TState, TEvent> right)
+        public static bool operator ==(GenericStatePolicy<TState, TEvent, TContext> left,
+            GenericStatePolicy<TState, TEvent, TContext> right)
         {
             return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(GenericStatePolicy<TContext, TState, TEvent> left,
-            GenericStatePolicy<TContext, TState, TEvent> right)
+        public static bool operator !=(GenericStatePolicy<TState, TEvent, TContext> left,
+            GenericStatePolicy<TState, TEvent, TContext> right)
         {
             return false;
         }

@@ -1,7 +1,6 @@
 namespace Machinery
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Threading;
 
     public static class StateMachine<TContext, TEvent>
@@ -9,7 +8,7 @@ namespace Machinery
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static StateMachine<TContext, TState, TEvent, TStatePolicy> Create<TState, TStatePolicy>(
             TState initialState, TStatePolicy statePolicy)
-            where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
+            where TStatePolicy : IStatePolicy<TState, TEvent, TContext>
         {
             return new StateMachine<TContext, TState, TEvent, TStatePolicy>(initialState, statePolicy);
         }
@@ -17,7 +16,7 @@ namespace Machinery
     }
 
     public sealed class StateMachine<TContext, TState, TEvent, TStatePolicy>
-        where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
+        where TStatePolicy : IStatePolicy<TState, TEvent, TContext>
     {
         private readonly TStatePolicy _statePolicy;
 

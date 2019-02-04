@@ -1,6 +1,6 @@
-﻿namespace Machinery
+namespace Machinery
 {
-    public interface IStatePolicy<in TContext, TState, in TEvent>
+    public interface IStatePolicy<TState, in TEvent, in TContext>
     {
         bool TryCreateNewState(TContext context, TState currentState, TEvent ev, out TState newState);
         void OnExiting(TContext context, TState currentState, TEvent ev, TState newState);
