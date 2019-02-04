@@ -37,18 +37,37 @@
                 case State.IdleDown:
                     switch (ev)
                     {
-                        case Event.CallDown: return Ignore(out newState);
-                        case Event.CallUp: return Transit(State.MovingUp, out newState);
-                        case Event.Move: return Transit(State.MovingUp, out newState);
-                        case Event.Stop: return Ignore(out newState);
-                        default: return Ignore(out newState);
+                        case Event.CallUp:
+                        case Event.Move:
+                            return Transit(State.MovingUp, out newState);
+                        default:
+                            return Ignore(out newState);
                     }
                 case State.IdleUp:
-                    throw new NotImplementedException();
+                    switch (ev)
+                    {
+                        case Event.CallDown:
+                        case Event.Move:
+                            return Transit(State.MovingDown, out newState);
+                        default:
+                            return Ignore(out newState);
+                    }
                 case State.MovingDown:
-                    throw new NotImplementedException();
+                    switch (ev)
+                    {
+                        case Event.Stop:
+                            return Transit(State.IdleDown, out newState);
+                        default:
+                            return Ignore(out newState);
+                    }
                 case State.MovingUp:
-                    throw new NotImplementedException();
+                    switch (ev)
+                    {
+                        case Event.Stop:
+                            return Transit(State.IdleUp, out newState);
+                        default:
+                            return Ignore(out newState);
+                    }
                 default:
                     return Ignore(out newState);
             }
@@ -97,6 +116,10 @@
             Out.WriteLine();
 
             elevator.ProcessEvent(Event.CallUp);
+            Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            Out.WriteLine();
+
+            elevator.ProcessEvent(Event.Stop);
             Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
             Out.WriteLine();
         }
