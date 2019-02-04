@@ -1,11 +1,12 @@
 namespace Machinery
 {
     using System;
-    using System.Runtime.CompilerServices;
 
+#pragma warning disable CA1815, CA2231
     public readonly struct GenericStatePolicy<TState, TEvent, TContext> : IStatePolicy<TState, TEvent, TContext>,
         IEquatable<GenericStatePolicy<TState, TEvent, TContext>>
         where TState : IState<TState, TEvent, TContext>
+#pragma warning restore CA2231, CA1815
     {
         public bool TryCreateNewState(TContext context, TState currentState, TEvent ev, out TState newState)
         {
@@ -41,21 +42,5 @@ namespace Machinery
         {
             return typeof(GenericStatePolicy<TState, TEvent, TContext>).GetHashCode();
         }
-
-#pragma warning disable CA1801
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(GenericStatePolicy<TState, TEvent, TContext> left,
-            GenericStatePolicy<TState, TEvent, TContext> right)
-        {
-            return true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(GenericStatePolicy<TState, TEvent, TContext> left,
-            GenericStatePolicy<TState, TEvent, TContext> right)
-        {
-            return false;
-        }
-#pragma warning restore CA1801
     }
 }
