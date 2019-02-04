@@ -6,13 +6,14 @@ namespace Machinery
 
     public static class StateMachine<TContext, TEvent>
     {
-        [SuppressMessage("Design", "CA1000")]
+#pragma warning disable CA1000 // Do not declare static members on generic types
         public static StateMachine<TContext, TState, TEvent, TStatePolicy> Create<TState, TStatePolicy>(
             TState initialState, TStatePolicy statePolicy)
             where TStatePolicy : IStatePolicy<TContext, TState, TEvent>
         {
             return new StateMachine<TContext, TState, TEvent, TStatePolicy>(initialState, statePolicy);
         }
+#pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
     public sealed class StateMachine<TContext, TState, TEvent, TStatePolicy>

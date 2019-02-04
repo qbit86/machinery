@@ -43,7 +43,7 @@ namespace Machinery
             return typeof(GenericStatePolicy<TContext, TState, TEvent>).GetHashCode();
         }
 
-        [SuppressMessage("Usage", "CA1801")]
+#pragma warning disable CA1801
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(GenericStatePolicy<TContext, TState, TEvent> left,
             GenericStatePolicy<TContext, TState, TEvent> right)
@@ -51,12 +51,12 @@ namespace Machinery
             return true;
         }
 
-        [SuppressMessage("Usage", "CA1801")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(GenericStatePolicy<TContext, TState, TEvent> left,
             GenericStatePolicy<TContext, TState, TEvent> right)
         {
             return false;
         }
+#pragma warning restore CA1801
     }
 }
