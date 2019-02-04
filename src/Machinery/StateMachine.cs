@@ -22,7 +22,7 @@ namespace Machinery
         private readonly TStatePolicy _statePolicy;
 
         private TState _currentState;
-        private int _locked;
+        private int _reentrantLockAcquired;
 
         public StateMachine(TState initialState, TStatePolicy statePolicy)
         {
@@ -40,8 +40,8 @@ namespace Machinery
 
         public bool Process(TContext context, TEvent ev)
         {
-            int originalLocked = Interlocked.Exchange(ref _locked, 1);
-            if (originalLocked == 1)
+            int lockAlreadyAcquired = Interlocked.Exchange(ref _reentrantLockAcquired, 1);
+            if (lockAlreadyAcquired == 1)
                 return false;
 
             try
@@ -77,7 +77,7 @@ namespace Machinery
             }
             finally
             {
-                Interlocked.Exchange(ref _locked, 0);
+                Interlocked.Exchange(ref _reentrantLockAcquired, 0);
             }
 
             return true;
