@@ -35,7 +35,14 @@
             switch (currentState)
             {
                 case State.IdleDown:
-                    throw new NotImplementedException();
+                    switch (ev)
+                    {
+                        case Event.CallDown: return Ignore(out newState);
+                        case Event.CallUp: return Transit(State.MovingUp, out newState);
+                        case Event.Move: return Transit(State.MovingUp, out newState);
+                        case Event.Stop: return Ignore(out newState);
+                        default: return Ignore(out newState);
+                    }
                 case State.IdleUp:
                     throw new NotImplementedException();
                 case State.MovingDown:
@@ -43,8 +50,7 @@
                 case State.MovingUp:
                     throw new NotImplementedException();
                 default:
-                    newState = default;
-                    return false;
+                    return Ignore(out newState);
             }
         }
 
@@ -61,6 +67,18 @@
         public void DisposeState(State currentState, Event ev, State stateToDispose)
         {
         }
+
+        private bool Transit(State newState, out State result)
+        {
+            result = newState;
+            return true;
+        }
+
+        private bool Ignore(out State result)
+        {
+            result = default;
+            return false;
+        }
     }
 
     internal static class ElevatorDemo
@@ -72,9 +90,21 @@
             StateMachine<State, Event, ElevatorPolicy> elevator =
                 StateMachine<Event>.Create(State.IdleDown, new ElevatorPolicy(Out));
             Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            Out.WriteLine();
 
-            elevator.Process(Event.CallDown);
+            elevator.ProcessEvent(Event.CallDown);
             Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            Out.WriteLine();
+
+            elevator.ProcessEvent(Event.CallUp);
+            Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            Out.WriteLine();
+        }
+
+        private static void ProcessEvent(this StateMachine<State, Event, ElevatorPolicy> elevator, Event ev)
+        {
+            Out.WriteLine($"{ev}");
+            elevator.Process(ev);
         }
     }
 }
