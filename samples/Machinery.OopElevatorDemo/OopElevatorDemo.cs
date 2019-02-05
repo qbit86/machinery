@@ -55,7 +55,55 @@
 
         public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
         {
-            throw new NotImplementedException();
+            switch (ev)
+            {
+                case Event.CallUp:
+                case Event.Move:
+                    return Transit(MovingUpState.Default, out newState);
+                default:
+                    return Ignore(out newState);
+            }
+        }
+    }
+
+    internal sealed class IdleUpState : StateBase
+    {
+        private IdleUpState()
+        {
+        }
+
+        internal static IdleUpState Default { get; } = new IdleUpState();
+
+        public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
+        {
+            switch (ev)
+            {
+                case Event.CallDown:
+                case Event.Move:
+                    return Transit(MovingDownState.Default, out newState);
+                default:
+                    return Ignore(out newState);
+            }
+        }
+    }
+
+    internal sealed class MovingDownState : StateBase
+    {
+        private MovingDownState()
+        {
+        }
+
+        internal static MovingDownState Default { get; } = new MovingDownState();
+
+        public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
+        {
+            switch (ev)
+            {
+                case Event.Stop:
+                    return Transit(IdleDownState.Default, out newState);
+                default:
+                    return Ignore(out newState);
+            }
         }
     }
 
@@ -69,7 +117,13 @@
 
         public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
         {
-            throw new NotImplementedException();
+            switch (ev)
+            {
+                case Event.Stop:
+                    return Transit(IdleUpState.Default, out newState);
+                default:
+                    return Ignore(out newState);
+            }
         }
     }
 
