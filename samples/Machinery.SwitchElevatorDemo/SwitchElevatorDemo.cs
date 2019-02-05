@@ -75,12 +75,14 @@
 
         public void OnExiting(State currentState, Event ev, State newState)
         {
-            Out.WriteLine($"{nameof(OnExiting)}({ev}): {currentState} -> {newState}");
+            Out.WriteLine(
+                $"[{currentState}.{nameof(OnExiting)}] {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnEntered(State currentState, Event ev, State oldState)
         {
-            Out.WriteLine($"{nameof(OnEntered)}({ev}): {oldState} -> {currentState}");
+            Out.WriteLine(
+                $"[{currentState}.{nameof(OnEntered)}] {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public void DisposeState(State currentState, Event ev, State stateToDispose)
@@ -109,25 +111,30 @@
             var elevatorPolicy = new ElevatorPolicy(Out);
             StateMachine<State, Event, ElevatorPolicy> elevator =
                 StateMachine<Event>.Create(State.IdleDown, elevatorPolicy);
-            Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            elevator.PrintCurrentState();
             Out.WriteLine();
 
             elevator.ProcessEvent(Event.CallDown);
-            Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            elevator.PrintCurrentState();
             Out.WriteLine();
 
             elevator.ProcessEvent(Event.CallUp);
-            Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            elevator.PrintCurrentState();
             Out.WriteLine();
 
             elevator.ProcessEvent(Event.Stop);
-            Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            elevator.PrintCurrentState();
             Out.WriteLine();
+        }
+
+        private static void PrintCurrentState(this StateMachine<State, Event, ElevatorPolicy> elevator)
+        {
+            Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
         private static void ProcessEvent(this StateMachine<State, Event, ElevatorPolicy> elevator, Event ev)
         {
-            Out.WriteLine($"{ev}");
+            Out.WriteLine($"[{nameof(ProcessEvent)}] {nameof(ev)}: {ev}");
             elevator.Process(ev);
         }
     }
