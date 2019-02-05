@@ -3,15 +3,6 @@
     using System;
     using System.IO;
 
-    internal enum State
-    {
-        None = 0,
-        IdleDown,
-        IdleUp,
-        MovingDown,
-        MovingUp
-    }
-
     internal enum Event
     {
         None = 0,
@@ -19,6 +10,15 @@
         CallUp,
         Move,
         Stop
+    }
+
+    internal enum State
+    {
+        None = 0,
+        IdleDown,
+        IdleUp,
+        MovingDown,
+        MovingUp
     }
 
     internal readonly struct ElevatorPolicy : IStatePolicy<State, Event>
