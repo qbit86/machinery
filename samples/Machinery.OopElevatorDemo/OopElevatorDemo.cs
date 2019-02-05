@@ -32,6 +32,11 @@
         {
         }
 
+        public sealed override string ToString()
+        {
+            return GetType().Name;
+        }
+
         protected static bool Transit(StateBase newState, out StateBase result)
         {
             result = newState;
@@ -133,7 +138,36 @@
 
         private static void Main()
         {
-            Console.WriteLine("Hello World!");
+            var elevatorPolicy = new ContextStatePolicy<StateBase, Event, TextWriter>(Out);
+            StateMachine<StateBase, Event, ContextStatePolicy<StateBase, Event, TextWriter>> elevator =
+                StateMachine<Event>.Create((StateBase)IdleDownState.Default, elevatorPolicy);
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+
+            elevator.ProcessEvent(Event.CallDown);
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+
+            elevator.ProcessEvent(Event.CallUp);
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+
+            elevator.ProcessEvent(Event.Stop);
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+        }
+
+        private static void PrintCurrentState(
+            this StateMachine<StateBase, Event, ContextStatePolicy<StateBase, Event, TextWriter>> elevator)
+        {
+            Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+        }
+
+        private static void ProcessEvent(
+            this StateMachine<StateBase, Event, ContextStatePolicy<StateBase, Event, TextWriter>> elevator, Event ev)
+        {
+            Out.WriteLine($"[{nameof(ProcessEvent)}] {nameof(ev)}: {ev}");
+            elevator.Process(ev);
         }
     }
 }

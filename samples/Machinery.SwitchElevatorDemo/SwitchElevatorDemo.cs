@@ -106,8 +106,9 @@
 
         private static void Main()
         {
+            var elevatorPolicy = new ElevatorPolicy(Out);
             StateMachine<State, Event, ElevatorPolicy> elevator =
-                StateMachine<Event>.Create(State.IdleDown, new ElevatorPolicy(Out));
+                StateMachine<Event>.Create(State.IdleDown, elevatorPolicy);
             Out.WriteLine($"{nameof(elevator.CurrentState)}: {elevator.CurrentState}");
             Out.WriteLine();
 
