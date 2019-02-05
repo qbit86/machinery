@@ -16,12 +16,32 @@
     {
         public abstract bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState);
 
-        public abstract void OnExiting(TextWriter context, Event ev, StateBase newState);
+        public void OnExiting(TextWriter context, Event ev, StateBase newState)
+        {
+            context.WriteLine(
+                $"[{GetType().Name}.{nameof(OnExiting)}] {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+        }
 
-        public abstract void OnEntered(TextWriter context, Event ev, StateBase oldState);
+        public void OnEntered(TextWriter context, Event ev, StateBase oldState)
+        {
+            context.WriteLine(
+                $"[{GetType().Name}.{nameof(OnEntered)}] {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+        }
 
         public void Dispose()
         {
+        }
+
+        protected static bool Transit(StateBase newState, out StateBase result)
+        {
+            result = newState;
+            return true;
+        }
+
+        protected static bool Ignore(out StateBase result)
+        {
+            result = default;
+            return false;
         }
     }
 
@@ -37,20 +57,18 @@
         {
             throw new NotImplementedException();
         }
+    }
 
-        public override void OnExiting(TextWriter context, Event ev, StateBase newState)
+    internal sealed class MovingUpState : StateBase
+    {
+        private MovingUpState()
         {
-            if (context == null || context == TextWriter.Null)
-                return;
-
-            throw new NotImplementedException();
         }
 
-        public override void OnEntered(TextWriter context, Event ev, StateBase oldState)
-        {
-            if (context == null || context == TextWriter.Null)
-                return;
+        internal static MovingUpState Default { get; } = new MovingUpState();
 
+        public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
+        {
             throw new NotImplementedException();
         }
     }
