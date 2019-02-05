@@ -85,9 +85,7 @@
                 $"[{currentState}.{nameof(OnEntered)}] {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
-        public void DisposeState(State currentState, Event ev, State stateToDispose)
-        {
-        }
+        public void DisposeState(State currentState, Event ev, State stateToDispose) { }
 
         private bool Transit(State newState, out State result)
         {

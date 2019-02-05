@@ -28,9 +28,7 @@
                 $"[{GetType().Name}.{nameof(OnEntered)}] {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
 
         public sealed override string ToString()
         {
@@ -52,9 +50,7 @@
 
     internal sealed class IdleDownState : StateBase
     {
-        private IdleDownState()
-        {
-        }
+        private IdleDownState() { }
 
         internal static IdleDownState Default { get; } = new IdleDownState();
 
@@ -73,9 +69,7 @@
 
     internal sealed class IdleUpState : StateBase
     {
-        private IdleUpState()
-        {
-        }
+        private IdleUpState() { }
 
         internal static IdleUpState Default { get; } = new IdleUpState();
 
@@ -94,9 +88,7 @@
 
     internal sealed class MovingDownState : StateBase
     {
-        private MovingDownState()
-        {
-        }
+        private MovingDownState() { }
 
         internal static MovingDownState Default { get; } = new MovingDownState();
 
@@ -114,9 +106,7 @@
 
     internal sealed class MovingUpState : StateBase
     {
-        private MovingUpState()
-        {
-        }
+        private MovingUpState() { }
 
         internal static MovingUpState Default { get; } = new MovingUpState();
 
