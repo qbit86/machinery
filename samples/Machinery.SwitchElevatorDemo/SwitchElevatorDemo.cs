@@ -100,7 +100,7 @@
         }
     }
 
-    internal static class ElevatorDemo
+    internal static class SwitchElevatorDemo
     {
         private static TextWriter Out => Console.Out;
 
