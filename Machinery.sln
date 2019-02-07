@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.SwitchElevatorDem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.OopElevatorDemo", "samples\Machinery.OopElevatorDemo\Machinery.OopElevatorDemo.csproj", "{D7E6092F-4079-41D8-8B63-50927EDF1EAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.Advanced", "src\Machinery.Advanced\Machinery.Advanced.csproj", "{91D7C87E-CBDF-456D-B2E1-CE14D455F13E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,7 @@ Global
 		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E} = {D865A3DD-72FF-43BE-AD03-BA980DEFF126}
 		{38F8E8C6-6DE5-4449-BF8D-01FF6873379D} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
 		{D7E6092F-4079-41D8-8B63-50927EDF1EAA} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
+		{91D7C87E-CBDF-456D-B2E1-CE14D455F13E} = {D865A3DD-72FF-43BE-AD03-BA980DEFF126}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -33,5 +36,9 @@ Global
 		{D7E6092F-4079-41D8-8B63-50927EDF1EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7E6092F-4079-41D8-8B63-50927EDF1EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7E6092F-4079-41D8-8B63-50927EDF1EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91D7C87E-CBDF-456D-B2E1-CE14D455F13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D7C87E-CBDF-456D-B2E1-CE14D455F13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91D7C87E-CBDF-456D-B2E1-CE14D455F13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91D7C87E-CBDF-456D-B2E1-CE14D455F13E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
