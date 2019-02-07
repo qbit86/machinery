@@ -15,6 +15,8 @@ namespace Machinery
             _context = context;
         }
 
+        public TContext Context => _context;
+
         public bool TryCreateNewState(TState currentState, TEvent ev, out TState newState)
         {
             return currentState.TryCreateNewState(_context, ev, out newState);
