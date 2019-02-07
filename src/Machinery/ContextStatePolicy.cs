@@ -32,9 +32,9 @@ namespace Machinery
             currentState.OnEntered(_context, ev, oldState);
         }
 
-        public void DisposeState(TState currentState, TEvent ev, TState stateToDispose)
+        public void DisposeState(TState stateToDispose)
         {
-            currentState.Dispose();
+            stateToDispose.Dispose();
         }
 
         public bool Equals(ContextStatePolicy<TState, TEvent, TContext> other)
