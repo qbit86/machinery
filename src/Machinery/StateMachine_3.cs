@@ -15,7 +15,7 @@ namespace Machinery
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-    public sealed class StateMachine<TState, TEvent, TStatePolicy>
+    public sealed class StateMachine<TState, TEvent, TStatePolicy> : IStateMachine<TState, TEvent>
         where TStatePolicy : IStatePolicy<TState, TEvent>
     {
         private readonly TStatePolicy _statePolicy;
