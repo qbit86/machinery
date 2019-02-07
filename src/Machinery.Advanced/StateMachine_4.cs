@@ -57,7 +57,7 @@ namespace Machinery
                 }
                 catch
                 {
-                    _statePolicy.DisposeState(context, _currentState, ev, newState);
+                    _statePolicy.DisposeState(newState);
                     throw;
                 }
 
@@ -70,7 +70,7 @@ namespace Machinery
                 }
                 finally
                 {
-                    _statePolicy.DisposeState(context, _currentState, ev, oldState);
+                    _statePolicy.DisposeState(oldState);
                 }
             }
             finally
