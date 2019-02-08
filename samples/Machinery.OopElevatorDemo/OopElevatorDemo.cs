@@ -154,8 +154,7 @@
         }
 
         private static void PrintProcessEvent(
-            this StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator,
-            Event ev)
+            this StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
             elevator.ProcessEvent(ev);
