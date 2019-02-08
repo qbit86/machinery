@@ -1,6 +1,6 @@
 namespace Machinery
 {
-    public interface IStateMachine<in TEvent>
+    public interface IEventSource<in TEvent>
     {
         bool Process(TEvent ev);
     }
