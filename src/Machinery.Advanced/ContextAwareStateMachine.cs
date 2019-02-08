@@ -3,7 +3,7 @@ namespace Machinery
     using System;
     using System.Threading;
 
-    public static class StateMachine<TContext, TEvent>
+    public static class ContextAwareStateMachine<TEvent, TContext>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext> Create<TState, TStatePolicy>(
@@ -15,7 +15,8 @@ namespace Machinery
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-    public sealed class ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext> : IStateHolder<TState>
+    public sealed class ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext> :
+        IContextAwareStateMachine<TState, TEvent, TContext>
         where TStatePolicy : IStatePolicy<TState, TEvent, TContext>
     {
         private readonly TStatePolicy _statePolicy;
