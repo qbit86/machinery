@@ -6,33 +6,33 @@ namespace Machinery
     public static class StateMachine<TEvent>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static StateMachine<TState, TEvent, TStatePolicy> Create<TState, TStatePolicy>(
-            TState initialState, TStatePolicy statePolicy)
-            where TStatePolicy : IEventSink<TState, TEvent>
+        public static StateMachine<TState, TEvent, TEventSink> Create<TState, TEventSink>(
+            TState initialState, TEventSink eventSink)
+            where TEventSink : IEventSink<TState, TEvent>
         {
-            return new StateMachine<TState, TEvent, TStatePolicy>(initialState, statePolicy);
+            return new StateMachine<TState, TEvent, TEventSink>(initialState, eventSink);
         }
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-    public sealed class StateMachine<TState, TEvent, TStatePolicy> : IStateMachine<TState, TEvent>
-        where TStatePolicy : IEventSink<TState, TEvent>
+    public sealed class StateMachine<TState, TEvent, TEventSink> : IStateMachine<TState, TEvent>
+        where TEventSink : IEventSink<TState, TEvent>
     {
-        private readonly TStatePolicy _statePolicy;
+        private readonly TEventSink _eventSink;
 
         private TState _currentState;
         private int _lock;
 
-        public StateMachine(TState initialState, TStatePolicy statePolicy)
+        public StateMachine(TState initialState, TEventSink eventSink)
         {
             if (initialState == null)
                 throw new ArgumentNullException(nameof(initialState));
 
-            if (statePolicy == null)
-                throw new ArgumentNullException(nameof(statePolicy));
+            if (eventSink == null)
+                throw new ArgumentNullException(nameof(eventSink));
 
             _currentState = initialState;
-            _statePolicy = statePolicy;
+            _eventSink = eventSink;
         }
 
         public TState CurrentState => _currentState;
@@ -44,7 +44,7 @@ namespace Machinery
 
             try
             {
-                bool transit = _statePolicy.TryCreateNewState(_currentState, ev, out TState newState);
+                bool transit = _eventSink.TryCreateNewState(_currentState, ev, out TState newState);
                 if (!transit)
                     return true;
 
@@ -53,11 +53,11 @@ namespace Machinery
 
                 try
                 {
-                    _statePolicy.OnExiting(_currentState, ev, newState);
+                    _eventSink.OnExiting(_currentState, ev, newState);
                 }
                 catch
                 {
-                    _statePolicy.DisposeState(newState);
+                    _eventSink.DisposeState(newState);
                     throw;
                 }
 
@@ -66,11 +66,11 @@ namespace Machinery
 
                 try
                 {
-                    _statePolicy.OnEntered(_currentState, ev, oldState);
+                    _eventSink.OnEntered(_currentState, ev, oldState);
                 }
                 finally
                 {
-                    _statePolicy.DisposeState(oldState);
+                    _eventSink.DisposeState(oldState);
                 }
             }
             finally

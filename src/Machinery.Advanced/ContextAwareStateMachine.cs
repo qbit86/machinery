@@ -6,34 +6,34 @@ namespace Machinery
     public static class ContextAwareStateMachine<TEvent, TContext>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext> Create<TState, TStatePolicy>(
-            TState initialState, TStatePolicy statePolicy)
-            where TStatePolicy : IContextAwareEventSink<TState, TEvent, TContext>
+        public static ContextAwareStateMachine<TState, TEvent, TEventSink, TContext> Create<TState, TEventSink>(
+            TState initialState, TEventSink eventSink)
+            where TEventSink : IContextAwareEventSink<TState, TEvent, TContext>
         {
-            return new ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext>(initialState, statePolicy);
+            return new ContextAwareStateMachine<TState, TEvent, TEventSink, TContext>(initialState, eventSink);
         }
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-    public sealed class ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext> :
+    public sealed class ContextAwareStateMachine<TState, TEvent, TEventSink, TContext> :
         IContextAwareStateMachine<TState, TEvent, TContext>
-        where TStatePolicy : IContextAwareEventSink<TState, TEvent, TContext>
+        where TEventSink : IContextAwareEventSink<TState, TEvent, TContext>
     {
-        private readonly TStatePolicy _statePolicy;
+        private readonly TEventSink _eventSink;
 
         private TState _currentState;
         private int _lock;
 
-        public ContextAwareStateMachine(TState initialState, TStatePolicy statePolicy)
+        public ContextAwareStateMachine(TState initialState, TEventSink eventSink)
         {
             if (initialState == null)
                 throw new ArgumentNullException(nameof(initialState));
 
-            if (statePolicy == null)
-                throw new ArgumentNullException(nameof(statePolicy));
+            if (eventSink == null)
+                throw new ArgumentNullException(nameof(eventSink));
 
             _currentState = initialState;
-            _statePolicy = statePolicy;
+            _eventSink = eventSink;
         }
 
         public TState CurrentState => _currentState;
@@ -45,7 +45,7 @@ namespace Machinery
 
             try
             {
-                bool transit = _statePolicy.TryCreateNewState(context, _currentState, ev, out TState newState);
+                bool transit = _eventSink.TryCreateNewState(context, _currentState, ev, out TState newState);
                 if (!transit)
                     return true;
 
@@ -54,11 +54,11 @@ namespace Machinery
 
                 try
                 {
-                    _statePolicy.OnExiting(context, _currentState, ev, newState);
+                    _eventSink.OnExiting(context, _currentState, ev, newState);
                 }
                 catch
                 {
-                    _statePolicy.DisposeState(newState);
+                    _eventSink.DisposeState(newState);
                     throw;
                 }
 
@@ -67,11 +67,11 @@ namespace Machinery
 
                 try
                 {
-                    _statePolicy.OnEntered(context, _currentState, ev, oldState);
+                    _eventSink.OnEntered(context, _currentState, ev, oldState);
                 }
                 finally
                 {
-                    _statePolicy.DisposeState(oldState);
+                    _eventSink.DisposeState(oldState);
                 }
             }
             finally
