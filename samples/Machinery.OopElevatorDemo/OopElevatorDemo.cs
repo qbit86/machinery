@@ -154,7 +154,8 @@
         }
 
         private static void ProcessEvent(
-            this StateMachine<StateBase, Event, ContextBoundStatePolicy<StateBase, Event, TextWriter>> elevator, Event ev)
+            this StateMachine<StateBase, Event, ContextBoundStatePolicy<StateBase, Event, TextWriter>> elevator,
+            Event ev)
         {
             Out.WriteLine($"[{nameof(ProcessEvent)}] {nameof(ev)}: {ev}");
             elevator.Process(ev);
