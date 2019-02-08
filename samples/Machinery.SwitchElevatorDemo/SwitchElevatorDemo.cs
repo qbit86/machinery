@@ -21,11 +21,11 @@
         MovingUp
     }
 
-    internal readonly struct ElevatorPolicy : IEventSink<State, Event>
+    internal readonly struct ElevatorEventSink : IEventSink<State, Event>
     {
         private TextWriter Out { get; }
 
-        public ElevatorPolicy(TextWriter @out)
+        public ElevatorEventSink(TextWriter @out)
         {
             Out = @out;
         }
@@ -106,9 +106,9 @@
 
         private static void Main()
         {
-            var elevatorPolicy = new ElevatorPolicy(Out);
-            StateMachine<State, Event, ElevatorPolicy> elevator =
-                StateMachine<Event>.Create(State.IdleDown, elevatorPolicy);
+            var elevatorEventSink = new ElevatorEventSink(Out);
+            StateMachine<State, Event, ElevatorEventSink> elevator =
+                StateMachine<Event>.Create(State.IdleDown, elevatorEventSink);
             elevator.PrintCurrentState();
             Out.WriteLine();
 
@@ -125,12 +125,12 @@
             Out.WriteLine();
         }
 
-        private static void PrintCurrentState(this StateMachine<State, Event, ElevatorPolicy> elevator)
+        private static void PrintCurrentState(this StateMachine<State, Event, ElevatorEventSink> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(this StateMachine<State, Event, ElevatorPolicy> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<State, Event, ElevatorEventSink> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
             elevator.ProcessEvent(ev);
