@@ -15,7 +15,7 @@ namespace Machinery
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-    public sealed class ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext> : ICurrentStateProvider<TState>
+    public sealed class ContextAwareStateMachine<TState, TEvent, TStatePolicy, TContext> : IStateHolder<TState>
         where TStatePolicy : IStatePolicy<TState, TEvent, TContext>
     {
         private readonly TStatePolicy _statePolicy;

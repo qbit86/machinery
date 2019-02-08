@@ -1,6 +1,6 @@
 namespace Machinery
 {
-    public interface ICurrentStateProvider<out TState>
+    public interface IStateHolder<out TState>
     {
         TState CurrentState { get; }
     }
