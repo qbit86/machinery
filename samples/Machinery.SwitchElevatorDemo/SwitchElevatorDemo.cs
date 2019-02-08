@@ -112,15 +112,15 @@
             elevator.PrintCurrentState();
             Out.WriteLine();
 
-            elevator.ProcessEvent(Event.CallDown);
+            elevator.PrintProcessEvent(Event.CallDown);
             elevator.PrintCurrentState();
             Out.WriteLine();
 
-            elevator.ProcessEvent(Event.CallUp);
+            elevator.PrintProcessEvent(Event.CallUp);
             elevator.PrintCurrentState();
             Out.WriteLine();
 
-            elevator.ProcessEvent(Event.Stop);
+            elevator.PrintProcessEvent(Event.Stop);
             elevator.PrintCurrentState();
             Out.WriteLine();
         }
@@ -130,10 +130,10 @@
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void ProcessEvent(this StateMachine<State, Event, ElevatorPolicy> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<State, Event, ElevatorPolicy> elevator, Event ev)
         {
-            Out.WriteLine($"[{nameof(ProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.Process(ev);
+            Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
+            elevator.ProcessEvent(ev);
         }
     }
 }

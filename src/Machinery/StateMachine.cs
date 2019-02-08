@@ -37,7 +37,7 @@ namespace Machinery
 
         public TState CurrentState => _currentState;
 
-        public bool Process(TEvent ev)
+        public bool ProcessEvent(TEvent ev)
         {
             if (Interlocked.Exchange(ref _lock, 1) == 1)
                 return false;
