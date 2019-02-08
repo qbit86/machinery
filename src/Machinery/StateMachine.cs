@@ -8,7 +8,7 @@ namespace Machinery
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static StateMachine<TState, TEvent, TStatePolicy> Create<TState, TStatePolicy>(
             TState initialState, TStatePolicy statePolicy)
-            where TStatePolicy : IStatePolicy<TState, TEvent>
+            where TStatePolicy : IEventSink<TState, TEvent>
         {
             return new StateMachine<TState, TEvent, TStatePolicy>(initialState, statePolicy);
         }
@@ -16,7 +16,7 @@ namespace Machinery
     }
 
     public sealed class StateMachine<TState, TEvent, TStatePolicy> : IStateMachine<TState, TEvent>
-        where TStatePolicy : IStatePolicy<TState, TEvent>
+        where TStatePolicy : IEventSink<TState, TEvent>
     {
         private readonly TStatePolicy _statePolicy;
 

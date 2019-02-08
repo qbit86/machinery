@@ -3,14 +3,14 @@ namespace Machinery
     using System;
 
 #pragma warning disable CA1815, CA2231
-    public readonly struct ContextBoundStatePolicy<TState, TEvent, TContext> : IStatePolicy<TState, TEvent>,
-        IEquatable<ContextBoundStatePolicy<TState, TEvent, TContext>>
+    public readonly struct ContextBoundEventSink<TState, TEvent, TContext> : IEventSink<TState, TEvent>,
+        IEquatable<ContextBoundEventSink<TState, TEvent, TContext>>
         where TState : IState<TState, TEvent, TContext>
 #pragma warning restore CA2231, CA1815
     {
         private readonly TContext _context;
 
-        public ContextBoundStatePolicy(TContext context)
+        public ContextBoundEventSink(TContext context)
         {
             _context = context;
         }
@@ -37,19 +37,19 @@ namespace Machinery
             stateToDispose.Dispose();
         }
 
-        public bool Equals(ContextBoundStatePolicy<TState, TEvent, TContext> other)
+        public bool Equals(ContextBoundEventSink<TState, TEvent, TContext> other)
         {
             return true;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is ContextBoundStatePolicy<TState, TEvent, TContext>;
+            return obj is ContextBoundEventSink<TState, TEvent, TContext>;
         }
 
         public override int GetHashCode()
         {
-            return typeof(ContextBoundStatePolicy<TState, TEvent, TContext>).GetHashCode();
+            return typeof(ContextBoundEventSink<TState, TEvent, TContext>).GetHashCode();
         }
     }
 }

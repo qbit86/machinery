@@ -3,9 +3,9 @@ namespace Machinery
     using System;
 
 #pragma warning disable CA1815, CA2231
-    public readonly struct GenericContextAwareStatePolicy<TState, TEvent, TContext> :
-        IContextAwareStatePolicy<TState, TEvent, TContext>,
-        IEquatable<GenericContextAwareStatePolicy<TState, TEvent, TContext>>
+    public readonly struct GenericContextAwareEventSink<TState, TEvent, TContext> :
+        IContextAwareEventSink<TState, TEvent, TContext>,
+        IEquatable<GenericContextAwareEventSink<TState, TEvent, TContext>>
         where TState : IState<TState, TEvent, TContext>
 #pragma warning restore CA2231, CA1815
     {
@@ -29,19 +29,19 @@ namespace Machinery
             stateToDispose.Dispose();
         }
 
-        public bool Equals(GenericContextAwareStatePolicy<TState, TEvent, TContext> other)
+        public bool Equals(GenericContextAwareEventSink<TState, TEvent, TContext> other)
         {
             return true;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is GenericContextAwareStatePolicy<TState, TEvent, TContext>;
+            return obj is GenericContextAwareEventSink<TState, TEvent, TContext>;
         }
 
         public override int GetHashCode()
         {
-            return typeof(GenericContextAwareStatePolicy<TState, TEvent, TContext>).GetHashCode();
+            return typeof(GenericContextAwareEventSink<TState, TEvent, TContext>).GetHashCode();
         }
     }
 }

@@ -128,8 +128,8 @@
 
         private static void Main()
         {
-            var elevatorPolicy = new ContextBoundStatePolicy<StateBase, Event, TextWriter>(Out);
-            StateMachine<StateBase, Event, ContextBoundStatePolicy<StateBase, Event, TextWriter>> elevator =
+            var elevatorPolicy = new ContextBoundEventSink<StateBase, Event, TextWriter>(Out);
+            StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator =
                 StateMachine<Event>.Create((StateBase)IdleDownState.Default, elevatorPolicy);
             elevator.PrintCurrentState();
             Out.WriteLine();
@@ -148,13 +148,13 @@
         }
 
         private static void PrintCurrentState(
-            this StateMachine<StateBase, Event, ContextBoundStatePolicy<StateBase, Event, TextWriter>> elevator)
+            this StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
         private static void PrintProcessEvent(
-            this StateMachine<StateBase, Event, ContextBoundStatePolicy<StateBase, Event, TextWriter>> elevator,
+            this StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator,
             Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
