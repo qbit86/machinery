@@ -3,7 +3,8 @@ namespace Machinery
     using System;
 
 #pragma warning disable CA1815, CA2231
-    public readonly struct GenericStatePolicy<TState, TEvent, TContext> : IStatePolicy<TState, TEvent, TContext>,
+    public readonly struct GenericStatePolicy<TState, TEvent, TContext> :
+        IContextAwareStatePolicy<TState, TEvent, TContext>,
         IEquatable<GenericStatePolicy<TState, TEvent, TContext>>
         where TState : IState<TState, TEvent, TContext>
 #pragma warning restore CA2231, CA1815
