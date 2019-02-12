@@ -2,10 +2,10 @@ namespace Machinery
 {
     using System;
 
-    public interface IState<TStateBase, in TEvent, in TContext> : IDisposable
+    public interface IState<TState, in TEvent, in TContext> : IDisposable
     {
-        bool TryCreateNewState(TContext context, TEvent ev, out TStateBase newState);
-        void OnExiting(TContext context, TEvent ev, TStateBase newState);
-        void OnEntered(TContext context, TEvent ev, TStateBase oldState);
+        bool TryCreateNewState(TContext context, TEvent ev, out TState newState);
+        void OnExiting(TContext context, TEvent ev, TState newState);
+        void OnEntered(TContext context, TEvent ev, TState oldState);
     }
 }
