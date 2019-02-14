@@ -99,7 +99,7 @@
             switch (ev.Kind)
             {
                 case EventKind.Stop:
-                    return Transit(new IdleState(ev.Floor), out newState);
+                    return Transit(new IdleState(Floor), out newState);
                 default:
                     return Ignore(out newState);
             }
