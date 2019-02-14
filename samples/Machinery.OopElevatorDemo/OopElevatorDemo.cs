@@ -3,36 +3,59 @@
     using System;
     using System.IO;
 
-    internal enum Event
+    internal enum EventKind
     {
         None = 0,
-        CallDown,
-        CallUp,
+        Call,
         Move,
         Stop
     }
 
+    internal readonly struct Event
+    {
+        public Event(EventKind kind, int floor)
+        {
+            Kind = kind;
+            Floor = floor;
+        }
+
+        public EventKind Kind { get; }
+        public int Floor { get; }
+
+        public override string ToString()
+        {
+            return $"{Kind}({Floor})";
+        }
+    }
+
     internal abstract class StateBase : IState<StateBase, Event, TextWriter>
     {
+        internal StateBase(int floor)
+        {
+            Floor = floor;
+        }
+
+        internal int Floor { get; }
+
         public abstract bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState);
 
         public void OnExiting(TextWriter context, Event ev, StateBase newState)
         {
-            context.WriteLine(
-                $"[{GetType().Name}.{nameof(OnExiting)}] {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+            context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
+            context.WriteLine($"{nameof(Floor)}: {Floor}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, StateBase oldState)
         {
-            context.WriteLine(
-                $"[{GetType().Name}.{nameof(OnEntered)}] {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+            context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
+            context.WriteLine($"{nameof(Floor)}: {Floor}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public void Dispose() { }
 
         public sealed override string ToString()
         {
-            return GetType().Name;
+            return $"{GetType().Name}({Floor})";
         }
 
         protected static bool Transit(StateBase newState, out StateBase result)
@@ -48,74 +71,35 @@
         }
     }
 
-    internal sealed class IdleDownState : StateBase
+    internal sealed class IdleState : StateBase
     {
-        private IdleDownState() { }
-
-        internal static IdleDownState Default { get; } = new IdleDownState();
+        internal IdleState(int floor) : base(floor) { }
 
         public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
         {
-            switch (ev)
+            switch (ev.Kind)
             {
-                case Event.CallUp:
-                case Event.Move:
-                    return Transit(MovingUpState.Default, out newState);
+                case EventKind.Call:
+                case EventKind.Move:
+                    if (Floor == ev.Floor)
+                        return Ignore(out newState);
+                    return Transit(new MovingState(ev.Floor), out newState);
                 default:
                     return Ignore(out newState);
             }
         }
     }
 
-    internal sealed class IdleUpState : StateBase
+    internal sealed class MovingState : StateBase
     {
-        private IdleUpState() { }
-
-        internal static IdleUpState Default { get; } = new IdleUpState();
+        internal MovingState(int floor) : base(floor) { }
 
         public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
         {
-            switch (ev)
+            switch (ev.Kind)
             {
-                case Event.CallDown:
-                case Event.Move:
-                    return Transit(MovingDownState.Default, out newState);
-                default:
-                    return Ignore(out newState);
-            }
-        }
-    }
-
-    internal sealed class MovingDownState : StateBase
-    {
-        private MovingDownState() { }
-
-        internal static MovingDownState Default { get; } = new MovingDownState();
-
-        public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
-        {
-            switch (ev)
-            {
-                case Event.Stop:
-                    return Transit(IdleDownState.Default, out newState);
-                default:
-                    return Ignore(out newState);
-            }
-        }
-    }
-
-    internal sealed class MovingUpState : StateBase
-    {
-        private MovingUpState() { }
-
-        internal static MovingUpState Default { get; } = new MovingUpState();
-
-        public override bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState)
-        {
-            switch (ev)
-            {
-                case Event.Stop:
-                    return Transit(IdleUpState.Default, out newState);
+                case EventKind.Stop:
+                    return Transit(new IdleState(ev.Floor), out newState);
                 default:
                     return Ignore(out newState);
             }
@@ -130,19 +114,19 @@
         {
             var elevatorEventSink = new ContextBoundEventSink<StateBase, Event, TextWriter>(Out);
             StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator =
-                StateMachine<Event>.Create((StateBase)IdleDownState.Default, elevatorEventSink);
+                StateMachine<Event>.Create((StateBase)new IdleState(0), elevatorEventSink);
             elevator.PrintCurrentState();
             Out.WriteLine();
 
-            elevator.PrintProcessEvent(Event.CallDown);
+            elevator.PrintProcessEvent(new Event(EventKind.Call, -1));
             elevator.PrintCurrentState();
             Out.WriteLine();
 
-            elevator.PrintProcessEvent(Event.CallUp);
+            elevator.PrintProcessEvent(new Event(EventKind.Call, 2));
             elevator.PrintCurrentState();
             Out.WriteLine();
 
-            elevator.PrintProcessEvent(Event.Stop);
+            elevator.PrintProcessEvent(new Event(EventKind.Stop, default));
             elevator.PrintCurrentState();
             Out.WriteLine();
         }
