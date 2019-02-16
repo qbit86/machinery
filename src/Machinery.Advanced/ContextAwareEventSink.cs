@@ -6,7 +6,7 @@ namespace Machinery
     public readonly struct ContextAwareEventSink<TState, TEvent, TContext> :
         IContextAwareEventSink<TState, TEvent, TContext>,
         IEquatable<ContextAwareEventSink<TState, TEvent, TContext>>
-        where TState : IState<TState, TEvent, TContext>
+        where TState : IState<TState, TEvent, TContext>, IDisposable
 #pragma warning restore CA2231, CA1815
     {
         public bool TryCreateNewState(TContext context, TState currentState, TEvent ev, out TState newState)

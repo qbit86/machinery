@@ -28,7 +28,7 @@
         }
     }
 
-    internal abstract class StateBase : IState<StateBase, Event, TextWriter>
+    internal abstract class StateBase : IState<StateBase, Event, TextWriter>, IDisposable
     {
         internal StateBase(int floor)
         {
@@ -36,6 +36,8 @@
         }
 
         internal int Floor { get; }
+
+        public void Dispose() { }
 
         public abstract bool TryCreateNewState(TextWriter context, Event ev, out StateBase newState);
 
@@ -50,8 +52,6 @@
             context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
             context.WriteLine($"{nameof(Floor)}: {Floor}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
-
-        public void Dispose() { }
 
         public sealed override string ToString()
         {

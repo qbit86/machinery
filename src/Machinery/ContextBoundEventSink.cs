@@ -5,7 +5,7 @@ namespace Machinery
 #pragma warning disable CA1815, CA2231
     public readonly struct ContextBoundEventSink<TState, TEvent, TContext> : IEventSink<TState, TEvent>,
         IEquatable<ContextBoundEventSink<TState, TEvent, TContext>>
-        where TState : IState<TState, TEvent, TContext>
+        where TState : IState<TState, TEvent, TContext>, IDisposable
 #pragma warning restore CA2231, CA1815
     {
         private readonly TContext _context;
