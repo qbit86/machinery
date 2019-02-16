@@ -75,14 +75,16 @@
 
         public void OnExiting(State currentState, Event ev, State newState)
         {
+            Out.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
             Out.WriteLine(
-                $"[{currentState}.{nameof(OnExiting)}] {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+                $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnEntered(State currentState, Event ev, State oldState)
         {
+            Out.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
             Out.WriteLine(
-                $"[{currentState}.{nameof(OnEntered)}] {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+                $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public void DisposeState(State stateToDispose) { }

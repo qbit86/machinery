@@ -31,10 +31,55 @@
         }
     }
 
+    internal abstract class StateMethodTable
+    {
+        internal abstract bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState);
+        internal abstract string ToString(int floor);
+    }
+
+    internal sealed class IdleStateMethodTable : StateMethodTable
+    {
+        private IdleStateMethodTable() { }
+
+        internal static IdleStateMethodTable Default { get; } = new IdleStateMethodTable();
+
+        internal override bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override string ToString(int floor)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal sealed class MovingStateMethodTable : StateMethodTable
+    {
+        private MovingStateMethodTable() { }
+
+        internal static MovingStateMethodTable Default { get; } = new MovingStateMethodTable();
+
+        internal override bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override string ToString(int floor)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     internal readonly struct State : IState<State, Event, TextWriter>, IDisposable
     {
-        internal State(int floor)
+        private readonly StateMethodTable _stateMethodTable;
+        private readonly string _stringRepresentation;
+
+        internal State(int floor, StateMethodTable stateMethodTable)
         {
+            _stateMethodTable = stateMethodTable ?? throw new ArgumentNullException(nameof(stateMethodTable));
+            _stringRepresentation = stateMethodTable.ToString(floor);
             Floor = floor;
         }
 
@@ -42,22 +87,22 @@
 
         public bool TryCreateNewState(TextWriter context, Event ev, out State newState)
         {
-            throw new NotImplementedException();
+            return _stateMethodTable.TryCreateNewState(this, context, ev, out newState);
         }
 
         public void OnExiting(TextWriter context, Event ev, State newState)
         {
-            throw new NotImplementedException();
+            context.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
+            context.WriteLine($"this: {_stringRepresentation}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State oldState)
         {
-            throw new NotImplementedException();
+            context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
+            context.WriteLine($"this: {_stringRepresentation}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
     }
 
     internal static class StructElevatorDemo
@@ -68,7 +113,7 @@
         {
             var elevatorEventSink = new ContextBoundEventSink<State, Event, TextWriter>(Out);
             StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator =
-                StateMachine<Event>.Create(new State(0), elevatorEventSink);
+                StateMachine<Event>.Create(new State(0, IdleStateMethodTable.Default), elevatorEventSink);
             elevator.PrintCurrentState();
             Out.WriteLine();
 
