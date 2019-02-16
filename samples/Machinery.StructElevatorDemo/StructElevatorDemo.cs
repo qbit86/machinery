@@ -35,6 +35,18 @@
     {
         internal abstract bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState);
         internal abstract string ToString(int floor);
+
+        protected static bool Transit(State newState, out State result)
+        {
+            result = newState;
+            return true;
+        }
+
+        protected static bool Ignore(out State result)
+        {
+            result = default;
+            return false;
+        }
     }
 
     internal sealed class IdleStateMethodTable : StateMethodTable
@@ -45,12 +57,21 @@
 
         internal override bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState)
         {
-            throw new NotImplementedException();
+            switch (ev.Kind)
+            {
+                case EventKind.Call:
+                case EventKind.Move:
+                    if (state.Floor == ev.Floor)
+                        return Ignore(out newState);
+                    return Transit(new State(ev.Floor, MovingStateMethodTable.Default), out newState);
+                default:
+                    return Ignore(out newState);
+            }
         }
 
         internal override string ToString(int floor)
         {
-            throw new NotImplementedException();
+            return $"Idle({floor})";
         }
     }
 
@@ -62,12 +83,18 @@
 
         internal override bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState)
         {
-            throw new NotImplementedException();
+            switch (ev.Kind)
+            {
+                case EventKind.Stop:
+                    return Transit(new State(state.Floor, IdleStateMethodTable.Default), out newState);
+                default:
+                    return Ignore(out newState);
+            }
         }
 
         internal override string ToString(int floor)
         {
-            throw new NotImplementedException();
+            return $"Moving({floor})";
         }
     }
 
@@ -85,6 +112,8 @@
 
         internal int Floor { get; }
 
+        public void Dispose() { }
+
         public bool TryCreateNewState(TextWriter context, Event ev, out State newState)
         {
             return _stateMethodTable.TryCreateNewState(this, context, ev, out newState);
@@ -93,16 +122,19 @@
         public void OnExiting(TextWriter context, Event ev, State newState)
         {
             context.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
-            context.WriteLine($"this: {_stringRepresentation}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State oldState)
         {
             context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
-            context.WriteLine($"this: {_stringRepresentation}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
-        public void Dispose() { }
+        public override string ToString()
+        {
+            return _stringRepresentation;
+        }
     }
 
     internal static class StructElevatorDemo
