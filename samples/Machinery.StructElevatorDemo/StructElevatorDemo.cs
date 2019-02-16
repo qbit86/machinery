@@ -24,6 +24,9 @@
 
         public override string ToString()
         {
+            if (Kind == EventKind.Stop)
+                return nameof(EventKind.Stop);
+
             return $"{Kind}({Floor})";
         }
     }
@@ -54,7 +57,6 @@
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 

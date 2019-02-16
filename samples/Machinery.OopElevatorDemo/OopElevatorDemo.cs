@@ -24,6 +24,9 @@
 
         public override string ToString()
         {
+            if (Kind == EventKind.Stop)
+                return nameof(EventKind.Stop);
+
             return $"{Kind}({Floor})";
         }
     }
@@ -43,14 +46,14 @@
 
         public void OnExiting(TextWriter context, Event ev, StateBase newState)
         {
-            context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
-            context.WriteLine($"{nameof(Floor)}: {Floor}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+            context.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
+            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, StateBase oldState)
         {
             context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
-            context.WriteLine($"{nameof(Floor)}: {Floor}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public sealed override string ToString()
