@@ -60,8 +60,40 @@
 
     internal static class StructElevatorDemo
     {
+        private static TextWriter Out => Console.Out;
+
         private static void Main()
         {
+            var elevatorEventSink = new ContextBoundEventSink<State, Event, TextWriter>(Out);
+            StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator =
+                StateMachine<Event>.Create(new State(0), elevatorEventSink);
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+
+            elevator.PrintProcessEvent(new Event(EventKind.Call, -1));
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+
+            elevator.PrintProcessEvent(new Event(EventKind.Call, 2));
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+
+            elevator.PrintProcessEvent(new Event(EventKind.Stop, default));
+            elevator.PrintCurrentState();
+            Out.WriteLine();
+        }
+
+        private static void PrintCurrentState(
+            this StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator)
+        {
+            Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+        }
+
+        private static void PrintProcessEvent(
+            this StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator, Event ev)
+        {
+            Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
+            elevator.ProcessEvent(ev);
         }
     }
 }
