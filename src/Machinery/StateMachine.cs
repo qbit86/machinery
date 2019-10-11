@@ -46,34 +46,7 @@ namespace Machinery
 
             try
             {
-                bool transit = _policy.TryCreateNewState(_currentState, ev, out TState newState);
-                if (!transit)
-                    return true;
-
-                if (newState is null)
-                    throw new InvalidOperationException("The new state must not be null.");
-
-                try
-                {
-                    _policy.OnExiting(_currentState, ev, newState);
-                }
-                catch
-                {
-                    _policy.DisposeState(newState);
-                    throw;
-                }
-
-                TState oldState = _currentState;
-                _currentState = newState;
-
-                try
-                {
-                    _policy.OnEntered(_currentState, ev, oldState);
-                }
-                finally
-                {
-                    _policy.DisposeState(oldState);
-                }
+                UncheckedProcessEvent(ev);
             }
             finally
             {
@@ -81,6 +54,38 @@ namespace Machinery
             }
 
             return true;
+        }
+
+        private void UncheckedProcessEvent(TEvent ev)
+        {
+            bool transit = _policy.TryCreateNewState(_currentState, ev, out TState newState);
+            if (!transit)
+                return;
+
+            if (newState is null)
+                throw new InvalidOperationException("The new state must not be null.");
+
+            try
+            {
+                _policy.OnExiting(_currentState, ev, newState);
+            }
+            catch
+            {
+                _policy.DisposeState(newState);
+                throw;
+            }
+
+            TState oldState = _currentState;
+            _currentState = newState;
+
+            try
+            {
+                _policy.OnEntered(_currentState, ev, oldState);
+            }
+            finally
+            {
+                _policy.DisposeState(oldState);
+            }
         }
     }
 }
