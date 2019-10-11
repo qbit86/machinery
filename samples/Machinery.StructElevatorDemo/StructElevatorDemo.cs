@@ -152,19 +152,18 @@
             StateMachine<TextWriter, Event, State> elevator =
                 StateMachine<Event>.Create(Out, new State(0, IdleStateMethodTable.Default));
             elevator.PrintCurrentState();
-            Out.WriteLine();
 
+            Out.WriteLine();
             elevator.PrintProcessEvent(new Event(EventKind.Call, -1));
             elevator.PrintCurrentState();
-            Out.WriteLine();
 
+            Out.WriteLine();
             elevator.PrintProcessEvent(new Event(EventKind.Call, 2));
             elevator.PrintCurrentState();
-            Out.WriteLine();
 
+            Out.WriteLine();
             elevator.PrintProcessEvent(new Event(EventKind.Stop, default));
             elevator.PrintCurrentState();
-            Out.WriteLine();
         }
 
         private static void PrintCurrentState(this StateMachine<TextWriter, Event, State> elevator)
