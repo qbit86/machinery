@@ -21,7 +21,7 @@
         MovingUp
     }
 
-    internal readonly struct ElevatorPolicy : IPolicy<TextWriter, State, Event>
+    internal readonly struct ElevatorPolicy : IPolicy<TextWriter, Event, State>
     {
         private TextWriter Out { get; }
 
