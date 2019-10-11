@@ -30,7 +30,7 @@
             Out = @out;
         }
 
-        public bool TryCreateNewState(TextWriter context, State currentState, Event ev, out State newState)
+        public bool TryCreateNewState(TextWriter context, Event ev, State currentState, out State newState)
         {
             switch (currentState)
             {
@@ -73,21 +73,21 @@
             }
         }
 
-        public void OnExiting(TextWriter context, State currentState, Event ev, State newState)
+        public void OnExiting(TextWriter context, Event ev, State currentState, State newState)
         {
             Out.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
             Out.WriteLine(
                 $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
-        public void OnEntered(TextWriter context, State currentState, Event ev, State oldState)
+        public void OnEntered(TextWriter context, Event ev, State currentState, State oldState)
         {
             Out.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
             Out.WriteLine(
                 $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
-        public void DisposeState(TextWriter context, State stateToDispose, Event ev) { }
+        public void DisposeState(TextWriter context, Event ev, State stateToDispose) { }
 
         private bool Transit(State newState, out State result)
         {

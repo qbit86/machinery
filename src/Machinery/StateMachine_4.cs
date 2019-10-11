@@ -63,7 +63,7 @@ namespace Machinery
 
         private void UncheckedProcessEvent(TEvent ev)
         {
-            bool transit = _policy.TryCreateNewState(_context, _currentState, ev, out TState newState);
+            bool transit = _policy.TryCreateNewState(_context, ev, _currentState, out TState newState);
             if (!transit)
                 return;
 
@@ -72,11 +72,11 @@ namespace Machinery
 
             try
             {
-                _policy.OnExiting(_context, _currentState, ev, newState);
+                _policy.OnExiting(_context, ev, _currentState, newState);
             }
             catch
             {
-                _policy.DisposeState(_context, newState, ev);
+                _policy.DisposeState(_context, ev, newState);
                 throw;
             }
 
@@ -85,11 +85,11 @@ namespace Machinery
 
             try
             {
-                _policy.OnEntered(_context, _currentState, ev, oldState);
+                _policy.OnEntered(_context, ev, _currentState, oldState);
             }
             finally
             {
-                _policy.DisposeState(_context, oldState, ev);
+                _policy.DisposeState(_context, ev, oldState);
             }
         }
     }
