@@ -57,7 +57,10 @@ namespace Machinery
         {
             bool transit = _currentState.TryCreateNewState(_context, ev, out IState<TContext, TEvent> newState);
             if (!transit)
+            {
+                _currentState.OnRemain(_context, ev, _currentState);
                 return;
+            }
 
             if (newState is null)
                 throw new InvalidOperationException("The new state must not be null.");
