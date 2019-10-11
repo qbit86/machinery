@@ -15,8 +15,6 @@ namespace Machinery
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
-
     public sealed class StateMachine<TContext, TEvent, TState, TPolicy>
         where TPolicy : IPolicy<TContext, TEvent, TState>
     {
@@ -64,14 +62,11 @@ namespace Machinery
         private void UncheckedProcessEvent(TEvent ev)
         {
             bool transit = _policy.TryCreateNewState(_context, ev, _currentState, out TState newState);
-            if (!transit)
+            if (!transit || newState is null)
             {
                 _policy.OnRemain(_context, ev, _currentState);
                 return;
             }
-
-            if (newState is null)
-                throw new InvalidOperationException("The new state must not be null.");
 
             try
             {
