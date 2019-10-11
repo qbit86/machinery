@@ -1,3 +1,5 @@
+// ReSharper disable SuspiciousTypeConversion.Global
+
 namespace Machinery
 {
     using System;
