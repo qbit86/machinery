@@ -1,10 +1,10 @@
 namespace Machinery
 {
-    public interface IPolicy<TState, in TEvent>
+    public interface IPolicy<in TContext, TState, in TEvent>
     {
-        bool TryCreateNewState(TState currentState, TEvent ev, out TState newState);
-        void OnExiting(TState currentState, TEvent ev, TState newState);
-        void OnEntered(TState currentState, TEvent ev, TState oldState);
-        void DisposeState(TState stateToDispose, TEvent ev);
+        bool TryCreateNewState(TContext context, TState currentState, TEvent ev, out TState newState);
+        void OnExiting(TContext context, TState currentState, TEvent ev, TState newState);
+        void OnEntered(TContext context, TState currentState, TEvent ev, TState oldState);
+        void DisposeState(TContext context, TState stateToDispose, TEvent ev);
     }
 }

@@ -8,7 +8,7 @@ namespace Machinery
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static StateMachine<TContext, TState, TEvent, TPolicy> Create<TContext, TState, TPolicy>(
             TContext context, TState initialState, TPolicy eventSink)
-            where TPolicy : IPolicy<TState, TEvent>
+            where TPolicy : IPolicy<TContext, TState, TEvent>
         {
             return new StateMachine<TContext, TState, TEvent, TPolicy>(context, initialState, eventSink);
         }
@@ -18,7 +18,7 @@ namespace Machinery
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
 
     public sealed class StateMachine<TContext, TState, TEvent, TPolicy>
-        where TPolicy : IPolicy<TState, TEvent>
+        where TPolicy : IPolicy<TContext, TState, TEvent>
     {
         private readonly TContext _context;
         private readonly TPolicy _policy;
@@ -63,7 +63,7 @@ namespace Machinery
 
         private void UncheckedProcessEvent(TEvent ev)
         {
-            bool transit = _policy.TryCreateNewState(_currentState, ev, out TState newState);
+            bool transit = _policy.TryCreateNewState(_context, _currentState, ev, out TState newState);
             if (!transit)
                 return;
 
@@ -72,11 +72,11 @@ namespace Machinery
 
             try
             {
-                _policy.OnExiting(_currentState, ev, newState);
+                _policy.OnExiting(_context, _currentState, ev, newState);
             }
             catch
             {
-                _policy.DisposeState(newState, ev);
+                _policy.DisposeState(_context, newState, ev);
                 throw;
             }
 
@@ -85,11 +85,11 @@ namespace Machinery
 
             try
             {
-                _policy.OnEntered(_currentState, ev, oldState);
+                _policy.OnEntered(_context, _currentState, ev, oldState);
             }
             finally
             {
-                _policy.DisposeState(oldState, ev);
+                _policy.DisposeState(_context, oldState, ev);
             }
         }
     }

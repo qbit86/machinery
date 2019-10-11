@@ -3,36 +3,27 @@ namespace Machinery
     using System;
 
 #pragma warning disable CA1815, CA2231
-    public readonly struct ContextBoundPolicy<TState, TEvent, TContext> : IPolicy<TState, TEvent>,
+    public readonly struct ContextBoundPolicy<TState, TEvent, TContext> : IPolicy<TContext, TState, TEvent>,
         IEquatable<ContextBoundPolicy<TState, TEvent, TContext>>
         where TState : IState<TState, TEvent, TContext>, IDisposable
 #pragma warning restore CA2231, CA1815
     {
-        private readonly TContext _context;
-
-        public ContextBoundPolicy(TContext context)
+        public bool TryCreateNewState(TContext context, TState currentState, TEvent ev, out TState newState)
         {
-            _context = context;
+            return currentState.TryCreateNewState(context, ev, out newState);
         }
 
-        public TContext Context => _context;
-
-        public bool TryCreateNewState(TState currentState, TEvent ev, out TState newState)
+        public void OnExiting(TContext context, TState currentState, TEvent ev, TState newState)
         {
-            return currentState.TryCreateNewState(_context, ev, out newState);
+            currentState.OnExiting(context, ev, newState);
         }
 
-        public void OnExiting(TState currentState, TEvent ev, TState newState)
+        public void OnEntered(TContext context, TState currentState, TEvent ev, TState oldState)
         {
-            currentState.OnExiting(_context, ev, newState);
+            currentState.OnEntered(context, ev, oldState);
         }
 
-        public void OnEntered(TState currentState, TEvent ev, TState oldState)
-        {
-            currentState.OnEntered(_context, ev, oldState);
-        }
-
-        public void DisposeState(TState stateToDispose, TEvent ev)
+        public void DisposeState(TContext context, TState stateToDispose, TEvent ev)
         {
             stateToDispose.Dispose();
         }

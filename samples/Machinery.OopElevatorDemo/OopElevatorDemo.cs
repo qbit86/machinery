@@ -115,7 +115,7 @@
 
         private static void Main()
         {
-            var elevatorEventSink = new ContextBoundPolicy<StateBase, Event, TextWriter>(Out);
+            var elevatorEventSink = new ContextBoundPolicy<StateBase, Event, TextWriter>();
             StateMachine<TextWriter, StateBase, Event, ContextBoundPolicy<StateBase, Event, TextWriter>> elevator =
                 StateMachine<Event>.Create(Out, (StateBase)new IdleState(0), elevatorEventSink);
             elevator.PrintCurrentState();
