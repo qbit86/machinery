@@ -75,16 +75,23 @@
 
         public void OnExiting(TextWriter context, Event ev, State currentState, State newState)
         {
-            Out.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
+            const string tag = nameof(ElevatorPolicy) + "." + nameof(OnExiting);
             Out.WriteLine(
-                $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+                $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+        }
+
+        public void OnRemain(TextWriter context, Event ev, State currentState)
+        {
+            const string tag = nameof(ElevatorPolicy) + "." + nameof(OnRemain);
+            Out.WriteLine(
+                $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State currentState, State oldState)
         {
-            Out.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
+            const string tag = nameof(ElevatorPolicy) + "." + nameof(OnEntered);
             Out.WriteLine(
-                $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+                $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public void DisposeState(TextWriter context, Event ev, State stateToDispose) { }
