@@ -121,14 +121,20 @@
 
         public void OnExiting(TextWriter context, Event ev, State newState)
         {
-            context.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
-            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+            const string tag = nameof(State) + "." + nameof(OnExiting);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+        }
+
+        public void OnRemain(TextWriter context, Event ev, State currentState)
+        {
+            const string tag = nameof(State) + "." + nameof(OnRemain);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State oldState)
         {
-            context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
-            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+            const string tag = nameof(State) + "." + nameof(OnEntered);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public override string ToString()

@@ -50,6 +50,12 @@
             context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
+        public void OnRemain(TextWriter context, Event ev, StateBase currentState)
+        {
+            const string tag = nameof(StateBase) + "." + nameof(OnRemain);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}");
+        }
+
         public void OnEntered(TextWriter context, Event ev, StateBase oldState)
         {
             const string tag = nameof(StateBase) + "." + nameof(OnEntered);
