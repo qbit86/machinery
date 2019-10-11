@@ -1,6 +1,6 @@
 namespace Machinery
 {
-    public interface IEventSink<TState, in TEvent>
+    public interface IPolicy<TState, in TEvent>
     {
         bool TryCreateNewState(TState currentState, TEvent ev, out TState newState);
         void OnExiting(TState currentState, TEvent ev, TState newState);
