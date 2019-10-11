@@ -25,10 +25,10 @@ namespace Machinery
 
         public StateMachine(TState initialState, TEventSink eventSink)
         {
-            if (initialState == null)
+            if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
 
-            if (eventSink == null)
+            if (eventSink is null)
                 throw new ArgumentNullException(nameof(eventSink));
 
             _currentState = initialState;
@@ -48,7 +48,7 @@ namespace Machinery
                 if (!transit)
                     return true;
 
-                if (newState == null)
+                if (newState is null)
                     throw new InvalidOperationException(nameof(newState));
 
                 try
