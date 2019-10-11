@@ -31,7 +31,7 @@
         }
     }
 
-    internal abstract class StateBase : IState<StateBase, Event, TextWriter>, IDisposable
+    internal abstract class StateBase : IState<TextWriter, Event, StateBase>, IDisposable
     {
         internal StateBase(int floor)
         {
@@ -115,9 +115,8 @@
 
         private static void Main()
         {
-            var elevatorEventSink = new ContextBoundEventSink<StateBase, Event, TextWriter>(Out);
-            StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator =
-                StateMachine<Event>.Create((StateBase)new IdleState(0), elevatorEventSink);
+            StateMachine<TextWriter, Event, StateBase> elevator =
+                StateMachine<Event>.Create(Out, (StateBase)new IdleState(0));
             elevator.PrintCurrentState();
             Out.WriteLine();
 
@@ -134,17 +133,15 @@
             Out.WriteLine();
         }
 
-        private static void PrintCurrentState(
-            this StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator)
+        private static void PrintCurrentState(this StateMachine<TextWriter, Event, StateBase> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(
-            this StateMachine<StateBase, Event, ContextBoundEventSink<StateBase, Event, TextWriter>> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, StateBase> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.ProcessEvent(ev);
+            elevator.TryProcessEvent(ev);
         }
     }
 }

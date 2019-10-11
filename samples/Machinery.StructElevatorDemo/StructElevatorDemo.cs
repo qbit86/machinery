@@ -98,7 +98,7 @@
         }
     }
 
-    internal readonly struct State : IState<State, Event, TextWriter>, IDisposable
+    internal readonly struct State : IState<TextWriter, Event, State>, IDisposable
     {
         private readonly StateMethodTable _stateMethodTable;
         private readonly string _stringRepresentation;
@@ -143,9 +143,8 @@
 
         private static void Main()
         {
-            var elevatorEventSink = new ContextBoundEventSink<State, Event, TextWriter>(Out);
-            StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator =
-                StateMachine<Event>.Create(new State(0, IdleStateMethodTable.Default), elevatorEventSink);
+            StateMachine<TextWriter, Event, State> elevator =
+                StateMachine<Event>.Create(Out, new State(0, IdleStateMethodTable.Default));
             elevator.PrintCurrentState();
             Out.WriteLine();
 
@@ -162,17 +161,15 @@
             Out.WriteLine();
         }
 
-        private static void PrintCurrentState(
-            this StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator)
+        private static void PrintCurrentState(this StateMachine<TextWriter, Event, State> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(
-            this StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, State> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.ProcessEvent(ev);
+            elevator.TryProcessEvent(ev);
         }
     }
 }

@@ -21,16 +21,16 @@
         MovingUp
     }
 
-    internal readonly struct ElevatorEventSink : IEventSink<State, Event>
+    internal readonly struct ElevatorPolicy : IPolicy<TextWriter, Event, State>
     {
         private TextWriter Out { get; }
 
-        public ElevatorEventSink(TextWriter @out)
+        public ElevatorPolicy(TextWriter @out)
         {
             Out = @out;
         }
 
-        public bool TryCreateNewState(State currentState, Event ev, out State newState)
+        public bool TryCreateNewState(TextWriter context, Event ev, State currentState, out State newState)
         {
             switch (currentState)
             {
@@ -73,21 +73,21 @@
             }
         }
 
-        public void OnExiting(State currentState, Event ev, State newState)
+        public void OnExiting(TextWriter context, Event ev, State currentState, State newState)
         {
             Out.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
             Out.WriteLine(
                 $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
-        public void OnEntered(State currentState, Event ev, State oldState)
+        public void OnEntered(TextWriter context, Event ev, State currentState, State oldState)
         {
             Out.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
             Out.WriteLine(
                 $"{nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
-        public void DisposeState(State stateToDispose) { }
+        public void DisposeState(TextWriter context, Event ev, State stateToDispose) { }
 
         private bool Transit(State newState, out State result)
         {
@@ -108,9 +108,9 @@
 
         private static void Main()
         {
-            var elevatorEventSink = new ElevatorEventSink(Out);
-            StateMachine<State, Event, ElevatorEventSink> elevator =
-                StateMachine<Event>.Create(State.IdleDown, elevatorEventSink);
+            var elevatorPolicy = new ElevatorPolicy(Out);
+            StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator =
+                StateMachine<Event>.Create(Out, State.IdleDown, elevatorPolicy);
             elevator.PrintCurrentState();
             Out.WriteLine();
 
@@ -127,15 +127,16 @@
             Out.WriteLine();
         }
 
-        private static void PrintCurrentState(this StateMachine<State, Event, ElevatorEventSink> elevator)
+        private static void PrintCurrentState(this StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(this StateMachine<State, Event, ElevatorEventSink> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator,
+            Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.ProcessEvent(ev);
+            elevator.TryProcessEvent(ev);
         }
     }
 }
