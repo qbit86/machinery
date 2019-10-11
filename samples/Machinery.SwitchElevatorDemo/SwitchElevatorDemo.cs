@@ -135,7 +135,7 @@
         private static void PrintProcessEvent(this StateMachine<State, Event, ElevatorPolicy> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.ProcessEvent(ev);
+            elevator.TryProcessEvent(ev);
         }
     }
 }

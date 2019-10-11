@@ -144,7 +144,7 @@
             this StateMachine<StateBase, Event, ContextBoundPolicy<StateBase, Event, TextWriter>> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.ProcessEvent(ev);
+            elevator.TryProcessEvent(ev);
         }
     }
 }
