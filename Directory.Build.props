@@ -8,6 +8,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/machinery</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>Machinery</RootNamespace>
   </PropertyGroup>
 </Project>
