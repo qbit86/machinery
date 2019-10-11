@@ -31,7 +31,7 @@
         }
     }
 
-    internal abstract class StateBase : IState<StateBase, Event, TextWriter>, IDisposable
+    internal abstract class StateBase : IState<TextWriter, Event, StateBase>, IDisposable
     {
         internal StateBase(int floor)
         {

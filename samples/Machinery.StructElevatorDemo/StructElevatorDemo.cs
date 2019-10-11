@@ -98,7 +98,7 @@
         }
     }
 
-    internal readonly struct State : IState<State, Event, TextWriter>, IDisposable
+    internal readonly struct State : IState<TextWriter, Event, State>, IDisposable
     {
         private readonly StateMethodTable _stateMethodTable;
         private readonly string _stringRepresentation;
