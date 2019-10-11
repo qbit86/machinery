@@ -5,17 +5,6 @@ namespace Machinery
     using System;
     using System.Threading;
 
-    public static partial class StateMachine<TEvent>
-    {
-#pragma warning disable CA1000 // Do not declare static members on generic types
-        public static StateMachine<TContext, TEvent> Create<TContext>(
-            TContext context, IState<TContext, TEvent> initialState)
-        {
-            return new StateMachine<TContext, TEvent>(context, initialState);
-        }
-#pragma warning restore CA1000 // Do not declare static members on generic types
-    }
-
     public sealed class StateMachine<TContext, TEvent>
     {
         private readonly TContext _context;
