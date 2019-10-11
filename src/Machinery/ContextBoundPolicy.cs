@@ -32,7 +32,7 @@ namespace Machinery
             currentState.OnEntered(_context, ev, oldState);
         }
 
-        public void DisposeState(TState stateToDispose)
+        public void DisposeState(TState stateToDispose, TEvent ev)
         {
             stateToDispose.Dispose();
         }

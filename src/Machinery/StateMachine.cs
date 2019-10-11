@@ -76,7 +76,7 @@ namespace Machinery
             }
             catch
             {
-                _policy.DisposeState(newState);
+                _policy.DisposeState(newState, ev);
                 throw;
             }
 
@@ -89,7 +89,7 @@ namespace Machinery
             }
             finally
             {
-                _policy.DisposeState(oldState);
+                _policy.DisposeState(oldState, ev);
             }
         }
     }
