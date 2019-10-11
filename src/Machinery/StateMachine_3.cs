@@ -8,18 +8,18 @@ namespace Machinery
     public static partial class StateMachine<TEvent>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static StateMachine<TContext, TState, TEvent> Create<TContext, TState>(
+        public static StateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IState<TContext, TEvent, TState>
         {
-            return new StateMachine<TContext, TState, TEvent>(context, initialState);
+            return new StateMachine<TContext, TEvent, TState>(context, initialState);
         }
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
 
-    public sealed class StateMachine<TContext, TState, TEvent>
+    public sealed class StateMachine<TContext, TEvent, TState>
         where TState : IState<TContext, TEvent, TState>
     {
         private readonly TContext _context;

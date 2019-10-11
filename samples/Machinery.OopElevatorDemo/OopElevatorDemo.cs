@@ -115,7 +115,7 @@
 
         private static void Main()
         {
-            StateMachine<TextWriter, StateBase, Event> elevator =
+            StateMachine<TextWriter, Event, StateBase> elevator =
                 StateMachine<Event>.Create(Out, (StateBase)new IdleState(0));
             elevator.PrintCurrentState();
             Out.WriteLine();
@@ -133,12 +133,12 @@
             Out.WriteLine();
         }
 
-        private static void PrintCurrentState(this StateMachine<TextWriter, StateBase, Event> elevator)
+        private static void PrintCurrentState(this StateMachine<TextWriter, Event, StateBase> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(this StateMachine<TextWriter, StateBase, Event> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, StateBase> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
             elevator.TryProcessEvent(ev);
