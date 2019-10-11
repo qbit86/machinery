@@ -109,8 +109,8 @@
         private static void Main()
         {
             var elevatorEventSink = new ElevatorPolicy(Out);
-            StateMachine<State, Event, ElevatorPolicy> elevator =
-                StateMachine<Event>.Create(State.IdleDown, elevatorEventSink);
+            StateMachine<TextWriter, State, Event, ElevatorPolicy> elevator =
+                StateMachine<Event>.Create(Out, State.IdleDown, elevatorEventSink);
             elevator.PrintCurrentState();
             Out.WriteLine();
 
@@ -127,12 +127,13 @@
             Out.WriteLine();
         }
 
-        private static void PrintCurrentState(this StateMachine<State, Event, ElevatorPolicy> elevator)
+        private static void PrintCurrentState(this StateMachine<TextWriter, State, Event, ElevatorPolicy> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(this StateMachine<State, Event, ElevatorPolicy> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<TextWriter, State, Event, ElevatorPolicy> elevator,
+            Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
             elevator.TryProcessEvent(ev);

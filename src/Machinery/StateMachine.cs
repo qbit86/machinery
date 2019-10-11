@@ -6,33 +6,38 @@ namespace Machinery
     public static class StateMachine<TEvent>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static StateMachine<TState, TEvent, TEventSink> Create<TState, TEventSink>(
-            TState initialState, TEventSink eventSink)
-            where TEventSink : IPolicy<TState, TEvent>
+        public static StateMachine<TContext, TState, TEvent, TPolicy> Create<TContext, TState, TPolicy>(
+            TContext context, TState initialState, TPolicy eventSink)
+            where TPolicy : IPolicy<TState, TEvent>
         {
-            return new StateMachine<TState, TEvent, TEventSink>(initialState, eventSink);
+            return new StateMachine<TContext, TState, TEvent, TPolicy>(context, initialState, eventSink);
         }
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
 
-    public sealed class StateMachine<TState, TEvent, TPolicy>
+    public sealed class StateMachine<TContext, TState, TEvent, TPolicy>
         where TPolicy : IPolicy<TState, TEvent>
     {
+        private readonly TContext _context;
         private readonly TPolicy _policy;
 
         private TState _currentState;
         private int _lock;
 
-        public StateMachine(TState initialState, TPolicy policy)
+        public StateMachine(TContext context, TState initialState, TPolicy policy)
         {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
             if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
 
             if (policy is null)
                 throw new ArgumentNullException(nameof(policy));
 
+            _context = context;
             _currentState = initialState;
             _policy = policy;
         }
