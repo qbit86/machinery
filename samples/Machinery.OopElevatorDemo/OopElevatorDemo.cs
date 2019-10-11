@@ -46,14 +46,14 @@
 
         public void OnExiting(TextWriter context, Event ev, StateBase newState)
         {
-            context.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
-            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+            const string tag = nameof(StateBase) + "." + nameof(OnExiting);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, StateBase oldState)
         {
-            context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
-            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+            const string tag = nameof(StateBase) + "." + nameof(OnEntered);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public sealed override string ToString()
@@ -118,29 +118,30 @@
             StateMachine<TextWriter, Event, StateBase> elevator =
                 StateMachine<Event>.Create(Out, (StateBase)new IdleState(0));
             elevator.PrintCurrentState();
-            Out.WriteLine();
 
-            elevator.PrintProcessEvent(new Event(EventKind.Call, -1));
-            elevator.PrintCurrentState();
             Out.WriteLine();
+            elevator.PrintProcessingEvent(new Event(EventKind.Call, -1));
+            elevator.PrintCurrentState();
 
-            elevator.PrintProcessEvent(new Event(EventKind.Call, 2));
-            elevator.PrintCurrentState();
             Out.WriteLine();
+            elevator.PrintProcessingEvent(new Event(EventKind.Call, 2));
+            elevator.PrintCurrentState();
 
-            elevator.PrintProcessEvent(new Event(EventKind.Stop, default));
-            elevator.PrintCurrentState();
             Out.WriteLine();
+            elevator.PrintProcessingEvent(new Event(EventKind.Stop, default));
+            elevator.PrintCurrentState();
         }
 
         private static void PrintCurrentState(this StateMachine<TextWriter, Event, StateBase> elevator)
         {
-            Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
+            const string tag = nameof(OopElevatorDemo) + "." + nameof(PrintCurrentState);
+            Out.WriteLine($"[{tag}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, StateBase> elevator, Event ev)
+        private static void PrintProcessingEvent(this StateMachine<TextWriter, Event, StateBase> elevator, Event ev)
         {
-            Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
+            const string tag = nameof(OopElevatorDemo) + "." + nameof(PrintProcessingEvent);
+            Out.WriteLine($"[{tag}] {nameof(ev)}: {ev}");
             elevator.TryProcessEvent(ev);
         }
     }
