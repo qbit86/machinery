@@ -98,7 +98,7 @@
         }
     }
 
-    internal readonly struct State : IState<State, Event, TextWriter>, IDisposable
+    internal readonly struct State : IState<TextWriter, Event, State>, IDisposable
     {
         private readonly StateMethodTable _stateMethodTable;
         private readonly string _stringRepresentation;
@@ -121,14 +121,20 @@
 
         public void OnExiting(TextWriter context, Event ev, State newState)
         {
-            context.Write($"[{GetType().Name}.{nameof(OnExiting)}] ");
-            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+            const string tag = nameof(State) + "." + nameof(OnExiting);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+        }
+
+        public void OnRemain(TextWriter context, Event ev, State currentState)
+        {
+            const string tag = nameof(State) + "." + nameof(OnRemain);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State oldState)
         {
-            context.Write($"[{GetType().Name}.{nameof(OnEntered)}] ");
-            context.WriteLine($"this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+            const string tag = nameof(State) + "." + nameof(OnEntered);
+            context.WriteLine($"[{tag}] this: {this}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
         public override string ToString()
@@ -143,36 +149,32 @@
 
         private static void Main()
         {
-            var elevatorEventSink = new ContextBoundEventSink<State, Event, TextWriter>(Out);
-            StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator =
-                StateMachine<Event>.Create(new State(0, IdleStateMethodTable.Default), elevatorEventSink);
+            StateMachine<TextWriter, Event, State> elevator =
+                StateMachine<Event>.Create(Out, new State(0, IdleStateMethodTable.Default));
             elevator.PrintCurrentState();
-            Out.WriteLine();
 
+            Out.WriteLine();
             elevator.PrintProcessEvent(new Event(EventKind.Call, -1));
             elevator.PrintCurrentState();
-            Out.WriteLine();
 
+            Out.WriteLine();
             elevator.PrintProcessEvent(new Event(EventKind.Call, 2));
             elevator.PrintCurrentState();
-            Out.WriteLine();
 
+            Out.WriteLine();
             elevator.PrintProcessEvent(new Event(EventKind.Stop, default));
             elevator.PrintCurrentState();
-            Out.WriteLine();
         }
 
-        private static void PrintCurrentState(
-            this StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator)
+        private static void PrintCurrentState(this StateMachine<TextWriter, Event, State> elevator)
         {
             Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
         }
 
-        private static void PrintProcessEvent(
-            this StateMachine<State, Event, ContextBoundEventSink<State, Event, TextWriter>> elevator, Event ev)
+        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, State> elevator, Event ev)
         {
             Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.ProcessEvent(ev);
+            elevator.TryProcessEvent(ev);
         }
     }
 }
