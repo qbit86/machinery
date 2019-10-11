@@ -15,6 +15,8 @@ namespace Machinery
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+
     public sealed class StateMachine<TState, TEvent, TEventSink> : IStateMachine<TState, TEvent>
         where TEventSink : IEventSink<TState, TEvent>
     {
@@ -49,7 +51,7 @@ namespace Machinery
                     return true;
 
                 if (newState is null)
-                    throw new InvalidOperationException(nameof(newState));
+                    throw new InvalidOperationException("The new state must not be null.");
 
                 try
                 {
