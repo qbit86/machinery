@@ -17,7 +17,7 @@ namespace Machinery
 
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
 
-    public sealed class StateMachine<TState, TEvent, TEventSink> : IStateMachine<TState, TEvent>
+    public sealed class StateMachine<TState, TEvent, TEventSink>
         where TEventSink : IEventSink<TState, TEvent>
     {
         private readonly TEventSink _eventSink;
