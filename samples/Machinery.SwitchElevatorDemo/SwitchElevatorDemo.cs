@@ -108,9 +108,9 @@
 
         private static void Main()
         {
-            var elevatorEventSink = new ElevatorPolicy(Out);
+            var elevatorPolicy = new ElevatorPolicy(Out);
             StateMachine<TextWriter, State, Event, ElevatorPolicy> elevator =
-                StateMachine<Event>.Create(Out, State.IdleDown, elevatorEventSink);
+                StateMachine<Event>.Create(Out, State.IdleDown, elevatorPolicy);
             elevator.PrintCurrentState();
             Out.WriteLine();
 

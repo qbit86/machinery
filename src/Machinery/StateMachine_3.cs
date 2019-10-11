@@ -6,27 +6,26 @@ namespace Machinery
     public static partial class StateMachine<TEvent>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static StateMachine<TContext, TState, TEvent, TPolicy> Create<TContext, TState, TPolicy>(
-            TContext context, TState initialState, TPolicy policy)
-            where TPolicy : IPolicy<TContext, TState, TEvent>
+        public static StateMachine<TContext, TState, TEvent> Create<TContext, TState>(
+            TContext context, TState initialState)
+            where TState : IState<TState, TEvent, TContext>
         {
-            return new StateMachine<TContext, TState, TEvent, TPolicy>(context, initialState, policy);
+            return new StateMachine<TContext, TState, TEvent>(context, initialState);
         }
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
 
-    public sealed class StateMachine<TContext, TState, TEvent, TPolicy>
-        where TPolicy : IPolicy<TContext, TState, TEvent>
+    public sealed class StateMachine<TContext, TState, TEvent>
+        where TState : IState<TState, TEvent, TContext>
     {
         private readonly TContext _context;
-        private readonly TPolicy _policy;
 
         private TState _currentState;
         private int _lock;
 
-        public StateMachine(TContext context, TState initialState, TPolicy policy)
+        public StateMachine(TContext context, TState initialState)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -34,12 +33,8 @@ namespace Machinery
             if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
 
-            if (policy is null)
-                throw new ArgumentNullException(nameof(policy));
-
             _context = context;
             _currentState = initialState;
-            _policy = policy;
         }
 
         public TState CurrentState => _currentState;
@@ -63,7 +58,7 @@ namespace Machinery
 
         private void UncheckedProcessEvent(TEvent ev)
         {
-            bool transit = _policy.TryCreateNewState(_context, _currentState, ev, out TState newState);
+            bool transit = _currentState.TryCreateNewState(_context, ev, out TState newState);
             if (!transit)
                 return;
 
@@ -72,11 +67,11 @@ namespace Machinery
 
             try
             {
-                _policy.OnExiting(_context, _currentState, ev, newState);
+                _currentState.OnExiting(_context, ev, newState);
             }
             catch
             {
-                _policy.DisposeState(_context, newState, ev);
+                (newState as IDisposable)?.Dispose();
                 throw;
             }
 
@@ -85,11 +80,11 @@ namespace Machinery
 
             try
             {
-                _policy.OnEntered(_context, _currentState, ev, oldState);
+                _currentState.OnEntered(_context, ev, oldState);
             }
             finally
             {
-                _policy.DisposeState(_context, oldState, ev);
+                (oldState as IDisposable)?.Dispose();
             }
         }
     }
