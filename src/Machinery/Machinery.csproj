@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
     <AssemblyVersion>0.1</AssemblyVersion>
-    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionPrefix>0.1.1</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <Description>Minimalistic state machine.
 Commonly used types:
@@ -14,9 +14,13 @@ Machinery.StateMachine&lt;TContext, TEvent, TState, TPolicy&gt;</Description>
     <SignAssembly>true</SignAssembly>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <LangVersion>preview</LangVersion>
+    <PackageIcon>kopimi.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="$(RepoRoot)/assets/kopimi.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="all" />
   </ItemGroup>
 </Project>
