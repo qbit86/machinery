@@ -102,7 +102,7 @@
         }
     }
 
-    internal static class SwitchElevatorDemo
+    internal static class StateMachine4Demo
     {
         private static TextWriter Out => Console.Out;
 
