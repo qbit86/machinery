@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery", "src\Machinery\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{402E8D07-3266-43CC-936C-A3E5ADA3AFA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.SwitchElevatorDemo", "samples\Machinery.SwitchElevatorDemo\Machinery.SwitchElevatorDemo.csproj", "{38F8E8C6-6DE5-4449-BF8D-01FF6873379D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.StateMachine4Demo", "samples\Machinery.StateMachine4Demo\Machinery.StateMachine4Demo.csproj", "{38F8E8C6-6DE5-4449-BF8D-01FF6873379D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.OopElevatorDemo", "samples\Machinery.OopElevatorDemo\Machinery.OopElevatorDemo.csproj", "{D7E6092F-4079-41D8-8B63-50927EDF1EAA}"
 EndProject
