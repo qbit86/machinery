@@ -33,7 +33,7 @@
 
     internal abstract class StateMethodTable
     {
-        internal abstract bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState);
+        internal abstract bool TryCreateNewState(TextWriter context, Event ev, in State state, out State newState);
         internal abstract string ToString(int floor);
 
         protected static bool Transit(State newState, out State result)
@@ -55,7 +55,7 @@
 
         internal static IdleStateMethodTable Default { get; } = new IdleStateMethodTable();
 
-        internal override bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState)
+        internal override bool TryCreateNewState(TextWriter context, Event ev, in State state, out State newState)
         {
             switch (ev.Kind)
             {
@@ -81,7 +81,7 @@
 
         internal static MovingStateMethodTable Default { get; } = new MovingStateMethodTable();
 
-        internal override bool TryCreateNewState(in State state, TextWriter context, Event ev, out State newState)
+        internal override bool TryCreateNewState(TextWriter context, Event ev, in State state, out State newState)
         {
             switch (ev.Kind)
             {
@@ -116,7 +116,7 @@
 
         public bool TryCreateNewState(TextWriter context, Event ev, out State newState)
         {
-            return _stateMethodTable.TryCreateNewState(this, context, ev, out newState);
+            return _stateMethodTable.TryCreateNewState(context, ev, this, out newState);
         }
 
         public void OnExiting(TextWriter context, Event ev, State newState)
