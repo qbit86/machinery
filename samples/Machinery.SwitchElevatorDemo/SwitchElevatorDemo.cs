@@ -23,13 +23,6 @@
 
     internal readonly struct ElevatorPolicy : IPolicy<TextWriter, Event, State>
     {
-        private TextWriter Out { get; }
-
-        public ElevatorPolicy(TextWriter @out)
-        {
-            Out = @out;
-        }
-
         public bool TryCreateNewState(TextWriter context, Event ev, State currentState, out State newState)
         {
             switch (currentState)
@@ -76,21 +69,21 @@
         public void OnExiting(TextWriter context, Event ev, State currentState, State newState)
         {
             const string tag = nameof(ElevatorPolicy) + "." + nameof(OnExiting);
-            Out.WriteLine(
+            context.WriteLine(
                 $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
         }
 
         public void OnRemain(TextWriter context, Event ev, State currentState)
         {
             const string tag = nameof(ElevatorPolicy) + "." + nameof(OnRemain);
-            Out.WriteLine(
+            context.WriteLine(
                 $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State currentState, State oldState)
         {
             const string tag = nameof(ElevatorPolicy) + "." + nameof(OnEntered);
-            Out.WriteLine(
+            context.WriteLine(
                 $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
         }
 
@@ -115,7 +108,7 @@
 
         private static void Main()
         {
-            var elevatorPolicy = new ElevatorPolicy(Out);
+            var elevatorPolicy = new ElevatorPolicy();
             StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator =
                 StateMachine<Event>.Create(Out, State.IdleDown, elevatorPolicy);
             elevator.PrintCurrentState();
