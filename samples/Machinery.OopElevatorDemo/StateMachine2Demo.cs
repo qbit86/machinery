@@ -115,7 +115,7 @@
         }
     }
 
-    internal static class OopElevatorDemo
+    internal static class StateMachine2Demo
     {
         private static TextWriter Out => Console.Out;
 
