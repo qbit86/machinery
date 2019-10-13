@@ -143,7 +143,7 @@
         }
     }
 
-    internal static class StructElevatorDemo
+    internal static class StateMachine3Demo
     {
         private static TextWriter Out => Console.Out;
 
