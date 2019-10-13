@@ -1,5 +1,7 @@
 # Machinery
 
+[![Machinery version](https://img.shields.io/nuget/v/Machinery.svg)](https://www.nuget.org/packages/Machinery/)
+
 Minimalistic state machine.
 
 ## Basic usage
