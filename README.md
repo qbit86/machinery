@@ -40,7 +40,7 @@ stateMachine.TryProcessEvent(ev);
 MyState currentState = stateMachine.CurrentState;
 ```
 
-In case of four-parameters generic `StateMachine<C, E, S, P>` your states are not required to implement any interfaces (may be enums, strings, or whatever). But you need to provide `IPolicy<C, E, S>` implementation:
+To use four-parameters generic `StateMachine<C, E, S, P>` you need to provide `IPolicy<C, E, S>` implementation:
 
 ```cs
 public interface IPolicy<in TContext, in TEvent, TState>
@@ -52,3 +52,6 @@ public interface IPolicy<in TContext, in TEvent, TState>
     void DisposeState(TContext context, TEvent ev, TState stateToDispose);
 }
 ```
+
+In this case your states are not required to implement any interfaces (may be enums, strings, or whatever).
+But you need then to dispatch the runtime type of `currentState` by yourself.
