@@ -111,31 +111,14 @@
             var elevatorPolicy = new ElevatorPolicy();
             StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator =
                 StateMachine<Event>.Create(Out, State.IdleDown, elevatorPolicy);
-            elevator.PrintCurrentState();
+
+            elevator.TryProcessEvent(Event.CallDown);
 
             Out.WriteLine();
-            elevator.PrintProcessEvent(Event.CallDown);
-            elevator.PrintCurrentState();
+            elevator.TryProcessEvent(Event.CallUp);
 
             Out.WriteLine();
-            elevator.PrintProcessEvent(Event.CallUp);
-            elevator.PrintCurrentState();
-
-            Out.WriteLine();
-            elevator.PrintProcessEvent(Event.Stop);
-            elevator.PrintCurrentState();
-        }
-
-        private static void PrintCurrentState(this StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator)
-        {
-            Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
-        }
-
-        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator,
-            Event ev)
-        {
-            Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.TryProcessEvent(ev);
+            elevator.TryProcessEvent(Event.Stop);
         }
     }
 }
