@@ -31,7 +31,7 @@
         }
     }
 
-    internal abstract class StateBase : IState<TextWriter, Event>, IDisposable
+    internal abstract class StateBase : IState<TextWriter, Event>
     {
         internal StateBase(int floor)
         {
@@ -39,8 +39,6 @@
         }
 
         internal int Floor { get; }
-
-        public void Dispose() { }
 
         public abstract bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event> newState);
 
