@@ -1,7 +1,6 @@
 ﻿namespace Machinery
 {
     using System;
-    using System.IO;
 
     internal enum Event
     {
