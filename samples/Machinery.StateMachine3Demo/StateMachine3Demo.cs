@@ -125,10 +125,10 @@
             context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(newState)}: {newState}");
         }
 
-        public void OnRemain(TextWriter context, Event ev, State currentState)
+        public void OnRemain(TextWriter context, Event ev)
         {
             const string tag = nameof(State) + "." + nameof(OnRemain);
-            context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(currentState)}: {currentState}");
+            context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State oldState)
