@@ -6,6 +6,7 @@
     internal enum Event
     {
         None = 0,
+
         // The same event used for both opening and closing.
         Interact,
         Lock,
@@ -14,9 +15,9 @@
 
     internal sealed class Door
     {
-        internal static Door Instance { get; } = new Door();
-
         private Door() { }
+
+        internal static Door Instance { get; } = new Door();
     }
 
     internal static class State2Demo
