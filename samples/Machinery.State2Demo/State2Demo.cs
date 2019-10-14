@@ -19,6 +19,13 @@
 
         private static void Main()
         {
+            var door = new Door(Out);
+            var stateMachine = new StateMachine<Door, Event>(door, door.CreateInitialState());
+
+            stateMachine.TryProcessEvent(Event.Lock);
+            stateMachine.TryProcessEvent(Event.Interact);
+            stateMachine.TryProcessEvent(Event.Unlock);
+            stateMachine.TryProcessEvent(Event.Lock);
         }
     }
 }
