@@ -4,9 +4,18 @@ namespace Machinery
 
     internal sealed class Closed : IState<Door, Event>
     {
+        private Closed() { }
+
+        internal static Closed Instance { get; } = new Closed();
+
         public bool TryCreateNewState(Door context, Event ev, out IState<Door, Event> newState)
         {
-            throw new NotImplementedException();
+            return ev switch
+            {
+                Event.Interact => StateHelpers.Transit(Opened.Instance, out newState),
+                Event.Lock => StateHelpers.Transit(Locked.Instance, out newState),
+                _ => StateHelpers.Ignore(out newState)
+            };
         }
 
         public void OnExiting(Door context, Event ev, IState<Door, Event> newState)
