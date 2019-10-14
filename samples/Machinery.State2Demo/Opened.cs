@@ -22,7 +22,7 @@ namespace Machinery
                 context.OnExitingOpened(ev, this, newState);
             }
 
-            public void OnRemain(Door context, Event ev, IState<Door, Event> currentState)
+            public void OnRemain(Door context, Event ev)
             {
                 context.OnRemainOpened(ev, this);
             }
