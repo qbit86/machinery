@@ -23,13 +23,6 @@
 
     internal readonly struct ElevatorPolicy : IPolicy<TextWriter, Event, State>
     {
-        private TextWriter Out { get; }
-
-        public ElevatorPolicy(TextWriter @out)
-        {
-            Out = @out;
-        }
-
         public bool TryCreateNewState(TextWriter context, Event ev, State currentState, out State newState)
         {
             switch (currentState)
@@ -76,22 +69,22 @@
         public void OnExiting(TextWriter context, Event ev, State currentState, State newState)
         {
             const string tag = nameof(ElevatorPolicy) + "." + nameof(OnExiting);
-            Out.WriteLine(
-                $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(newState)}: {newState}");
+            context.WriteLine(
+                $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}, {nameof(newState)}: {newState}");
         }
 
         public void OnRemain(TextWriter context, Event ev, State currentState)
         {
             const string tag = nameof(ElevatorPolicy) + "." + nameof(OnRemain);
-            Out.WriteLine(
-                $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}");
+            context.WriteLine(
+                $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}");
         }
 
         public void OnEntered(TextWriter context, Event ev, State currentState, State oldState)
         {
             const string tag = nameof(ElevatorPolicy) + "." + nameof(OnEntered);
-            Out.WriteLine(
-                $"[{tag}] {nameof(currentState)}: {currentState}, {nameof(ev)}: {ev}, {nameof(oldState)}: {oldState}");
+            context.WriteLine(
+                $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}, {nameof(oldState)}: {oldState}");
         }
 
         public void DisposeState(TextWriter context, Event ev, State stateToDispose) { }
@@ -109,40 +102,23 @@
         }
     }
 
-    internal static class SwitchElevatorDemo
+    internal static class StateMachine4Demo
     {
         private static TextWriter Out => Console.Out;
 
         private static void Main()
         {
-            var elevatorPolicy = new ElevatorPolicy(Out);
+            var elevatorPolicy = new ElevatorPolicy();
             StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator =
                 StateMachine<Event>.Create(Out, State.IdleDown, elevatorPolicy);
-            elevator.PrintCurrentState();
+
+            elevator.TryProcessEvent(Event.CallDown);
 
             Out.WriteLine();
-            elevator.PrintProcessEvent(Event.CallDown);
-            elevator.PrintCurrentState();
+            elevator.TryProcessEvent(Event.CallUp);
 
             Out.WriteLine();
-            elevator.PrintProcessEvent(Event.CallUp);
-            elevator.PrintCurrentState();
-
-            Out.WriteLine();
-            elevator.PrintProcessEvent(Event.Stop);
-            elevator.PrintCurrentState();
-        }
-
-        private static void PrintCurrentState(this StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator)
-        {
-            Out.WriteLine($"[{nameof(PrintCurrentState)}] {nameof(elevator.CurrentState)}: {elevator.CurrentState}");
-        }
-
-        private static void PrintProcessEvent(this StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator,
-            Event ev)
-        {
-            Out.WriteLine($"[{nameof(PrintProcessEvent)}] {nameof(ev)}: {ev}");
-            elevator.TryProcessEvent(ev);
+            elevator.TryProcessEvent(Event.Stop);
         }
     }
 }

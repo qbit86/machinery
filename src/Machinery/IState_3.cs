@@ -4,7 +4,7 @@ namespace Machinery
     {
         bool TryCreateNewState(TContext context, TEvent ev, out TState newState);
         void OnExiting(TContext context, TEvent ev, TState newState);
-        void OnRemain(TContext context, TEvent ev, TState currentState);
+        void OnRemain(TContext context, TEvent ev);
         void OnEntered(TContext context, TEvent ev, TState oldState);
     }
 }
