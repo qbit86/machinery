@@ -20,17 +20,17 @@ namespace Machinery
 
         public void OnExiting(Door context, Event ev, IState<Door, Event> newState)
         {
-            throw new NotImplementedException();
+            context.OnExitingClosed(ev, this, newState);
         }
 
         public void OnRemain(Door context, Event ev, IState<Door, Event> currentState)
         {
-            throw new NotImplementedException();
+            context.OnRemainClosed(ev, this);
         }
 
         public void OnEntered(Door context, Event ev, IState<Door, Event> oldState)
         {
-            throw new NotImplementedException();
+            context.OnEnteredClosed(ev, this, oldState);
         }
     }
 }
