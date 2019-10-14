@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.StateMachine2Demo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.StateMachine3Demo", "samples\Machinery.StateMachine3Demo\Machinery.StateMachine3Demo.csproj", "{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.State2Demo", "samples\Machinery.State2Demo\Machinery.State2Demo.csproj", "{7EDC4374-C605-4027-994C-38B92A1395F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,7 @@ Global
 		{38F8E8C6-6DE5-4449-BF8D-01FF6873379D} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
 		{D7E6092F-4079-41D8-8B63-50927EDF1EAA} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
 		{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
+		{7EDC4374-C605-4027-994C-38B92A1395F4} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -48,5 +51,9 @@ Global
 		{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EDC4374-C605-4027-994C-38B92A1395F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EDC4374-C605-4027-994C-38B92A1395F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EDC4374-C605-4027-994C-38B92A1395F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EDC4374-C605-4027-994C-38B92A1395F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
