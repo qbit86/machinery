@@ -15,17 +15,15 @@
 
     internal static class State2Demo
     {
-        private static TextWriter Out => Console.Out;
-
         private static void Main()
         {
-            var door = new Door(Out);
+            var door = new Door(Console.Out);
             var stateMachine = new StateMachine<Door, Event>(door, door.CreateInitialState());
 
+            stateMachine.TryProcessEvent(Event.Unlock);
+            stateMachine.TryProcessEvent(Event.Interact);
             stateMachine.TryProcessEvent(Event.Lock);
             stateMachine.TryProcessEvent(Event.Interact);
-            stateMachine.TryProcessEvent(Event.Unlock);
-            stateMachine.TryProcessEvent(Event.Lock);
         }
     }
 }
