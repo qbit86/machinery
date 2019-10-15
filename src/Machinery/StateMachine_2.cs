@@ -59,8 +59,7 @@ namespace Machinery
                 throw;
             }
 
-            IState<TContext, TEvent> oldState = _currentState;
-            _currentState = newState;
+            IState<TContext, TEvent> oldState = Interlocked.Exchange(ref _currentState, newState);
 
             try
             {
