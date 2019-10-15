@@ -40,6 +40,20 @@ namespace Machinery
             _policy = policy;
         }
 
+        public TState CurrentState
+        {
+            get
+            {
+                if (_lock == -1)
+                {
+                    throw new ObjectDisposedException(
+                        nameof(DisposableStateMachine<TContext, TEvent, TState, TPolicy>));
+                }
+
+                return _currentState;
+            }
+        }
+
         public void Dispose()
         {
             if (_lock == -1)
@@ -52,22 +66,10 @@ namespace Machinery
             _lock = -1;
         }
 
-        public bool TryGetCurrentState(out TState currentState)
-        {
-            if (_lock != 0)
-            {
-                currentState = default;
-                return false;
-            }
-
-            currentState = _currentState;
-            return true;
-        }
-
         public bool TryProcessEvent(TEvent ev)
         {
             if (_lock == -1)
-                return false;
+                throw new ObjectDisposedException(nameof(DisposableStateMachine<TContext, TEvent, TState, TPolicy>));
 
             if (Interlocked.Exchange(ref _lock, 1) != 0)
                 return false;
