@@ -5,7 +5,7 @@ namespace Machinery
     using System;
     using System.Threading;
 
-    public sealed class DisposableStateMachine<TContext, TEvent>
+    public sealed class DisposableStateMachine<TContext, TEvent> : IDisposable
     {
         private readonly TContext _context;
 
@@ -21,10 +21,34 @@ namespace Machinery
             _currentState = initialState ?? throw new ArgumentNullException(nameof(initialState));
         }
 
-        public IState<TContext, TEvent> CurrentState => _currentState;
+        public void Dispose()
+        {
+            if (_lock == -1)
+                return;
+
+            IState<TContext, TEvent> currentState = Interlocked.Exchange(ref _currentState, null);
+            (currentState as IDisposable)?.Dispose();
+
+            _lock = -1;
+        }
+
+        public bool TryGetCurrentState(out IState<TContext, TEvent> currentState)
+        {
+            if (_lock != 0)
+            {
+                currentState = default;
+                return false;
+            }
+
+            currentState = _currentState;
+            return true;
+        }
 
         public bool TryProcessEvent(TEvent ev)
         {
+            if (_lock == -1)
+                return false;
+
             if (Interlocked.Exchange(ref _lock, 1) != 0)
                 return false;
 
