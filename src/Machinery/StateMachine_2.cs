@@ -25,7 +25,7 @@ namespace Machinery
 
         public bool TryProcessEvent(TEvent ev)
         {
-            if (Interlocked.Exchange(ref _lock, 1) == 1)
+            if (Interlocked.Exchange(ref _lock, 1) != 0)
                 return false;
 
             try
