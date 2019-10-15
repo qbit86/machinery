@@ -68,27 +68,12 @@ namespace Machinery
                 return;
             }
 
-            try
-            {
-                _policy.OnExiting(_context, ev, _currentState, newState);
-            }
-            catch
-            {
-                (newState as IDisposable)?.Dispose();
-                throw;
-            }
+            _policy.OnExiting(_context, ev, _currentState, newState);
 
             TState oldState = _currentState;
             _currentState = newState;
 
-            try
-            {
-                _policy.OnEntered(_context, ev, _currentState, oldState);
-            }
-            finally
-            {
-                (oldState as IDisposable)?.Dispose();
-            }
+            _policy.OnEntered(_context, ev, _currentState, oldState);
         }
     }
 }

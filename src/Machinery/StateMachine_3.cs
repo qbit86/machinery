@@ -1,5 +1,3 @@
-// ReSharper disable SuspiciousTypeConversion.Global
-
 namespace Machinery
 {
     using System;
@@ -65,27 +63,12 @@ namespace Machinery
                 return;
             }
 
-            try
-            {
-                _currentState.OnExiting(_context, ev, newState);
-            }
-            catch
-            {
-                (newState as IDisposable)?.Dispose();
-                throw;
-            }
+            _currentState.OnExiting(_context, ev, newState);
 
             TState oldState = _currentState;
             _currentState = newState;
 
-            try
-            {
-                _currentState.OnEntered(_context, ev, oldState);
-            }
-            finally
-            {
-                (oldState as IDisposable)?.Dispose();
-            }
+            _currentState.OnEntered(_context, ev, oldState);
         }
     }
 }
