@@ -28,8 +28,7 @@ namespace Machinery
 
         private void OnRemainOpened(Event ev, Opened currentState)
         {
-            WriteLine(
-                $"{nameof(ev)}: {ev}, {nameof(currentState)}: {currentState.GetType().Name}");
+            WriteLine($"{nameof(ev)}: {ev}, {nameof(currentState)}: {currentState.GetType().Name}");
         }
 
         private void OnEnteredOpened(Event ev, Opened currentState, IState<Door, Event> oldState)
@@ -46,8 +45,7 @@ namespace Machinery
 
         private void OnRemainClosed(Event ev, Closed currentState)
         {
-            WriteLine(
-                $"{nameof(ev)}: {ev}, {nameof(currentState)}: {currentState.GetType().Name}");
+            WriteLine($"{nameof(ev)}: {ev}, {nameof(currentState)}: {currentState.GetType().Name}");
         }
 
         private void OnEnteredClosed(Event ev, Closed currentState, IState<Door, Event> oldState)
@@ -64,8 +62,7 @@ namespace Machinery
 
         private void OnRemainLocked(Event ev, Locked currentState)
         {
-            WriteLine(
-                $"{nameof(ev)}: {ev}, {nameof(currentState)}: {currentState.GetType().Name}");
+            WriteLine($"{nameof(ev)}: {ev}, {nameof(currentState)}: {currentState.GetType().Name}");
         }
 
         private void OnEnteredLocked(Event ev, Locked currentState, IState<Door, Event> oldState)
