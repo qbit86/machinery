@@ -16,6 +16,9 @@ Machinery.StateMachine&lt;TContext, TEvent, TState, TPolicy&gt;</Description>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageIcon>kopimi.png</PackageIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(DebugType)' == 'portable'">
+    <EmbedAllSources>true</EmbedAllSources>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="$(RepoRoot)/assets/kopimi.png" Pack="true" PackagePath=""/>
   </ItemGroup>
