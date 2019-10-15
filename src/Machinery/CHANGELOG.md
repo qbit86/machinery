@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- `DisposableStateMachine<…>` classes owning their states.
+
 ### Changed
 - Removed `DisposeState(…)` method.
 
@@ -10,10 +13,10 @@
 
 ## [0.1.1] - 2019-10-12
 ### Added
-- [SourceLink](https://github.com/dotnet/sourcelink) support
+- [SourceLink](https://github.com/dotnet/sourcelink) support.
 
 ### Fixed
-- Package metadata
+- Package metadata.
 
 ## [0.1.0] - 2019-10-11
 ### Added
