@@ -1,5 +1,3 @@
-// ReSharper disable SuspiciousTypeConversion.Global
-
 namespace Machinery
 {
     using System;
@@ -25,7 +23,7 @@ namespace Machinery
 
         public bool TryProcessEvent(TEvent ev)
         {
-            if (Interlocked.Exchange(ref _lock, 1) == 1)
+            if (Interlocked.Exchange(ref _lock, 1) != 0)
                 return false;
 
             try
@@ -49,27 +47,11 @@ namespace Machinery
                 return;
             }
 
-            try
-            {
-                _currentState.OnExiting(_context, ev, newState);
-            }
-            catch
-            {
-                (newState as IDisposable)?.Dispose();
-                throw;
-            }
+            _currentState.OnExiting(_context, ev, newState);
 
-            IState<TContext, TEvent> oldState = _currentState;
-            _currentState = newState;
+            IState<TContext, TEvent> oldState = Interlocked.Exchange(ref _currentState, newState);
 
-            try
-            {
-                _currentState.OnEntered(_context, ev, oldState);
-            }
-            finally
-            {
-                (oldState as IDisposable)?.Dispose();
-            }
+            _currentState.OnEntered(_context, ev, oldState);
         }
     }
 }

@@ -6,6 +6,5 @@ namespace Machinery
         void OnExiting(TContext context, TEvent ev, TState currentState, TState newState);
         void OnRemain(TContext context, TEvent ev, TState currentState);
         void OnEntered(TContext context, TEvent ev, TState currentState, TState oldState);
-        void DisposeState(TContext context, TEvent ev, TState stateToDispose);
     }
 }

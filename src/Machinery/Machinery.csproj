@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
-    <AssemblyVersion>0.2</AssemblyVersion>
-    <VersionPrefix>0.2.0</VersionPrefix>
+    <AssemblyVersion>0.3</AssemblyVersion>
+    <VersionPrefix>0.3.0</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <Description>Minimalistic state machine.
 Commonly used types:
@@ -15,6 +15,9 @@ Machinery.StateMachine&lt;TContext, TEvent, TState, TPolicy&gt;</Description>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageIcon>kopimi.png</PackageIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DebugType)' == 'portable'">
+    <EmbedAllSources>true</EmbedAllSources>
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(RepoRoot)/assets/kopimi.png" Pack="true" PackagePath=""/>

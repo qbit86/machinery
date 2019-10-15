@@ -87,8 +87,6 @@
                 $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}, {nameof(oldState)}: {oldState}");
         }
 
-        public void DisposeState(TextWriter context, Event ev, State stateToDispose) { }
-
         private bool Transit(State newState, out State result)
         {
             result = newState;

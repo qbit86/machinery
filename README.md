@@ -16,7 +16,7 @@ stateMachine.TryProcessEvent(ev);
 IState<MyContext, MyEvent> currentState = stateMachine.CurrentState;
 ```
 
-To use two-parameters generic `StateMachine<C, E>` your states need to implement `IState<C, E>` and optionally `IDisposable`: 
+To use two-parameters generic `StateMachine<C, E>` your states need to implement `IState<C, E>`: 
 
 ```cs
 public interface IState<TContext, TEvent>
@@ -51,7 +51,6 @@ public interface IPolicy<in TContext, in TEvent, TState>
     void OnExiting(TContext context, TEvent ev, TState currentState, TState newState);
     void OnRemain(TContext context, TEvent ev, TState currentState);
     void OnEntered(TContext context, TEvent ev, TState currentState, TState oldState);
-    void DisposeState(TContext context, TEvent ev, TState stateToDispose);
 }
 ```
 
