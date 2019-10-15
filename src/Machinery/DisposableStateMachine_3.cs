@@ -17,7 +17,7 @@ namespace Machinery
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-    public sealed class DisposableStateMachine<TContext, TEvent, TState>
+    public sealed class DisposableStateMachine<TContext, TEvent, TState> : IDisposable
         where TState : IState<TContext, TEvent, TState>
     {
         private readonly TContext _context;
@@ -37,10 +37,35 @@ namespace Machinery
             _currentState = initialState;
         }
 
-        public TState CurrentState => _currentState;
+        public void Dispose()
+        {
+            if (_lock == -1)
+                return;
+
+            TState currentState = _currentState;
+            _currentState = default;
+            (currentState as IDisposable)?.Dispose();
+
+            _lock = -1;
+        }
+
+        public bool TryGetCurrentState(out TState currentState)
+        {
+            if (_lock != 0)
+            {
+                currentState = default;
+                return false;
+            }
+
+            currentState = _currentState;
+            return true;
+        }
 
         public bool TryProcessEvent(TEvent ev)
         {
+            if (_lock == -1)
+                return false;
+
             if (Interlocked.Exchange(ref _lock, 1) != 0)
                 return false;
 
