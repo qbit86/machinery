@@ -3,19 +3,19 @@ namespace Machinery
     using System;
     using System.Threading;
 
-    public static partial class StateMachine<TEvent>
+    public static partial class DisposableStateMachine<TEvent>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static StateMachine<TContext, TEvent, TState, TPolicy> Create<TContext, TState, TPolicy>(
+        public static DisposableStateMachine<TContext, TEvent, TState, TPolicy> Create<TContext, TState, TPolicy>(
             TContext context, TState initialState, TPolicy policy)
             where TPolicy : IPolicy<TContext, TEvent, TState>
         {
-            return new StateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
+            return new DisposableStateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
         }
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
-    public sealed class StateMachine<TContext, TEvent, TState, TPolicy>
+    public sealed class DisposableStateMachine<TContext, TEvent, TState, TPolicy> : IDisposable
         where TPolicy : IPolicy<TContext, TEvent, TState>
     {
         private readonly TContext _context;
@@ -24,7 +24,7 @@ namespace Machinery
         private TState _currentState;
         private int _lock;
 
-        public StateMachine(TContext context, TState initialState, TPolicy policy)
+        public DisposableStateMachine(TContext context, TState initialState, TPolicy policy)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -40,10 +40,37 @@ namespace Machinery
             _policy = policy;
         }
 
-        public TState CurrentState => _currentState;
+        public TState CurrentState
+        {
+            get
+            {
+                if (_lock == -1)
+                {
+                    throw new ObjectDisposedException(
+                        nameof(DisposableStateMachine<TContext, TEvent, TState, TPolicy>));
+                }
+
+                return _currentState;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_lock == -1)
+                return;
+
+            TState currentState = _currentState;
+            _currentState = default;
+            (currentState as IDisposable)?.Dispose();
+
+            _lock = -1;
+        }
 
         public bool TryProcessEvent(TEvent ev)
         {
+            if (_lock == -1)
+                throw new ObjectDisposedException(nameof(DisposableStateMachine<TContext, TEvent, TState, TPolicy>));
+
             if (Interlocked.Exchange(ref _lock, 1) != 0)
                 return false;
 
@@ -68,12 +95,27 @@ namespace Machinery
                 return;
             }
 
-            _policy.OnExiting(_context, ev, _currentState, newState);
+            try
+            {
+                _policy.OnExiting(_context, ev, _currentState, newState);
+            }
+            catch
+            {
+                (newState as IDisposable)?.Dispose();
+                throw;
+            }
 
             TState oldState = _currentState;
             _currentState = newState;
 
-            _policy.OnEntered(_context, ev, _currentState, oldState);
+            try
+            {
+                _policy.OnEntered(_context, ev, _currentState, oldState);
+            }
+            finally
+            {
+                (oldState as IDisposable)?.Dispose();
+            }
         }
     }
 }
