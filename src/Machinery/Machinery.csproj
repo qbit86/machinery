@@ -6,8 +6,8 @@
     <FileVersion>$(VersionPrefix)</FileVersion>
     <Description>Minimalistic state machine.
 Commonly used types:
+Machinery.IState&lt;TContext, TEvent&gt;
 Machinery.StateMachine&lt;TContext, TEvent&gt;
-Machinery.StateMachine&lt;TContext, TEvent, TState&gt;
 Machinery.StateMachine&lt;TContext, TEvent, TState, TPolicy&gt;</Description>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <PackageReleaseNotes>https://github.com/qbit86/machinery/blob/develop/src/Machinery/CHANGELOG.md</PackageReleaseNotes>
