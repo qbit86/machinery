@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 ### Added
-- Constraint `IDisposable` for `TState` type parameter of `DisposableStateMachine<…>` generics.
+- `IDisposable` constraint for `TState` type parameter of `DisposableStateMachine<…>` generics.
+
+### Removed
+- Context constraint to be nonnull.
 
 ## [0.3.0] - 2019-10-16
 ### Added
