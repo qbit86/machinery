@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
-    <AssemblyVersion>0.3</AssemblyVersion>
-    <VersionPrefix>0.3.0</VersionPrefix>
+    <AssemblyVersion>0.4</AssemblyVersion>
+    <VersionPrefix>0.4.0</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <Description>Minimalistic state machine.
 Commonly used types:
+Machinery.IState&lt;TContext, TEvent&gt;
 Machinery.StateMachine&lt;TContext, TEvent&gt;
-Machinery.StateMachine&lt;TContext, TEvent, TState&gt;
 Machinery.StateMachine&lt;TContext, TEvent, TState, TPolicy&gt;</Description>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <PackageReleaseNotes>https://github.com/qbit86/machinery/blob/develop/src/Machinery/CHANGELOG.md</PackageReleaseNotes>

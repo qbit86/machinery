@@ -8,6 +8,7 @@ namespace Machinery
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static DisposableStateMachine<TContext, TEvent, TState, TPolicy> Create<TContext, TState, TPolicy>(
             TContext context, TState initialState, TPolicy policy)
+            where TState : IDisposable
             where TPolicy : IPolicy<TContext, TEvent, TState>
         {
             return new DisposableStateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
@@ -16,6 +17,7 @@ namespace Machinery
     }
 
     public sealed class DisposableStateMachine<TContext, TEvent, TState, TPolicy> : IDisposable
+        where TState : IDisposable
         where TPolicy : IPolicy<TContext, TEvent, TState>
     {
         private readonly TContext _context;
@@ -26,9 +28,6 @@ namespace Machinery
 
         public DisposableStateMachine(TContext context, TState initialState, TPolicy policy)
         {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
             if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
 
@@ -61,7 +60,7 @@ namespace Machinery
 
             TState currentState = _currentState;
             _currentState = default;
-            (currentState as IDisposable)?.Dispose();
+            currentState.Dispose();
 
             _lock = -1;
         }
@@ -101,7 +100,7 @@ namespace Machinery
             }
             catch
             {
-                (newState as IDisposable)?.Dispose();
+                newState.Dispose();
                 throw;
             }
 
@@ -114,7 +113,7 @@ namespace Machinery
             }
             finally
             {
-                (oldState as IDisposable)?.Dispose();
+                oldState.Dispose();
             }
         }
     }
