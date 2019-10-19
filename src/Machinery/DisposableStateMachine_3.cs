@@ -1,5 +1,3 @@
-// ReSharper disable SuspiciousTypeConversion.Global
-
 namespace Machinery
 {
     using System;
@@ -10,7 +8,7 @@ namespace Machinery
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static DisposableStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
-            where TState : IState<TContext, TEvent, TState>
+            where TState : IState<TContext, TEvent, TState>, IDisposable
         {
             return new DisposableStateMachine<TContext, TEvent, TState>(context, initialState);
         }
@@ -18,7 +16,7 @@ namespace Machinery
     }
 
     public sealed class DisposableStateMachine<TContext, TEvent, TState> : IDisposable
-        where TState : IState<TContext, TEvent, TState>
+        where TState : IState<TContext, TEvent, TState>, IDisposable
     {
         private readonly TContext _context;
 
@@ -55,7 +53,7 @@ namespace Machinery
 
             TState currentState = _currentState;
             _currentState = default;
-            (currentState as IDisposable)?.Dispose();
+            currentState.Dispose();
 
             _lock = -1;
         }
@@ -95,7 +93,7 @@ namespace Machinery
             }
             catch
             {
-                (newState as IDisposable)?.Dispose();
+                newState.Dispose();
                 throw;
             }
 
@@ -108,7 +106,7 @@ namespace Machinery
             }
             finally
             {
-                (oldState as IDisposable)?.Dispose();
+                oldState.Dispose();
             }
         }
     }
