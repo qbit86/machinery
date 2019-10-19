@@ -28,9 +28,6 @@ namespace Machinery
 
         public DisposableStateMachine(TContext context, TState initialState, TPolicy policy)
         {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
             if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
 

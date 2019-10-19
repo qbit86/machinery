@@ -12,9 +12,6 @@ namespace Machinery
 
         public StateMachine(TContext context, IState<TContext, TEvent> initialState)
         {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
             _context = context;
             _currentState = initialState ?? throw new ArgumentNullException(nameof(initialState));
         }
