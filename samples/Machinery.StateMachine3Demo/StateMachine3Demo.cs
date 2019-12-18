@@ -149,7 +149,7 @@
 
         private static void Main()
         {
-            StateMachine<TextWriter, Event, State> elevator =
+            var elevator =
                 StateMachine<Event>.Create(Out, new State(0, IdleStateMethodTable.Default));
 
             elevator.TryProcessEvent(new Event(EventKind.Call, -1));

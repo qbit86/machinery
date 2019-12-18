@@ -107,7 +107,7 @@
         private static void Main()
         {
             var elevatorPolicy = new ElevatorPolicy();
-            StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator =
+            var elevator =
                 StateMachine<Event>.Create(Out, State.IdleDown, elevatorPolicy);
 
             elevator.TryProcessEvent(Event.CallDown);
