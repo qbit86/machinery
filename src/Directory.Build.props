@@ -1,0 +1,20 @@
+<Project>
+  <Import Project="../Directory.Build.props" />
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Authors>Viktor T.</Authors>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageIcon>kopimi.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/qbit86/machinery</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(RepoRoot)/assets/kopimi.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>
