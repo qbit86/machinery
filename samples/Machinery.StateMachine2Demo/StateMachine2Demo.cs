@@ -1,11 +1,8 @@
 ﻿namespace Machinery
 {
     using System;
-    using System.IO;
-
-#if NET5_0
     using System.Diagnostics.CodeAnalysis;
-#endif
+    using System.IO;
 
     internal enum EventKind
     {
@@ -41,11 +38,8 @@
 
         internal int Floor { get; }
 
-#if NET5_0
-        public abstract bool TryCreateNewState(TextWriter context, Event ev, [NotNullWhen(true)] out IState<TextWriter, Event>? newState);
-#else
-        public abstract bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event>? newState);
-#endif
+        public abstract bool TryCreateNewState(TextWriter context, Event ev,
+            [NotNullWhen(true)] out IState<TextWriter, Event>? newState);
 
         public void OnExiting(TextWriter context, Event ev, IState<TextWriter, Event> newState)
         {
@@ -84,11 +78,8 @@
     {
         internal IdleState(int floor) : base(floor) { }
 
-#if NET5_0
-        public override bool TryCreateNewState(TextWriter context, Event ev, [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
-#else
-        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event>? newState)
-#endif
+        public override bool TryCreateNewState(TextWriter context, Event ev,
+            [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
         {
             switch (ev.Kind)
             {
@@ -107,11 +98,8 @@
     {
         internal MovingState(int floor) : base(floor) { }
 
-#if NET5_0
-        public override bool TryCreateNewState(TextWriter context, Event ev, [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
-#else
-        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event>? newState)
-#endif
+        public override bool TryCreateNewState(TextWriter context, Event ev,
+            [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
         {
             switch (ev.Kind)
             {
