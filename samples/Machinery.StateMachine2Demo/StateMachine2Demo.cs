@@ -33,10 +33,7 @@
 
     internal abstract class StateBase : IState<TextWriter, Event>
     {
-        internal StateBase(int floor)
-        {
-            Floor = floor;
-        }
+        internal StateBase(int floor) => Floor = floor;
 
         internal int Floor { get; }
 
@@ -60,10 +57,7 @@
             context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(oldState)}: {oldState}");
         }
 
-        public sealed override string ToString()
-        {
-            return $"{GetType().Name}({Floor})";
-        }
+        public sealed override string ToString() => $"{GetType().Name}({Floor})";
 
         protected static bool Transit(IState<TextWriter, Event> newState, out IState<TextWriter, Event> result)
         {

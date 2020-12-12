@@ -69,10 +69,7 @@
             }
         }
 
-        internal override string ToString(int floor)
-        {
-            return $"Idle({floor})";
-        }
+        internal override string ToString(int floor) => $"Idle({floor})";
     }
 
     internal sealed class MovingStateMethodTable : StateMethodTable
@@ -92,10 +89,7 @@
             }
         }
 
-        internal override string ToString(int floor)
-        {
-            return $"Moving({floor})";
-        }
+        internal override string ToString(int floor) => $"Moving({floor})";
     }
 
     internal readonly struct State : IState<TextWriter, Event, State>, IDisposable
@@ -114,10 +108,8 @@
 
         public void Dispose() { }
 
-        public bool TryCreateNewState(TextWriter context, Event ev, out State newState)
-        {
-            return _stateMethodTable.TryCreateNewState(context, ev, this, out newState);
-        }
+        public bool TryCreateNewState(TextWriter context, Event ev, out State newState) =>
+            _stateMethodTable.TryCreateNewState(context, ev, this, out newState);
 
         public void OnExiting(TextWriter context, Event ev, State newState)
         {
@@ -137,10 +129,7 @@
             context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(oldState)}: {oldState}");
         }
 
-        public override string ToString()
-        {
-            return _stringRepresentation;
-        }
+        public override string ToString() => _stringRepresentation;
     }
 
     internal static class StateMachine3Demo
