@@ -5,12 +5,10 @@ namespace Machinery
 
     public static partial class DisposableStateMachine<TEvent>
     {
-#pragma warning disable CA1000 // Do not declare static members on generic types
         public static DisposableStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IState<TContext, TEvent, TState>, IDisposable =>
             new DisposableStateMachine<TContext, TEvent, TState>(context, initialState);
-#pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
     public sealed class DisposableStateMachine<TContext, TEvent, TState> : IDisposable
