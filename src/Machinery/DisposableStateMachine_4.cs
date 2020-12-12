@@ -57,7 +57,7 @@ namespace Machinery
                 return;
 
             TState currentState = _currentState;
-            _currentState = default;
+            _currentState = default!;
             currentState.Dispose();
 
             _lock = -1;
@@ -85,7 +85,7 @@ namespace Machinery
 
         private void UncheckedProcessEvent(TEvent ev)
         {
-            bool transit = _policy.TryCreateNewState(_context, ev, _currentState, out TState newState);
+            bool transit = _policy.TryCreateNewState(_context, ev, _currentState, out TState? newState);
             if (!transit || newState is null)
             {
                 _policy.OnRemain(_context, ev, _currentState);
