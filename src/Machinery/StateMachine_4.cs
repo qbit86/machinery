@@ -8,10 +8,8 @@ namespace Machinery
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static StateMachine<TContext, TEvent, TState, TPolicy> Create<TContext, TState, TPolicy>(
             TContext context, TState initialState, TPolicy policy)
-            where TPolicy : IPolicy<TContext, TEvent, TState>
-        {
-            return new StateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
-        }
+            where TPolicy : IPolicy<TContext, TEvent, TState> =>
+            new StateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 

@@ -9,10 +9,8 @@ namespace Machinery
         public static DisposableStateMachine<TContext, TEvent, TState, TPolicy> Create<TContext, TState, TPolicy>(
             TContext context, TState initialState, TPolicy policy)
             where TState : IDisposable
-            where TPolicy : IPolicy<TContext, TEvent, TState>
-        {
-            return new DisposableStateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
-        }
+            where TPolicy : IPolicy<TContext, TEvent, TState> =>
+            new DisposableStateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
 #pragma warning restore CA1000 // Do not declare static members on generic types
     }
 
