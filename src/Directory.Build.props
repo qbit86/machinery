@@ -1,12 +1,9 @@
 <Project>
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <InformationalVersion>$(Version)</InformationalVersion>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
