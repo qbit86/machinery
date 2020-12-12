@@ -57,7 +57,7 @@ namespace Machinery
                 return;
 
             TState currentState = _currentState;
-            _currentState = default;
+            _currentState = default!;
             currentState.Dispose();
 
             _lock = -1;
