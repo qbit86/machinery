@@ -1,7 +1,13 @@
 <Project>
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
+    <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <InformationalVersion>$(Version)</InformationalVersion>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
@@ -9,6 +15,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>kopimi.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>https://github.com/qbit86/machinery/blob/develop/CHANGELOG.md</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/machinery</RepositoryUrl>
@@ -16,5 +23,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(RepoRoot)/assets/kopimi.png" Pack="true" PackagePath="" />
+    <SourceRoot Include="$(RepoRoot)" />
   </ItemGroup>
 </Project>
