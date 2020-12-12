@@ -3,6 +3,10 @@
     using System;
     using System.IO;
 
+#if NET5_0
+    using System.Diagnostics.CodeAnalysis;
+#endif
+
     internal enum EventKind
     {
         None = 0,
@@ -37,7 +41,11 @@
 
         internal int Floor { get; }
 
-        public abstract bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event> newState);
+#if NET5_0
+        public abstract bool TryCreateNewState(TextWriter context, Event ev, [NotNullWhen(true)] out IState<TextWriter, Event>? newState);
+#else
+        public abstract bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event>? newState);
+#endif
 
         public void OnExiting(TextWriter context, Event ev, IState<TextWriter, Event> newState)
         {
@@ -65,7 +73,7 @@
             return true;
         }
 
-        protected static bool Ignore(out IState<TextWriter, Event> result)
+        protected static bool Ignore(out IState<TextWriter, Event>? result)
         {
             result = default;
             return false;
@@ -76,7 +84,11 @@
     {
         internal IdleState(int floor) : base(floor) { }
 
-        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event> newState)
+#if NET5_0
+        public override bool TryCreateNewState(TextWriter context, Event ev, [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
+#else
+        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event>? newState)
+#endif
         {
             switch (ev.Kind)
             {
@@ -95,7 +107,11 @@
     {
         internal MovingState(int floor) : base(floor) { }
 
-        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event> newState)
+#if NET5_0
+        public override bool TryCreateNewState(TextWriter context, Event ev, [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
+#else
+        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event>? newState)
+#endif
         {
             switch (ev.Kind)
             {
