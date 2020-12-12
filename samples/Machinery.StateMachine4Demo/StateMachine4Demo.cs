@@ -87,13 +87,13 @@
                 $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}, {nameof(oldState)}: {oldState}");
         }
 
-        private bool Transit(State newState, out State result)
+        private static bool Transit(State newState, out State result)
         {
             result = newState;
             return true;
         }
 
-        private bool Ignore(out State result)
+        private static bool Ignore(out State result)
         {
             result = default;
             return false;

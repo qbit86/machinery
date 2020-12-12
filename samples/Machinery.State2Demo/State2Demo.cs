@@ -17,7 +17,7 @@
         private static void Main()
         {
             var door = new Door(Console.Out);
-            var stateMachine = new StateMachine<Door, Event>(door, door.CreateInitialState());
+            var stateMachine = new StateMachine<Door, Event>(door, Door.CreateInitialState());
 
             stateMachine.TryProcessEvent(Event.Unlock);
             stateMachine.TryProcessEvent(Event.Interact);

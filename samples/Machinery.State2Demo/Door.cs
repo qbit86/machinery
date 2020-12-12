@@ -10,7 +10,7 @@ namespace Machinery
 
         private TextWriter Out { get; }
 
-        internal IState<Door, Event> CreateInitialState() => Opened.Instance;
+        internal static IState<Door, Event> CreateInitialState() => Opened.Instance;
 
         private void WriteLine(string value, [CallerMemberName] string callerName = "") =>
             Out.WriteLine($"[{nameof(Door)}.{callerName}] {value}");
