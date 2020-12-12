@@ -1,13 +1,13 @@
 namespace Machinery
 {
-#if NETSTANDARD2_1 || NETCOREAPP3_0
+#if NETSTANDARD2_1
     using System.Diagnostics.CodeAnalysis;
 
 #endif
 
     public interface IState<in TContext, in TEvent, TState>
     {
-#if NETSTANDARD2_1 || NETCOREAPP3_0
+#if NETSTANDARD2_1
         bool TryCreateNewState(TContext context, TEvent ev, [MaybeNullWhen(false)] out TState newState);
 #else
         bool TryCreateNewState(TContext context, TEvent ev, out TState newState);
