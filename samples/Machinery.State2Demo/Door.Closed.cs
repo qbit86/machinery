@@ -6,7 +6,7 @@ namespace Machinery
         {
             private Closed() { }
 
-            internal static Closed Instance { get; } = new Closed();
+            internal static Closed Instance { get; } = new();
 
             public bool TryCreateNewState(Door context, Event ev, out IState<Door, Event> newState) =>
                 ev switch

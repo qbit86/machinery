@@ -6,7 +6,7 @@ namespace Machinery
         {
             private Locked() { }
 
-            internal static Locked Instance { get; } = new Locked();
+            internal static Locked Instance { get; } = new();
 
             public bool TryCreateNewState(Door context, Event ev, out IState<Door, Event> newState) =>
                 ev switch

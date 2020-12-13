@@ -53,7 +53,7 @@
     {
         private IdleStateMethodTable() { }
 
-        internal static IdleStateMethodTable Default { get; } = new IdleStateMethodTable();
+        internal static IdleStateMethodTable Default { get; } = new();
 
         internal override bool TryCreateNewState(TextWriter context, Event ev, in State state, out State newState)
         {
@@ -76,7 +76,7 @@
     {
         private MovingStateMethodTable() { }
 
-        internal static MovingStateMethodTable Default { get; } = new MovingStateMethodTable();
+        internal static MovingStateMethodTable Default { get; } = new();
 
         internal override bool TryCreateNewState(TextWriter context, Event ev, in State state, out State newState)
         {
