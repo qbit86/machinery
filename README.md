@@ -60,3 +60,6 @@ But you need then to dispatch the runtime type of `currentState` by yourself.
 ## License
 
 [![License](https://img.shields.io/github/license/qbit86/machinery)](LICENSE.txt)
+
+The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emoji and icon project.
+License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
