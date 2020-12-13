@@ -9,7 +9,7 @@ namespace Machinery
             TContext context, TState initialState, TPolicy policy)
             where TState : IDisposable
             where TPolicy : IPolicy<TContext, TEvent, TState> =>
-            new DisposableStateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
+            new(context, initialState, policy);
     }
 
     public sealed class DisposableStateMachine<TContext, TEvent, TState, TPolicy> : IDisposable

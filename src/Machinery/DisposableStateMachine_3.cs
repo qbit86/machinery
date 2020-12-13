@@ -8,7 +8,7 @@ namespace Machinery
         public static DisposableStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IState<TContext, TEvent, TState>, IDisposable =>
-            new DisposableStateMachine<TContext, TEvent, TState>(context, initialState);
+            new(context, initialState);
     }
 
     public sealed class DisposableStateMachine<TContext, TEvent, TState> : IDisposable

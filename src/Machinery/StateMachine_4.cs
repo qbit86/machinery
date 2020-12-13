@@ -8,7 +8,7 @@ namespace Machinery
         public static StateMachine<TContext, TEvent, TState, TPolicy> Create<TContext, TState, TPolicy>(
             TContext context, TState initialState, TPolicy policy)
             where TPolicy : IPolicy<TContext, TEvent, TState> =>
-            new StateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
+            new(context, initialState, policy);
     }
 
     public sealed class StateMachine<TContext, TEvent, TState, TPolicy>
