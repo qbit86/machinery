@@ -1,15 +1,15 @@
 # Machinery
 
-[![Machinery version](https://img.shields.io/nuget/v/Machinery.svg)](https://www.nuget.org/packages/Machinery/)
+[![Machinery version](https://img.shields.io/nuget/v/Machinery.svg?logo=nuget)](https://www.nuget.org/packages/Machinery/)
 
-Minimalistic state machine.
+Machinery is a minimalistic .NET library for dealing with state machines.
 
 ## Basic usage
 
 ```cs
 MyContext context = …;
 IState<MyContext, MyEvent> initialState = new MyState(…);
-var stateMachine = new StateMachine<MyContext, MyEvent>(context, initialState);
+StateMachine<MyContext, MyEvent> stateMachine = new(context, initialState);
 
 MyEvent ev = …;
 stateMachine.TryProcessEvent(ev);
@@ -35,7 +35,7 @@ MyContext context = …;
 MyState initialState = …;
 MyPolicy policy = …;
 StateMachine<MyContext, MyEvent, MyState, MyPolicy> stateMachine =
-    StateMachine<MyEvent>.Create(context, initialState, policy);
+    new(context, initialState, policy);
 
 MyEvent ev = …;
 stateMachine.TryProcessEvent(ev);
@@ -56,3 +56,7 @@ public interface IPolicy<in TContext, in TEvent, TState>
 
 In this case your states are not required to implement any interfaces (may be enums, strings, or whatever).
 But you need then to dispatch the runtime type of `currentState` by yourself.
+
+## License
+
+[![License](https://img.shields.io/github/license/qbit86/machinery)](LICENSE.txt)
