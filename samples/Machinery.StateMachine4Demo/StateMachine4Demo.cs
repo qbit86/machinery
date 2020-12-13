@@ -87,13 +87,13 @@
                 $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}, {nameof(oldState)}: {oldState}");
         }
 
-        private bool Transit(State newState, out State result)
+        private static bool Transit(State newState, out State result)
         {
             result = newState;
             return true;
         }
 
-        private bool Ignore(out State result)
+        private static bool Ignore(out State result)
         {
             result = default;
             return false;
@@ -106,9 +106,8 @@
 
         private static void Main()
         {
-            var elevatorPolicy = new ElevatorPolicy();
-            StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator =
-                StateMachine<Event>.Create(Out, State.IdleDown, elevatorPolicy);
+            ElevatorPolicy elevatorPolicy = new();
+            StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator = new(Out, State.IdleDown, elevatorPolicy);
 
             elevator.TryProcessEvent(Event.CallDown);
 

@@ -5,14 +5,10 @@ namespace Machinery
 
     public static partial class StateMachine<TEvent>
     {
-#pragma warning disable CA1000 // Do not declare static members on generic types
         public static StateMachine<TContext, TEvent, TState, TPolicy> Create<TContext, TState, TPolicy>(
             TContext context, TState initialState, TPolicy policy)
-            where TPolicy : IPolicy<TContext, TEvent, TState>
-        {
-            return new StateMachine<TContext, TEvent, TState, TPolicy>(context, initialState, policy);
-        }
-#pragma warning restore CA1000 // Do not declare static members on generic types
+            where TPolicy : IPolicy<TContext, TEvent, TState> =>
+            new(context, initialState, policy);
     }
 
     public sealed class StateMachine<TContext, TEvent, TState, TPolicy>
@@ -58,7 +54,7 @@ namespace Machinery
 
         private void UncheckedProcessEvent(TEvent ev)
         {
-            bool transit = _policy.TryCreateNewState(_context, ev, _currentState, out TState newState);
+            bool transit = _policy.TryCreateNewState(_context, ev, _currentState, out TState? newState);
             if (!transit || newState is null)
             {
                 _policy.OnRemain(_context, ev, _currentState);

@@ -1,14 +1,11 @@
 <Project>
   <PropertyGroup>
-    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
-    <NeutralLanguage>en-US</NeutralLanguage>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <LangVersion>latest</LangVersion>
-    <Authors>Viktor T.</Authors>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/qbit86/machinery</RepositoryUrl>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
     <RootNamespace>Machinery</RootNamespace>
   </PropertyGroup>
 </Project>

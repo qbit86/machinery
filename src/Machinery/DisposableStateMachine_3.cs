@@ -5,14 +5,10 @@ namespace Machinery
 
     public static partial class DisposableStateMachine<TEvent>
     {
-#pragma warning disable CA1000 // Do not declare static members on generic types
         public static DisposableStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
-            where TState : IState<TContext, TEvent, TState>, IDisposable
-        {
-            return new DisposableStateMachine<TContext, TEvent, TState>(context, initialState);
-        }
-#pragma warning restore CA1000 // Do not declare static members on generic types
+            where TState : IState<TContext, TEvent, TState>, IDisposable =>
+            new(context, initialState);
     }
 
     public sealed class DisposableStateMachine<TContext, TEvent, TState> : IDisposable
@@ -49,7 +45,7 @@ namespace Machinery
                 return;
 
             TState currentState = _currentState;
-            _currentState = default;
+            _currentState = default!;
             currentState.Dispose();
 
             _lock = -1;
@@ -77,7 +73,7 @@ namespace Machinery
 
         private void UncheckedProcessEvent(TEvent ev)
         {
-            bool transit = _currentState.TryCreateNewState(_context, ev, out TState newState);
+            bool transit = _currentState.TryCreateNewState(_context, ev, out TState? newState);
             if (!transit || newState is null)
             {
                 _currentState.OnRemain(_context, ev);

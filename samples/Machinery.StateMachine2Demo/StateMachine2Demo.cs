@@ -1,6 +1,7 @@
 ﻿namespace Machinery
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
     internal enum EventKind
@@ -33,14 +34,12 @@
 
     internal abstract class StateBase : IState<TextWriter, Event>
     {
-        internal StateBase(int floor)
-        {
-            Floor = floor;
-        }
+        internal StateBase(int floor) => Floor = floor;
 
         internal int Floor { get; }
 
-        public abstract bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event> newState);
+        public abstract bool TryCreateNewState(TextWriter context, Event ev,
+            [NotNullWhen(true)] out IState<TextWriter, Event>? newState);
 
         public void OnExiting(TextWriter context, Event ev, IState<TextWriter, Event> newState)
         {
@@ -60,10 +59,7 @@
             context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(oldState)}: {oldState}");
         }
 
-        public sealed override string ToString()
-        {
-            return $"{GetType().Name}({Floor})";
-        }
+        public sealed override string ToString() => $"{GetType().Name}({Floor})";
 
         protected static bool Transit(IState<TextWriter, Event> newState, out IState<TextWriter, Event> result)
         {
@@ -71,7 +67,7 @@
             return true;
         }
 
-        protected static bool Ignore(out IState<TextWriter, Event> result)
+        protected static bool Ignore(out IState<TextWriter, Event>? result)
         {
             result = default;
             return false;
@@ -82,7 +78,8 @@
     {
         internal IdleState(int floor) : base(floor) { }
 
-        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event> newState)
+        public override bool TryCreateNewState(TextWriter context, Event ev,
+            [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
         {
             switch (ev.Kind)
             {
@@ -101,7 +98,8 @@
     {
         internal MovingState(int floor) : base(floor) { }
 
-        public override bool TryCreateNewState(TextWriter context, Event ev, out IState<TextWriter, Event> newState)
+        public override bool TryCreateNewState(TextWriter context, Event ev,
+            [NotNullWhen(true)] out IState<TextWriter, Event>? newState)
         {
             switch (ev.Kind)
             {
@@ -119,7 +117,7 @@
 
         private static void Main()
         {
-            var elevator = new StateMachine<TextWriter, Event>(Out, new IdleState(0));
+            StateMachine<TextWriter, Event> elevator = new(Out, new IdleState(0));
 
             elevator.TryProcessEvent(new Event(EventKind.Call, -1));
 

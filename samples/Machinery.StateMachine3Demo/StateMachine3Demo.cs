@@ -53,7 +53,7 @@
     {
         private IdleStateMethodTable() { }
 
-        internal static IdleStateMethodTable Default { get; } = new IdleStateMethodTable();
+        internal static IdleStateMethodTable Default { get; } = new();
 
         internal override bool TryCreateNewState(TextWriter context, Event ev, in State state, out State newState)
         {
@@ -69,17 +69,14 @@
             }
         }
 
-        internal override string ToString(int floor)
-        {
-            return $"Idle({floor})";
-        }
+        internal override string ToString(int floor) => $"Idle({floor})";
     }
 
     internal sealed class MovingStateMethodTable : StateMethodTable
     {
         private MovingStateMethodTable() { }
 
-        internal static MovingStateMethodTable Default { get; } = new MovingStateMethodTable();
+        internal static MovingStateMethodTable Default { get; } = new();
 
         internal override bool TryCreateNewState(TextWriter context, Event ev, in State state, out State newState)
         {
@@ -92,10 +89,7 @@
             }
         }
 
-        internal override string ToString(int floor)
-        {
-            return $"Moving({floor})";
-        }
+        internal override string ToString(int floor) => $"Moving({floor})";
     }
 
     internal readonly struct State : IState<TextWriter, Event, State>, IDisposable
@@ -114,10 +108,8 @@
 
         public void Dispose() { }
 
-        public bool TryCreateNewState(TextWriter context, Event ev, out State newState)
-        {
-            return _stateMethodTable.TryCreateNewState(context, ev, this, out newState);
-        }
+        public bool TryCreateNewState(TextWriter context, Event ev, out State newState) =>
+            _stateMethodTable.TryCreateNewState(context, ev, this, out newState);
 
         public void OnExiting(TextWriter context, Event ev, State newState)
         {
@@ -137,10 +129,7 @@
             context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(oldState)}: {oldState}");
         }
 
-        public override string ToString()
-        {
-            return _stringRepresentation;
-        }
+        public override string ToString() => _stringRepresentation;
     }
 
     internal static class StateMachine3Demo
@@ -149,8 +138,7 @@
 
         private static void Main()
         {
-            StateMachine<TextWriter, Event, State> elevator =
-                StateMachine<Event>.Create(Out, new State(0, IdleStateMethodTable.Default));
+            StateMachine<TextWriter, Event, State> elevator = new(Out, new State(0, IdleStateMethodTable.Default));
 
             elevator.TryProcessEvent(new Event(EventKind.Call, -1));
 
