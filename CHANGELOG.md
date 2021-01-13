@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-01-13
+### Added
+- Nullability attributes for legacy target frameworks.
+
 ## [0.5.0] - 2020-12-13
 ### Changed
 - Annotate API for nullability.

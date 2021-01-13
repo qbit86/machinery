@@ -14,7 +14,7 @@ Machinery.StateMachine&lt;TContext, TEvent, TState, TPolicy&gt;</Description>
   <PropertyGroup>
     <AssemblyVersion>0.6</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <TargetFrameworks>netcoreapp3.1;net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
     <Nullable>enable</Nullable>
