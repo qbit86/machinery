@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.StateMachine3Demo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.State2Demo", "samples\Machinery.State2Demo\Machinery.State2Demo.csproj", "{7EDC4374-C605-4027-994C-38B92A1395F4}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Machinery.Nullable", "src\Machinery.Nullable\Machinery.Nullable.shproj", "{44C29B18-1DC4-41CE-98F2-13657C3FC1D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,7 @@ Global
 		{D7E6092F-4079-41D8-8B63-50927EDF1EAA} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
 		{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
 		{7EDC4374-C605-4027-994C-38B92A1395F4} = {402E8D07-3266-43CC-936C-A3E5ADA3AFA4}
+		{44C29B18-1DC4-41CE-98F2-13657C3FC1D7} = {D865A3DD-72FF-43BE-AD03-BA980DEFF126}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0CB0C32A-345A-4724-9581-2DC0C1D1E10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
