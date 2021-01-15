@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-01-13
+## [0.6.0] - 2021-01-15
 ### Added
 - Nullability attributes for legacy target frameworks.
 
@@ -38,6 +38,7 @@
 - Basic building blocks for generic state machines: `StateMachine<…>`, `IState<…>`, `IPolicy<…>`.
 
 [Unreleased]: https://github.com/qbit86/machinery/compare/machinery-0.5.0...HEAD
+[0.6.0]: https://github.com/qbit86/machinery/compare/machinery-0.5.0...machinery-0.6.0
 [0.5.0]: https://github.com/qbit86/machinery/compare/machinery-0.4.0...machinery-0.5.0
 [0.4.0]: https://github.com/qbit86/machinery/compare/machinery-0.3.0...machinery-0.4.0
 [0.3.0]: https://github.com/qbit86/machinery/compare/machinery-0.2.0...machinery-0.3.0
