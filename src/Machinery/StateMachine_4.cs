@@ -33,6 +33,8 @@ namespace Machinery
             _policy = policy;
         }
 
+        public TContext Context => _context;
+
         public TState CurrentState => _currentState;
 
         public bool TryProcessEvent(TEvent ev)
