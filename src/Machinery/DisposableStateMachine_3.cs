@@ -28,6 +28,8 @@ namespace Machinery
             _currentState = initialState;
         }
 
+        public TContext Context => _context;
+
         public TState CurrentState
         {
             get

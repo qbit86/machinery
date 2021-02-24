@@ -28,6 +28,8 @@ namespace Machinery
             _currentState = initialState;
         }
 
+        public TContext Context => _context;
+
         public TState CurrentState => _currentState;
 
         public bool TryProcessEvent(TEvent ev)

@@ -16,6 +16,8 @@ namespace Machinery
             _currentState = initialState ?? throw new ArgumentNullException(nameof(initialState));
         }
 
+        public TContext Context => _context;
+
         public IState<TContext, TEvent> CurrentState
         {
             get
