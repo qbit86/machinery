@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-02-25
+### Added
+- Public property `Context`.
+
 ## [0.6.0] - 2021-01-15
 ### Added
 - Nullability attributes for legacy target frameworks.
