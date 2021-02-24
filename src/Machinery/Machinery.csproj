@@ -4,7 +4,7 @@
 Commonly used types:
 Machinery.IState&lt;TContext, TEvent&gt;
 Machinery.StateMachine&lt;TContext, TEvent&gt;
-Machinery.StateMachine&lt;TContext, TEvent, TState, TPolicy&gt;</Description>
+Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <Title>Machinery</Title>
