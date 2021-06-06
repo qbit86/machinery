@@ -3,7 +3,7 @@ namespace Machinery
     using System;
     using System.Threading;
 
-    public static partial class DisposableStateMachine<TEvent>
+    public static class DisposableStateMachine<TEvent>
     {
         public static DisposableStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
