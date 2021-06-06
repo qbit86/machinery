@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-05-06
+### Removed
+- ``StateMachine`2``, ``DisposableStateMachine`2``, ``StateMachine`4``, ``DisposableStateMachine`4``
+
 ## [0.6.1] - 2021-02-25
 ### Added
 - Public property `Context`.
