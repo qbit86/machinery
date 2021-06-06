@@ -132,7 +132,7 @@
         public override string ToString() => _stringRepresentation;
     }
 
-    internal static class StateMachine3Demo
+    internal static class PolymorphicValueStateDemo
     {
         private static TextWriter Out => Console.Out;
 

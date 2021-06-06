@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.MonomorphicValueS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.StateMachine2Demo", "samples\Machinery.StateMachine2Demo\Machinery.StateMachine2Demo.csproj", "{D7E6092F-4079-41D8-8B63-50927EDF1EAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.StateMachine3Demo", "samples\Machinery.StateMachine3Demo\Machinery.StateMachine3Demo.csproj", "{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.PolymorphicValueStateDemo", "samples\Machinery.PolymorphicValueStateDemo\Machinery.PolymorphicValueStateDemo.csproj", "{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.State2Demo", "samples\Machinery.State2Demo\Machinery.State2Demo.csproj", "{7EDC4374-C605-4027-994C-38B92A1395F4}"
 EndProject
