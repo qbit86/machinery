@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal static class State2Demo
+    internal static class ContextDemo
     {
         private static void Main()
         {
