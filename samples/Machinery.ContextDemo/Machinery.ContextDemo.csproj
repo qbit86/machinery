@@ -4,6 +4,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Machinery" Version="0.5.0" />
+    <ProjectReference Include="..\..\src\Machinery\Machinery.csproj" />
   </ItemGroup>
 </Project>
