@@ -106,7 +106,7 @@
         }
     }
 
-    internal static class StateMachine4Demo
+    internal static class MonomorphicValueStateDemo
     {
         private static TextWriter Out => Console.Out;
 
