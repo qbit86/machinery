@@ -111,7 +111,7 @@
         }
     }
 
-    internal static class StateMachine2Demo
+    internal static class PolymorphicReferenceStateDemo
     {
         private static TextWriter Out => Console.Out;
 
@@ -119,13 +119,13 @@
         {
             StateMachine<TextWriter, Event, StateBase> elevator = new(Out, new IdleState(0));
 
-            elevator.TryProcessEvent(new Event(EventKind.Call, -1));
+            elevator.TryProcessEvent(new(EventKind.Call, -1));
 
             Out.WriteLine();
-            elevator.TryProcessEvent(new Event(EventKind.Call, 2));
+            elevator.TryProcessEvent(new(EventKind.Call, 2));
 
             Out.WriteLine();
-            elevator.TryProcessEvent(new Event(EventKind.Stop, default));
+            elevator.TryProcessEvent(new(EventKind.Stop, default));
         }
     }
 }
