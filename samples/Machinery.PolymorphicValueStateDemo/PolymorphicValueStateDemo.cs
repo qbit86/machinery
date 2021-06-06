@@ -63,7 +63,7 @@
                 case EventKind.Move:
                     if (state.Floor == ev.Floor)
                         return Ignore(out newState);
-                    return Transit(new State(ev.Floor, MovingStateMethodTable.Default), out newState);
+                    return Transit(new(ev.Floor, MovingStateMethodTable.Default), out newState);
                 default:
                     return Ignore(out newState);
             }
@@ -83,7 +83,7 @@
             switch (ev.Kind)
             {
                 case EventKind.Stop:
-                    return Transit(new State(state.Floor, IdleStateMethodTable.Default), out newState);
+                    return Transit(new(state.Floor, IdleStateMethodTable.Default), out newState);
                 default:
                     return Ignore(out newState);
             }
@@ -132,21 +132,21 @@
         public override string ToString() => _stringRepresentation;
     }
 
-    internal static class StateMachine3Demo
+    internal static class PolymorphicValueStateDemo
     {
         private static TextWriter Out => Console.Out;
 
         private static void Main()
         {
-            StateMachine<TextWriter, Event, State> elevator = new(Out, new State(0, IdleStateMethodTable.Default));
+            StateMachine<TextWriter, Event, State> elevator = new(Out, new(0, IdleStateMethodTable.Default));
 
-            elevator.TryProcessEvent(new Event(EventKind.Call, -1));
-
-            Out.WriteLine();
-            elevator.TryProcessEvent(new Event(EventKind.Call, 2));
+            elevator.TryProcessEvent(new(EventKind.Call, -1));
 
             Out.WriteLine();
-            elevator.TryProcessEvent(new Event(EventKind.Stop, default));
+            elevator.TryProcessEvent(new(EventKind.Call, 2));
+
+            Out.WriteLine();
+            elevator.TryProcessEvent(new(EventKind.Stop, default));
         }
     }
 }
