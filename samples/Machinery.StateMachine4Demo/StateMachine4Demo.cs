@@ -12,7 +12,7 @@
         Stop
     }
 
-    internal enum State
+    internal enum StateKind
     {
         None = 0,
         IdleDown,
@@ -21,43 +21,49 @@
         MovingUp
     }
 
-    internal readonly struct ElevatorPolicy : IPolicy<TextWriter, Event, State>
+    internal readonly struct State : IState<TextWriter, Event, State>
     {
-        public bool TryCreateNewState(TextWriter context, Event ev, State currentState, out State newState)
+        public State(StateKind kind) => Kind = kind;
+
+        internal StateKind Kind { get; }
+
+        public override string ToString() => Kind.ToString();
+
+        public bool TryCreateNewState(TextWriter context, Event ev, out State newState)
         {
-            switch (currentState)
+            switch (Kind)
             {
-                case State.IdleDown:
+                case StateKind.IdleDown:
                     switch (ev)
                     {
                         case Event.CallUp:
                         case Event.Move:
-                            return Transit(State.MovingUp, out newState);
+                            return Transit(new(StateKind.MovingUp), out newState);
                         default:
                             return Ignore(out newState);
                     }
-                case State.IdleUp:
+                case StateKind.IdleUp:
                     switch (ev)
                     {
                         case Event.CallDown:
                         case Event.Move:
-                            return Transit(State.MovingDown, out newState);
+                            return Transit(new(StateKind.MovingDown), out newState);
                         default:
                             return Ignore(out newState);
                     }
-                case State.MovingDown:
+                case StateKind.MovingDown:
                     switch (ev)
                     {
                         case Event.Stop:
-                            return Transit(State.IdleDown, out newState);
+                            return Transit(new(StateKind.IdleDown), out newState);
                         default:
                             return Ignore(out newState);
                     }
-                case State.MovingUp:
+                case StateKind.MovingUp:
                     switch (ev)
                     {
                         case Event.Stop:
-                            return Transit(State.IdleUp, out newState);
+                            return Transit(new(StateKind.IdleUp), out newState);
                         default:
                             return Ignore(out newState);
                     }
@@ -66,25 +72,25 @@
             }
         }
 
-        public void OnExiting(TextWriter context, Event ev, State currentState, State newState)
+        public void OnExiting(TextWriter context, Event ev, State newState)
         {
-            const string tag = nameof(ElevatorPolicy) + "." + nameof(OnExiting);
+            const string tag = nameof(State) + "." + nameof(OnExiting);
             context.WriteLine(
-                $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}, {nameof(newState)}: {newState}");
+                $"[{tag}] {nameof(ev)}: {ev}, this: {ToString()}, {nameof(newState)}: {newState.ToString()}");
         }
 
-        public void OnRemain(TextWriter context, Event ev, State currentState)
+        public void OnRemain(TextWriter context, Event ev)
         {
-            const string tag = nameof(ElevatorPolicy) + "." + nameof(OnRemain);
+            const string tag = nameof(State) + "." + nameof(OnRemain);
             context.WriteLine(
-                $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}");
+                $"[{tag}] {nameof(ev)}: {ev}, this: {ToString()}");
         }
 
-        public void OnEntered(TextWriter context, Event ev, State currentState, State oldState)
+        public void OnEntered(TextWriter context, Event ev, State oldState)
         {
-            const string tag = nameof(ElevatorPolicy) + "." + nameof(OnEntered);
+            const string tag = nameof(State) + "." + nameof(OnEntered);
             context.WriteLine(
-                $"[{tag}] {nameof(ev)}: {ev}, {nameof(currentState)}: {currentState}, {nameof(oldState)}: {oldState}");
+                $"[{tag}] {nameof(ev)}: {ev}, this: {ToString()}, {nameof(oldState)}: {oldState.ToString()}");
         }
 
         private static bool Transit(State newState, out State result)
@@ -106,8 +112,7 @@
 
         private static void Main()
         {
-            ElevatorPolicy elevatorPolicy = new();
-            StateMachine<TextWriter, Event, State, ElevatorPolicy> elevator = new(Out, State.IdleDown, elevatorPolicy);
+            StateMachine<TextWriter, Event, State> elevator = new(Out, new(StateKind.IdleDown));
 
             elevator.TryProcessEvent(Event.CallDown);
 
