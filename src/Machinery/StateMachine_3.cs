@@ -43,7 +43,7 @@ namespace Machinery
             }
             finally
             {
-                Interlocked.Exchange(ref _lock, 0);
+                _lock = 0;
             }
 
             return true;
