@@ -9,7 +9,6 @@ Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <Title>Machinery</Title>
     <VersionPrefix>0.7.1</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.7</AssemblyVersion>

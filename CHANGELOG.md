@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-07-07
+## [0.7.1] - 2021-07-07
 ### Changed
 - Annotate API for nullability for legacy target frameworks.
 
@@ -49,7 +49,8 @@
 ### Added
 - Basic building blocks for generic state machines: `StateMachine<…>`, `IState<…>`, `IPolicy<…>`.
 
-[Unreleased]: https://github.com/qbit86/machinery/compare/machinery-0.7.0...HEAD
+[Unreleased]: https://github.com/qbit86/machinery/compare/machinery-0.7.1...HEAD
+[0.7.1]: https://github.com/qbit86/machinery/compare/machinery-0.7.0...machinery-0.7.1
 [0.7.0]: https://github.com/qbit86/machinery/compare/machinery-0.6.1...machinery-0.7.0
 [0.6.1]: https://github.com/qbit86/machinery/compare/machinery-0.6.0...machinery-0.6.1
 [0.6.0]: https://github.com/qbit86/machinery/compare/machinery-0.5.0...machinery-0.6.0
