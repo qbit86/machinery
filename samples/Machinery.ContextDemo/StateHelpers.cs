@@ -1,5 +1,7 @@
 namespace Machinery
 {
+    using System.Diagnostics.CodeAnalysis;
+
     internal static class StateHelpers
     {
         internal static bool Transit(State newState, out State result)
@@ -8,7 +10,7 @@ namespace Machinery
             return true;
         }
 
-        internal static bool Ignore(out State result)
+        internal static bool Ignore([NotNullWhen(true)] out State? result)
         {
             result = default;
             return false;

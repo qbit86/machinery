@@ -1,5 +1,7 @@
 namespace Machinery
 {
+    using System.Diagnostics.CodeAnalysis;
+
     internal sealed partial class Door
     {
         internal sealed class Closed : State
@@ -8,7 +10,7 @@ namespace Machinery
 
             internal static Closed Instance { get; } = new();
 
-            public override bool TryCreateNewState(Door context, Event ev, out State newState) =>
+            public override bool TryCreateNewState(Door context, Event ev, [NotNullWhen(true)] out State? newState) =>
                 ev switch
                 {
                     Event.Interact => StateHelpers.Transit(Opened.Instance, out newState),

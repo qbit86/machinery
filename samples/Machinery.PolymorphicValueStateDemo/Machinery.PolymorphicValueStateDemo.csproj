@@ -3,9 +3,6 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net461;net5.0</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Machinery\Machinery.csproj" />
   </ItemGroup>
