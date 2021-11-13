@@ -4,6 +4,7 @@
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
+    <EnablePackageValidation>true</EnablePackageValidation>
     <LangVersion>8</LangVersion>
     <InformationalVersion>$(Version)</InformationalVersion>
     <SignAssembly>true</SignAssembly>
