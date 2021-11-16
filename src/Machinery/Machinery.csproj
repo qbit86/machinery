@@ -2,8 +2,7 @@
   <PropertyGroup>
     <Description>Minimalistic state machine.
 Commonly used types:
-Machinery.IState&lt;TContext, TEvent&gt;
-Machinery.StateMachine&lt;TContext, TEvent&gt;
+Machinery.IState&lt;TContext, TEvent, TState&gt;
 Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
