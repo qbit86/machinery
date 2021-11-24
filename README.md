@@ -17,6 +17,7 @@ public interface IState<in TContext, in TEvent, TState>
     void OnEntered(TContext context, TEvent ev, TState oldState);
 }
 ```
+
 ```cs
 MyContext context = …;
 MyState initialState = …;
