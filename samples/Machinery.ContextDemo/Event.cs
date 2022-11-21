@@ -1,12 +1,11 @@
-namespace Machinery
-{
-    internal enum Event
-    {
-        None = 0,
+namespace Machinery;
 
-        // The same event used for both opening and closing.
-        Interact,
-        Lock,
-        Unlock
-    }
+internal enum Event
+{
+    None = 0,
+
+    // The same event used for both opening and closing.
+    Interact,
+    Lock,
+    Unlock
 }
