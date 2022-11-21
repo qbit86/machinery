@@ -4,5 +4,5 @@ dotnet_diagnostic.CS8632.severity = silent # The annotation for nullable referen
 [*StateMachine_*.cs]
 dotnet_diagnostic.CA1000.severity = silent # Do not declare static members on generic types
 
-[DisposableStateMachine_2.cs]
-resharper_suspicious_type_conversion_global_highlighting = hint
+[Machinery.csproj]
+ij_formatter_enabled = false
