@@ -8,7 +8,7 @@ namespace Machinery
         public static StateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IState<TContext, TEvent, TState> =>
-            new StateMachine<TContext, TEvent, TState>(context, initialState);
+            new(context, initialState);
     }
 
     public sealed class StateMachine<TContext, TEvent, TState>
@@ -51,7 +51,7 @@ namespace Machinery
 
         private void UncheckedProcessEvent(TEvent ev)
         {
-            bool transit = _currentState.TryCreateNewState(_context, ev, out TState newState);
+            bool transit = _currentState.TryCreateNewState(_context, ev, out TState? newState);
             if (!transit || newState is null)
             {
                 _currentState.OnRemain(_context, ev);

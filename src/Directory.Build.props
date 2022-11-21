@@ -5,7 +5,7 @@
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
     <EnablePackageValidation>true</EnablePackageValidation>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <InformationalVersion>$(Version)</InformationalVersion>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
