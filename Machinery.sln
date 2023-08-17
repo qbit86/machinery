@@ -15,13 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery", "src\Machinery\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{402E8D07-3266-43CC-936C-A3E5ADA3AFA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.MonomorphicValueStateDemo", "samples\Machinery.MonomorphicValueStateDemo\Machinery.MonomorphicValueStateDemo.csproj", "{38F8E8C6-6DE5-4449-BF8D-01FF6873379D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.MonomorphicValueStateDemo", "samples\Samples.MonomorphicValueStateDemo\Samples.MonomorphicValueStateDemo.csproj", "{38F8E8C6-6DE5-4449-BF8D-01FF6873379D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.PolymorphicReferenceStateDemo", "samples\Machinery.PolymorphicReferenceStateDemo\Machinery.PolymorphicReferenceStateDemo.csproj", "{D7E6092F-4079-41D8-8B63-50927EDF1EAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.PolymorphicReferenceStateDemo", "samples\Samples.PolymorphicReferenceStateDemo\Samples.PolymorphicReferenceStateDemo.csproj", "{D7E6092F-4079-41D8-8B63-50927EDF1EAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.PolymorphicValueStateDemo", "samples\Machinery.PolymorphicValueStateDemo\Machinery.PolymorphicValueStateDemo.csproj", "{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.PolymorphicValueStateDemo", "samples\Samples.PolymorphicValueStateDemo\Samples.PolymorphicValueStateDemo.csproj", "{D73121B4-5EDF-47A6-AC32-EDBEB0227A6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machinery.ContextDemo", "samples\Machinery.ContextDemo\Machinery.ContextDemo.csproj", "{7EDC4374-C605-4027-994C-38B92A1395F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.ContextDemo", "samples\Samples.ContextDemo\Samples.ContextDemo.csproj", "{7EDC4374-C605-4027-994C-38B92A1395F4}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Machinery.Nullable", "src\Machinery.Nullable\Machinery.Nullable.shproj", "{44C29B18-1DC4-41CE-98F2-13657C3FC1D7}"
 EndProject
