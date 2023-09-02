@@ -39,7 +39,7 @@ namespace Machinery
 
             try
             {
-                UncheckedProcessEvent(ev);
+                ProcessEventUnchecked(ev);
             }
             finally
             {
@@ -49,7 +49,7 @@ namespace Machinery
             return true;
         }
 
-        private void UncheckedProcessEvent(TEvent ev)
+        private void ProcessEventUnchecked(TEvent ev)
         {
             bool transit = _currentState.TryCreateNewState(_context, ev, out TState? newState);
             if (!transit || newState is null)
