@@ -1,5 +1,5 @@
 <Project>
-  <Import Project="../Directory.Build.props" />
+  <Import Project="../Directory.Build.props"/>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
@@ -21,7 +21,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />
-    <SourceRoot Include="$(RepoRoot)" />
+    <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath=""/>
+    <SourceRoot Include="$(RepoRoot)"/>
   </ItemGroup>
 </Project>
