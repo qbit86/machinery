@@ -7,7 +7,6 @@ Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <Title>Machinery</Title>
-    <VersionPrefix>0.8.0</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
