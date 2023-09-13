@@ -1,8 +1,5 @@
 [*.cs]
-dotnet_diagnostic.CS8632.severity = silent # The annotation for nullable reference types should only be used in code within a ‘#nullable’ annotations context.
+dotnet_diagnostic.CS1591.severity = suggestion # Missing XML comment for publicly visible type or member
 
 [*StateMachine_*.cs]
 dotnet_diagnostic.CA1000.severity = silent # Do not declare static members on generic types
-
-[Machinery.csproj]
-ij_formatter_enabled = false
