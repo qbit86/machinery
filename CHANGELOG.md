@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased] - 2023-09-13
+
+### Added
+
+- `IAsyncState<in TContext, in TEvent, TState>`
+- `AsyncStateMachine<TContext, TEvent, TState>`
+
 ## [0.7.1] - 2021-07-07
 ### Changed
 - Annotate API for nullability for legacy target frameworks.
