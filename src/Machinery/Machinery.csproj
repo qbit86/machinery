@@ -2,16 +2,18 @@
   <PropertyGroup>
     <Description>Minimalistic state machine.
 Commonly used types:
-Machinery.IState&lt;TContext, TEvent&gt;
-Machinery.StateMachine&lt;TContext, TEvent&gt;
-Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
+• IState&lt;TContext, TEvent, TState&gt;
+• StateMachine&lt;TContext, TEvent, TState&gt;
+• IAsyncState&lt;TContext, TEvent, TState&gt;
+• AsyncStateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <Title>Machinery</Title>
-    <VersionPrefix>0.7.1</VersionPrefix>
+    <VersionPrefix>0.8.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.7</AssemblyVersion>
+    <AssemblyVersion>0.8</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
@@ -20,7 +22,10 @@ Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
+    <None Include="$(RepoRoot)/README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Machinery.Nullable\Machinery.Nullable.projitems" Label="Shared" />
+  <ItemGroup>
+    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="all"/>
+  </ItemGroup>
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared"/>
 </Project>

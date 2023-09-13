@@ -1,9 +1,10 @@
-.idea/
-.settings/
 .vs/
 .vscode/
 *.suo
 *.user
 BenchmarkDotNet.Artifacts*/
 bin/
+Debug/
 obj/
+out/
+Release/

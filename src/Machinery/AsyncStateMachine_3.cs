@@ -2,24 +2,25 @@ namespace Machinery
 {
     using System;
     using System.Threading;
+    using System.Threading.Tasks;
 
-    public static class StateMachine<TEvent>
+    public static class AsyncStateMachine<TEvent>
     {
-        public static StateMachine<TContext, TEvent, TState> Create<TContext, TState>(
+        public static AsyncStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
-            where TState : IState<TContext, TEvent, TState> =>
+            where TState : IAsyncState<TContext, TEvent, TState> =>
             new(context, initialState);
     }
 
-    public sealed class StateMachine<TContext, TEvent, TState>
-        where TState : IState<TContext, TEvent, TState>
+    public sealed class AsyncStateMachine<TContext, TEvent, TState>
+        where TState : IAsyncState<TContext, TEvent, TState>
     {
         private readonly TContext _context;
 
         private TState _currentState;
         private int _lock;
 
-        public StateMachine(TContext context, TState initialState)
+        public AsyncStateMachine(TContext context, TState initialState)
         {
             if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
@@ -32,14 +33,14 @@ namespace Machinery
 
         public TState CurrentState => _currentState;
 
-        public bool TryProcessEvent(TEvent ev)
+        public async Task<bool> TryProcessEvent(TEvent ev)
         {
             if (Interlocked.Exchange(ref _lock, 1) != 0)
                 return false;
 
             try
             {
-                ProcessEventUnchecked(ev);
+                await UncheckedProcessEventAsync(ev).ConfigureAwait(false);
             }
             finally
             {
@@ -49,21 +50,21 @@ namespace Machinery
             return true;
         }
 
-        private void ProcessEventUnchecked(TEvent ev)
+        private async Task UncheckedProcessEventAsync(TEvent ev)
         {
             bool transit = _currentState.TryCreateNewState(_context, ev, out TState? newState);
             if (!transit || newState is null)
             {
-                _currentState.OnRemain(_context, ev);
+                await _currentState.OnRemainAsync(_context, ev).ConfigureAwait(false);
                 return;
             }
 
-            _currentState.OnExiting(_context, ev, newState);
+            await _currentState.OnExitingAsync(_context, ev, newState).ConfigureAwait(false);
 
             TState oldState = _currentState;
             _currentState = newState;
 
-            _currentState.OnEntered(_context, ev, oldState);
+            await _currentState.OnEnteredAsync(_context, ev, oldState).ConfigureAwait(false);
         }
     }
 }

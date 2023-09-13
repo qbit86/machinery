@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0] - 2023-09-14
+
+### Added
+
+- `IAsyncState<in TContext, in TEvent, TState>`
+- `AsyncStateMachine<TContext, TEvent, TState>`
+
 ## [0.7.1] - 2021-07-07
 ### Changed
 - Annotate API for nullability for legacy target frameworks.
@@ -49,7 +56,10 @@
 ### Added
 - Basic building blocks for generic state machines: `StateMachine<…>`, `IState<…>`, `IPolicy<…>`.
 
-[Unreleased]: https://github.com/qbit86/machinery/compare/machinery-0.7.1...HEAD
+[Unreleased]: https://github.com/qbit86/machinery/compare/machinery-0.8.0...HEAD
+
+[0.8.0]: https://github.com/qbit86/machinery/compare/machinery-0.7.1...machinery-0.8.0
+
 [0.7.1]: https://github.com/qbit86/machinery/compare/machinery-0.7.0...machinery-0.7.1
 [0.7.0]: https://github.com/qbit86/machinery/compare/machinery-0.6.1...machinery-0.7.0
 [0.6.1]: https://github.com/qbit86/machinery/compare/machinery-0.6.0...machinery-0.6.1

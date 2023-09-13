@@ -8,7 +8,7 @@ namespace Machinery
         public static DisposableStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IState<TContext, TEvent, TState>, IDisposable =>
-            new DisposableStateMachine<TContext, TEvent, TState>(context, initialState);
+            new(context, initialState);
     }
 
     public sealed class DisposableStateMachine<TContext, TEvent, TState> : IDisposable
@@ -63,7 +63,7 @@ namespace Machinery
 
             try
             {
-                UncheckedProcessEvent(ev);
+                ProcessEventUnchecked(ev);
             }
             finally
             {
@@ -73,9 +73,9 @@ namespace Machinery
             return true;
         }
 
-        private void UncheckedProcessEvent(TEvent ev)
+        private void ProcessEventUnchecked(TEvent ev)
         {
-            bool transit = _currentState.TryCreateNewState(_context, ev, out TState newState);
+            bool transit = _currentState.TryCreateNewState(_context, ev, out TState? newState);
             if (!transit || newState is null)
             {
                 _currentState.OnRemain(_context, ev);

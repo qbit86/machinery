@@ -1,15 +1,8 @@
 <Project>
-  <Import Project="../Directory.Build.props" />
+  <Import Project="../Directory.Build.props"/>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
-    <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
-    <Deterministic>true</Deterministic>
-    <LangVersion>8</LangVersion>
-    <InformationalVersion>$(Version)</InformationalVersion>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Authors>Viktor T.</Authors>
+    <Authors>Viktor Tselov</Authors>
+    <Copyright>Copyright (c) Viktor Tselov 2023</Copyright>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -18,9 +11,24 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/machinery</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <VersionPrefix>0.8.0</VersionPrefix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
+    <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
+    <DebugType>portable</DebugType>
+    <Deterministic>true</Deterministic>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <InformationalVersion>$(Version)</InformationalVersion>
+    <IsPackable>true</IsPackable>
+    <IsTrimmable>true</IsTrimmable>
+    <LangVersion>9</LangVersion>
+    <PackRelease>true</PackRelease>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />
-    <SourceRoot Include="$(RepoRoot)" />
+    <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath=""/>
+    <SourceRoot Include="$(RepoRoot)"/>
   </ItemGroup>
 </Project>
