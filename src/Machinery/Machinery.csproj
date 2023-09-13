@@ -10,7 +10,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <Title>Machinery</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.8.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.8</AssemblyVersion>

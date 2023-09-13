@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2023-09-13
+## [0.8.0] - 2023-09-14
 
 ### Added
 
@@ -56,7 +56,10 @@
 ### Added
 - Basic building blocks for generic state machines: `StateMachine<…>`, `IState<…>`, `IPolicy<…>`.
 
-[Unreleased]: https://github.com/qbit86/machinery/compare/machinery-0.7.1...HEAD
+[Unreleased]: https://github.com/qbit86/machinery/compare/machinery-0.8.0...HEAD
+
+[0.8.0]: https://github.com/qbit86/machinery/compare/machinery-0.7.1...machinery-0.8.0
+
 [0.7.1]: https://github.com/qbit86/machinery/compare/machinery-0.7.0...machinery-0.7.1
 [0.7.0]: https://github.com/qbit86/machinery/compare/machinery-0.6.1...machinery-0.7.0
 [0.6.1]: https://github.com/qbit86/machinery/compare/machinery-0.6.0...machinery-0.6.1
