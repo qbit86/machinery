@@ -2,9 +2,12 @@
   <PropertyGroup>
     <Description>Minimalistic state machine.
 Commonly used types:
-Machinery.IState&lt;TContext, TEvent, TState&gt;
-Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
+• IState&lt;TContext, TEvent, TState&gt;
+• StateMachine&lt;TContext, TEvent, TState&gt;
+• IAsyncState&lt;TContext, TEvent, TState&gt;
+• AsyncStateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>state;machine;state-machine;dfa</PackageTags>
     <Title>Machinery</Title>
     <VersionSuffix>preview</VersionSuffix>
@@ -18,6 +21,9 @@ Machinery.StateMachine&lt;TContext, TEvent, TState&gt;</Description>
     <EmbedAllSources>true</EmbedAllSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(RepoRoot)/README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="all"/>
   </ItemGroup>

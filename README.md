@@ -21,10 +21,10 @@ public interface IState<in TContext, in TEvent, TState>
 ```cs
 MyContext context = …;
 MyState initialState = …;
-StateMachine<MyContext, MyEvent, MyState> stateMachine = new(context, initialState);
+var stateMachine = StateMachine<Event>.Create(context, initialState);
 
 MyEvent ev = …;
-stateMachine.TryProcessEvent(ev);
+_ = stateMachine.TryProcessEvent(ev);
 MyState currentState = stateMachine.CurrentState;
 ```
 
