@@ -4,8 +4,20 @@ namespace Machinery
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Provides the factory method for <see cref="AsyncStateMachine{TContext,TEvent,TState}"/>.
+    /// </summary>
+    /// <typeparam name="TEvent">The type of the events.</typeparam>
     public static class AsyncStateMachine<TEvent>
     {
+        /// <summary>
+        /// Creates a new <see cref="AsyncStateMachine{TContext,TEvent,TState}"/> from the specified context and initial state.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="initialState">The initial state.</param>
+        /// <typeparam name="TContext">The type of the context.</typeparam>
+        /// <typeparam name="TState">The type of the states.</typeparam>
+        /// <returns>An <see cref="AsyncStateMachine{TContext,TEvent,TState}"/> in the initial state.</returns>
         public static AsyncStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IAsyncState<TContext, TEvent, TState> =>

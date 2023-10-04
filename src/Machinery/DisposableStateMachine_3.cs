@@ -3,8 +3,20 @@ namespace Machinery
     using System;
     using System.Threading;
 
+    /// <summary>
+    /// Provides the factory method for <see cref="DisposableStateMachine{TContext,TEvent,TState}"/>.
+    /// </summary>
+    /// <typeparam name="TEvent">The type of the events.</typeparam>
     public static class DisposableStateMachine<TEvent>
     {
+        /// <summary>
+        /// Creates a new <see cref="DisposableStateMachine{TContext,TEvent,TState}"/> from the specified context and initial state.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="initialState">The initial state.</param>
+        /// <typeparam name="TContext">The type of the context.</typeparam>
+        /// <typeparam name="TState">The type of the states.</typeparam>
+        /// <returns>A <see cref="DisposableStateMachine{TContext,TEvent,TState}"/> in the initial state.</returns>
         public static DisposableStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IState<TContext, TEvent, TState>, IDisposable =>
