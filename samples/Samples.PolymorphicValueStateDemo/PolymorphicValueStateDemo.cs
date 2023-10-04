@@ -117,10 +117,22 @@ internal readonly struct State : IState<TextWriter, Event, State>, IDisposable
         context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(newState)}: {newState}");
     }
 
+    public void OnExited(TextWriter context, Event ev, State newState)
+    {
+        const string tag = nameof(State) + "." + nameof(OnExited);
+        context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(newState)}: {newState}");
+    }
+
     public void OnRemain(TextWriter context, Event ev)
     {
         const string tag = nameof(State) + "." + nameof(OnRemain);
         context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}");
+    }
+
+    public void OnEntering(TextWriter context, Event ev, State oldState)
+    {
+        const string tag = nameof(State) + "." + nameof(OnEntering);
+        context.WriteLine($"[{tag}] {nameof(ev)}: {ev}, this: {this}, {nameof(oldState)}: {oldState}");
     }
 
     public void OnEntered(TextWriter context, Event ev, State oldState)
