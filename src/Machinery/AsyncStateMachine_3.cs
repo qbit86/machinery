@@ -60,10 +60,12 @@ namespace Machinery
             }
 
             await _currentState.OnExitingAsync(_context, ev, newState).ConfigureAwait(false);
+            await newState.OnEnteringAsync(_context, ev, _currentState).ConfigureAwait(false);
 
             TState oldState = _currentState;
             _currentState = newState;
 
+            await oldState.OnExitedAsync(_context, ev, _currentState).ConfigureAwait(false);
             await _currentState.OnEnteredAsync(_context, ev, oldState).ConfigureAwait(false);
         }
     }

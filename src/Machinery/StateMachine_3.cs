@@ -59,10 +59,12 @@ namespace Machinery
             }
 
             _currentState.OnExiting(_context, ev, newState);
+            newState.OnEntering(_context, ev, _currentState);
 
             TState oldState = _currentState;
             _currentState = newState;
 
+            oldState.OnExited(_context, ev, _currentState);
             _currentState.OnEntered(_context, ev, oldState);
         }
     }

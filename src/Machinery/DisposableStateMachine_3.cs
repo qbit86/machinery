@@ -85,6 +85,7 @@ namespace Machinery
             try
             {
                 _currentState.OnExiting(_context, ev, newState);
+                newState.OnEntering(_context, ev, _currentState);
             }
             catch
             {
@@ -97,6 +98,7 @@ namespace Machinery
 
             try
             {
+                oldState.OnExited(_context, ev, _currentState);
                 _currentState.OnEntered(_context, ev, oldState);
             }
             finally
