@@ -22,7 +22,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <InformationalVersion>$(Version)</InformationalVersion>
     <IsPackable>true</IsPackable>
-    <IsTrimmable>true</IsTrimmable>
     <LangVersion>9</LangVersion>
     <PackRelease>true</PackRelease>
     <SignAssembly>true</SignAssembly>
