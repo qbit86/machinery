@@ -5,19 +5,19 @@ namespace Machinery
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Provides the factory method for <see cref="AsyncStateMachine{TContext,TEvent,TState}"/>.
+    /// Provides the factory method for <see cref="AsyncStateMachine{TContext,TEvent,TState}" />.
     /// </summary>
     /// <typeparam name="TEvent">The type of the events.</typeparam>
     public static class AsyncStateMachine<TEvent>
     {
         /// <summary>
-        /// Creates a new <see cref="AsyncStateMachine{TContext,TEvent,TState}"/> from the specified context and initial state.
+        /// Creates a new <see cref="AsyncStateMachine{TContext,TEvent,TState}" /> from the specified context and initial state.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="initialState">The initial state.</param>
         /// <typeparam name="TContext">The type of the context.</typeparam>
         /// <typeparam name="TState">The type of the states.</typeparam>
-        /// <returns>An <see cref="AsyncStateMachine{TContext,TEvent,TState}"/> in the initial state.</returns>
+        /// <returns>An <see cref="AsyncStateMachine{TContext,TEvent,TState}" /> in the initial state.</returns>
         public static AsyncStateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IAsyncState<TContext, TEvent, TState> =>
@@ -62,7 +62,7 @@ namespace Machinery
 
         private async Task UncheckedProcessEventAsync(TEvent ev)
         {
-            bool transit = _currentState.TryCreateNewState(Context, ev, out TState? newState);
+            bool transit = _currentState.TryCreateNewState(Context, ev, out var newState);
             if (!transit || newState is null)
             {
                 await _currentState.OnRemainAsync(Context, ev).ConfigureAwait(false);
@@ -72,7 +72,7 @@ namespace Machinery
             await _currentState.OnExitingAsync(Context, ev, newState).ConfigureAwait(false);
             await newState.OnEnteringAsync(Context, ev, _currentState).ConfigureAwait(false);
 
-            TState oldState = _currentState;
+            var oldState = _currentState;
             _currentState = newState;
 
             await oldState.OnExitedAsync(Context, ev, _currentState).ConfigureAwait(false);

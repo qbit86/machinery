@@ -4,19 +4,19 @@ namespace Machinery
     using System.Threading;
 
     /// <summary>
-    /// Provides the factory method for <see cref="StateMachine{TContext,TEvent,TState}"/>.
+    /// Provides the factory method for <see cref="StateMachine{TContext,TEvent,TState}" />.
     /// </summary>
     /// <typeparam name="TEvent">The type of the events.</typeparam>
     public static class StateMachine<TEvent>
     {
         /// <summary>
-        /// Creates a new <see cref="StateMachine{TContext,TEvent,TState}"/> from the specified context and initial state.
+        /// Creates a new <see cref="StateMachine{TContext,TEvent,TState}" /> from the specified context and initial state.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="initialState">The initial state.</param>
         /// <typeparam name="TContext">The type of the context.</typeparam>
         /// <typeparam name="TState">The type of the states.</typeparam>
-        /// <returns>A <see cref="StateMachine{TContext,TEvent,TState}"/> in the initial state.</returns>
+        /// <returns>A <see cref="StateMachine{TContext,TEvent,TState}" /> in the initial state.</returns>
         public static StateMachine<TContext, TEvent, TState> Create<TContext, TState>(
             TContext context, TState initialState)
             where TState : IState<TContext, TEvent, TState> =>
@@ -61,7 +61,7 @@ namespace Machinery
 
         private void ProcessEventUnchecked(TEvent ev)
         {
-            bool transit = _currentState.TryCreateNewState(Context, ev, out TState? newState);
+            bool transit = _currentState.TryCreateNewState(Context, ev, out var newState);
             if (!transit || newState is null)
             {
                 _currentState.OnRemain(Context, ev);
@@ -71,7 +71,7 @@ namespace Machinery
             _currentState.OnExiting(Context, ev, newState);
             newState.OnEntering(Context, ev, _currentState);
 
-            TState oldState = _currentState;
+            var oldState = _currentState;
             _currentState = newState;
 
             oldState.OnExited(Context, ev, _currentState);
