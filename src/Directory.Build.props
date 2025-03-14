@@ -11,7 +11,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/machinery</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionPrefix>0.10.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/machinery.snk</AssemblyOriginatorKeyFile>
