@@ -1,5 +1,5 @@
 <Project>
-  <Import Project="../Directory.Build.props"/>
+  <Import Project="../Directory.Build.props" />
   <PropertyGroup>
     <Authors>Viktor Tselov</Authors>
     <Copyright>Copyright (c) Viktor Tselov 2023</Copyright>
@@ -27,7 +27,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath=""/>
-    <SourceRoot Include="$(RepoRoot)"/>
+    <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />
+    <SourceRoot Include="$(RepoRoot)" />
   </ItemGroup>
 </Project>
