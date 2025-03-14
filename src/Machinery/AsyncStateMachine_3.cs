@@ -27,8 +27,6 @@ namespace Machinery
     public sealed class AsyncStateMachine<TContext, TEvent, TState>
         where TState : IAsyncState<TContext, TEvent, TState>
     {
-        private readonly TContext _context;
-
         private TState _currentState;
         private int _lock;
 
@@ -37,11 +35,11 @@ namespace Machinery
             if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
 
-            _context = context;
+            Context = context;
             _currentState = initialState;
         }
 
-        public TContext Context => _context;
+        public TContext Context { get; }
 
         public TState CurrentState => _currentState;
 
@@ -64,21 +62,21 @@ namespace Machinery
 
         private async Task UncheckedProcessEventAsync(TEvent ev)
         {
-            bool transit = _currentState.TryCreateNewState(_context, ev, out TState? newState);
+            bool transit = _currentState.TryCreateNewState(Context, ev, out TState? newState);
             if (!transit || newState is null)
             {
-                await _currentState.OnRemainAsync(_context, ev).ConfigureAwait(false);
+                await _currentState.OnRemainAsync(Context, ev).ConfigureAwait(false);
                 return;
             }
 
-            await _currentState.OnExitingAsync(_context, ev, newState).ConfigureAwait(false);
-            await newState.OnEnteringAsync(_context, ev, _currentState).ConfigureAwait(false);
+            await _currentState.OnExitingAsync(Context, ev, newState).ConfigureAwait(false);
+            await newState.OnEnteringAsync(Context, ev, _currentState).ConfigureAwait(false);
 
             TState oldState = _currentState;
             _currentState = newState;
 
-            await oldState.OnExitedAsync(_context, ev, _currentState).ConfigureAwait(false);
-            await _currentState.OnEnteredAsync(_context, ev, oldState).ConfigureAwait(false);
+            await oldState.OnExitedAsync(Context, ev, _currentState).ConfigureAwait(false);
+            await _currentState.OnEnteredAsync(Context, ev, oldState).ConfigureAwait(false);
         }
     }
 }

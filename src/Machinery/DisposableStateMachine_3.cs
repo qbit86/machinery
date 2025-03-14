@@ -26,8 +26,6 @@ namespace Machinery
     public sealed class DisposableStateMachine<TContext, TEvent, TState> : IDisposable
         where TState : IState<TContext, TEvent, TState>, IDisposable
     {
-        private readonly TContext _context;
-
         private TState _currentState;
         private int _lock;
 
@@ -36,11 +34,11 @@ namespace Machinery
             if (initialState is null)
                 throw new ArgumentNullException(nameof(initialState));
 
-            _context = context;
+            Context = context;
             _currentState = initialState;
         }
 
-        public TContext Context => _context;
+        public TContext Context { get; }
 
         public TState CurrentState
         {
@@ -87,17 +85,17 @@ namespace Machinery
 
         private void ProcessEventUnchecked(TEvent ev)
         {
-            bool transit = _currentState.TryCreateNewState(_context, ev, out TState? newState);
+            bool transit = _currentState.TryCreateNewState(Context, ev, out TState? newState);
             if (!transit || newState is null)
             {
-                _currentState.OnRemain(_context, ev);
+                _currentState.OnRemain(Context, ev);
                 return;
             }
 
             try
             {
-                _currentState.OnExiting(_context, ev, newState);
-                newState.OnEntering(_context, ev, _currentState);
+                _currentState.OnExiting(Context, ev, newState);
+                newState.OnEntering(Context, ev, _currentState);
             }
             catch
             {
@@ -110,8 +108,8 @@ namespace Machinery
 
             try
             {
-                oldState.OnExited(_context, ev, _currentState);
-                _currentState.OnEntered(_context, ev, oldState);
+                oldState.OnExited(Context, ev, _currentState);
+                _currentState.OnEntered(Context, ev, oldState);
             }
             finally
             {
