@@ -43,6 +43,14 @@ namespace Machinery
 
         public TState CurrentState => _currentState;
 
+        /// <summary>
+        /// Attempts to process an event, acquiring a lock first to prevent reentrancy.
+        /// </summary>
+        /// <param name="ev">The event to process.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result is true if the event was processed;
+        /// otherwise, false (if the state machine is already processing another event).
+        /// </returns>
         public async Task<bool> TryProcessEvent(TEvent ev)
         {
             if (Interlocked.Exchange(ref _lock, 1) != 0)
@@ -50,7 +58,7 @@ namespace Machinery
 
             try
             {
-                await UncheckedProcessEventAsync(ev).ConfigureAwait(false);
+                await TryUncheckedProcessEventAsync(ev).ConfigureAwait(false);
             }
             finally
             {
@@ -60,13 +68,39 @@ namespace Machinery
             return true;
         }
 
-        private async Task UncheckedProcessEventAsync(TEvent ev)
+        /// <summary>
+        /// Processes an event and returns a detailed result about what happened.
+        /// </summary>
+        /// <param name="ev">The event to process.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result is a <see cref="ProcessingResult" /> indicating the outcome of the event processing:
+        /// NotProcessed - The state machine is already processing another event.
+        /// Remained - The event was processed but the state didn't change.
+        /// Transitioned - The event was processed and the state changed.
+        /// </returns>
+        public async Task<ProcessingResult> ProcessEventAsync(TEvent ev)
+        {
+            if (Interlocked.Exchange(ref _lock, 1) != 0)
+                return ProcessingResult.NotProcessed;
+
+            try
+            {
+                bool transitioned = await TryUncheckedProcessEventAsync(ev).ConfigureAwait(false);
+                return transitioned ? ProcessingResult.Transitioned : ProcessingResult.Remained;
+            }
+            finally
+            {
+                _lock = 0;
+            }
+        }
+
+        private async Task<bool> TryUncheckedProcessEventAsync(TEvent ev)
         {
             bool transit = _currentState.TryCreateNewState(Context, ev, out var newState);
             if (!transit || newState is null)
             {
                 await _currentState.OnRemainAsync(Context, ev).ConfigureAwait(false);
-                return;
+                return false;
             }
 
             await _currentState.OnExitingAsync(Context, ev, newState).ConfigureAwait(false);
@@ -77,6 +111,8 @@ namespace Machinery
 
             await oldState.OnExitedAsync(Context, ev, _currentState).ConfigureAwait(false);
             await _currentState.OnEnteredAsync(Context, ev, oldState).ConfigureAwait(false);
+
+            return true;
         }
     }
 }
