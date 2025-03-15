@@ -63,6 +63,11 @@ namespace Machinery
             _lock = -1;
         }
 
+        /// <summary>
+        /// Attempts to process an event, acquiring a lock first to prevent reentrancy.
+        /// </summary>
+        /// <param name="ev">The event to process.</param>
+        /// <returns>True if the event was processed; otherwise, false (if the state machine is already processing another event).</returns>
         public bool TryProcessEvent(TEvent ev)
         {
             if (_lock == -1)
@@ -73,7 +78,7 @@ namespace Machinery
 
             try
             {
-                ProcessEventUnchecked(ev);
+                TryProcessEventUnchecked(ev);
             }
             finally
             {
@@ -83,13 +88,42 @@ namespace Machinery
             return true;
         }
 
-        private void ProcessEventUnchecked(TEvent ev)
+        /// <summary>
+        /// Processes an event and returns a detailed result about what happened.
+        /// </summary>
+        /// <param name="ev">The event to process.</param>
+        /// <returns>
+        /// A <see cref="ProcessingResult" /> indicating the outcome of the event processing:
+        /// NotProcessed - The state machine is already processing another event.
+        /// Remained - The event was processed but the state didn't change.
+        /// Transitioned - The event was processed and the state changed.
+        /// </returns>
+        public ProcessingResult ProcessEvent(TEvent ev)
+        {
+            if (_lock == -1)
+                throw new ObjectDisposedException(nameof(DisposableStateMachine<TContext, TEvent, TState>));
+
+            if (Interlocked.Exchange(ref _lock, 1) != 0)
+                return ProcessingResult.NotProcessed;
+
+            try
+            {
+                bool transitioned = TryProcessEventUnchecked(ev);
+                return transitioned ? ProcessingResult.Transitioned : ProcessingResult.Remained;
+            }
+            finally
+            {
+                _lock = 0;
+            }
+        }
+
+        private bool TryProcessEventUnchecked(TEvent ev)
         {
             bool transit = _currentState.TryCreateNewState(Context, ev, out var newState);
             if (!transit || newState is null)
             {
                 _currentState.OnRemain(Context, ev);
-                return;
+                return false;
             }
 
             try
@@ -115,6 +149,8 @@ namespace Machinery
             {
                 oldState.Dispose();
             }
+
+            return true;
         }
     }
 }
