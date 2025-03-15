@@ -13,16 +13,16 @@
     - `Remained` - Event was processed but state didn't change
     - `Transitioned` - Event was processed and state changed
 
-- [ ] Modify `ProcessEventUnchecked` to:
+- [x] Modify `ProcessEventUnchecked` to:
   - Rename to `TryProcessEventUnchecked` for consistency
   - Return a boolean indicating whether a state transition occurred
 
-- [ ] Add a new public `ProcessEvent()` method that:
+- [x] Add a new public `ProcessEvent()` method that:
   - Tries to acquire the lock like `TryProcessEvent()`
   - Returns the new enum to indicate the detailed result
   - Calls the renamed `TryProcessEventUnchecked` method
   
-- [ ] Keep the existing `TryProcessEvent()` method intact
+- [x] Keep the existing `TryProcessEvent()` method intact
   - Update its implementation to use `TryProcessEventUnchecked` if needed
 
 - [ ] Update tests and documentation to reflect the new functionality
