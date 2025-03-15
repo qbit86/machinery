@@ -68,10 +68,12 @@ namespace Machinery
         /// Processes an event and returns a detailed result about what happened.
         /// </summary>
         /// <param name="ev">The event to process.</param>
-        /// <returns>A <see cref="ProcessingResult" /> indicating the outcome of the event processing:
+        /// <returns>
+        /// A <see cref="ProcessingResult" /> indicating the outcome of the event processing:
         /// NotProcessed - The state machine is already processing another event.
         /// Remained - The event was processed but the state didn't change.
-        /// Transitioned - The event was processed and the state changed.</returns>
+        /// Transitioned - The event was processed and the state changed.
+        /// </returns>
         public ProcessingResult ProcessEvent(TEvent ev)
         {
             if (Interlocked.Exchange(ref _lock, 1) != 0)
