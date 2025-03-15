@@ -7,7 +7,7 @@
 
 ## Tasks
 
-- [ ] Create an enum to represent the event processing result
+- [x] Create an enum to represent the event processing result
   - Suggestions: `ProcessingResult` with values like:
     - `NotProcessed` - Event couldn't be processed (lock couldn't be acquired)
     - `Remained` - Event was processed but state didn't change
