@@ -21,4 +21,8 @@
     <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Machinery\Machinery.csproj" />
+  </ItemGroup>
+
 </Project>
