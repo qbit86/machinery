@@ -1,0 +1,57 @@
+---
+description: Header Spacing Rule
+globs: *.md
+alwaysApply: true
+---
+# Header Spacing Rule
+
+## Description
+
+This rule ensures consistent and readable markdown document formatting by requiring an empty line between headers and their content. This improves readability and makes the document structure clearer.
+
+## Rule
+
+When writing markdown documents:
+
+1. There **MUST** be an empty line between any header (any level `#`, `##`, ..., `######`) and its following content
+2. This applies to all types of content following a header (text, lists, code blocks, etc.)
+3. This rule applies to all markdown files in the repository
+
+## Implementation
+
+- When writing markdown content:
+  - After writing a header, add a blank line before starting the content
+  - Ensure existing headers are followed by a blank line
+  - During code reviews, check for proper spacing between headers and content
+
+## Benefits
+
+- Improved readability and document structure
+- Consistent formatting across all documentation
+- Better rendering in markdown viewers
+- Easier visual parsing of document structure
+
+## Examples
+
+✔️ Correct:
+
+```markdown
+## Header
+
+This is the content that follows the header with a blank line in between.
+
+### Another Header
+
+- List item 1
+- List item 2
+```
+
+❌ Incorrect:
+
+```markdown
+## Header
+This is content without a blank line after the header.
+
+### Another Header
+- No blank line before this list
+```
