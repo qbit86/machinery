@@ -30,3 +30,33 @@ using var xmlReader = XmlReader.Create(inputReader, new XmlReaderSettings { Igno
 // ✔️
 using var xmlReader = XmlReader.Create(inputReader, new() { IgnoreWhitespace = true });
 ```
+
+## Prefer sealed classes
+
+✔️ When a class is not designed for inheritance, **DO** declare it as `sealed`.
+
+```csharp
+// ❌ Class not intended for inheritance but left unsealed
+private class TestContext
+{
+    // Implementation
+}
+```
+
+```csharp
+// ✔️
+private sealed class TestContext
+{
+    // Implementation
+}
+```
+
+✔️ Classes in test projects should generally be `sealed` unless specifically designed for inheritance.
+
+Benefits of sealing classes:
+- Prevents unintended inheritance
+- Communicates design intent clearly
+- May enable runtime optimizations
+- Reduces the testing surface
+
+The C# compiler will warn about classes that can be sealed (CA1852), which is a good indication that sealing is appropriate.

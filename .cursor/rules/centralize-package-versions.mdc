@@ -1,0 +1,71 @@
+---
+description: Centralize Package Versions Rule
+globs: *.csproj,*.props
+alwaysApply: false
+---
+# Centralize Package Versions Rule
+
+## Description
+
+This rule ensures consistent package version management by centralizing all NuGet package versions in the `Directory.Packages.props` file instead of individual project files. This approach uses MSBuild's central package version management feature to maintain consistency across the solution.
+
+## Rule
+
+When working with NuGet packages in the codebase:
+
+1. All package versions **MUST** be defined in `Directory.Packages.props` using `<PackageVersion>` elements
+2. Project files (`.csproj`, `.fsproj`, etc.) **MUST NOT** specify versions directly in `<PackageReference>` elements
+3. When adding a new package reference to a project, add the reference without a version in the project file, and add the version information to `Directory.Packages.props`
+4. When updating a package version, update it only in `Directory.Packages.props`
+
+## Implementation
+
+Process for centralizing package versions:
+
+1. Ensure `Directory.Packages.props` includes `<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>` in a `<PropertyGroup>`
+2. For each `<PackageReference Include="Package.Name" Version="x.y.z" />` in project files:
+   - Add `<PackageVersion Include="Package.Name" Version="x.y.z" />` to `Directory.Packages.props`
+   - Remove the `Version` attribute from the project file's `<PackageReference>` element
+
+## Benefits
+
+- Single source of truth for package versions
+- Consistent package versions across all projects
+- Easier package updates across the solution
+- Cleaner project files focused on dependencies, not versions
+- Better visibility of version conflicts
+
+## Examples
+
+✔️ Correct:
+
+In `Directory.Packages.props`:
+```xml
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="xunit.v3" Version="2.0.0" />
+  </ItemGroup>
+</Project>
+```
+
+In project file (`.csproj`):
+```xml
+<ItemGroup>
+  <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  <PackageReference Include="xunit.v3" />
+</ItemGroup>
+```
+
+❌ Incorrect:
+
+In project file with inline versions:
+```xml
+<ItemGroup>
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+  <PackageReference Include="xunit.v3" Version="2.0.0" />
+</ItemGroup>
+```
