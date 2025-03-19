@@ -31,6 +31,25 @@ using var xmlReader = XmlReader.Create(inputReader, new XmlReaderSettings { Igno
 using var xmlReader = XmlReader.Create(inputReader, new() { IgnoreWhitespace = true });
 ```
 
+## XML Documentation Formatting
+
+### Self-closing elements
+
+Always include a space before the closing slash in self-closing XML documentation elements:
+
+```csharp
+// ✔️ Correct
+/// <paramref name="parameterName" />
+
+// ❌ Incorrect
+/// <paramref name="parameterName"/>
+```
+
+Applies to all self-closing XML doc elements including:
+- `<paramref>`
+- `<see>`
+- `<inheritdoc>`
+
 ## Prefer sealed classes
 
 ✔️ When a class is not designed for inheritance, **DO** declare it as `sealed`.
