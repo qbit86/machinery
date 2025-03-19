@@ -55,7 +55,7 @@ namespace Machinery
             // Arrange
             TestContext context = new();
             TestState initialState = new("Initial");
-            StateMachine<TestContext, string, TestState> stateMachine = new(context, initialState);
+            var stateMachine = StateMachine<string>.Create(context, initialState);
 
             // Act
             bool result = stateMachine.TryProcessEvent("Test");
@@ -71,7 +71,7 @@ namespace Machinery
             // Arrange
             TestContext context = new();
             ReentrantTestState initialState = new("Initial");
-            StateMachine<TestContext, string, ReentrantTestState> stateMachine = new(context, initialState);
+            var stateMachine = StateMachine<string>.Create(context, initialState);
 
             // Set the state machine reference in the state
             initialState.StateMachine = stateMachine;
@@ -89,21 +89,20 @@ namespace Machinery
         {
             // Arrange
             TestContext context = new();
-            TestState initialState = new("Initial");
-            StateMachine<TestContext, string, TestState> stateMachine = new(context, initialState);
+            TestState initialState = new("Initial") { NextState = new("Next") };
+            var stateMachine = StateMachine<string>.Create(context, initialState);
 
             // Act - Remained
-            var result1 = stateMachine.ProcessEvent("Stay");
+            var resultRemained = stateMachine.ProcessEvent("Stay");
 
             // Assert
-            Assert.Equal(ProcessingResult.Remained, result1);
+            Assert.Equal(ProcessingResult.Remained, resultRemained);
 
             // Act - Transitioned
-            initialState.NextState = new TestState("Next");
-            var result2 = stateMachine.ProcessEvent("Change");
+            var resultTransitioned = stateMachine.ProcessEvent("Change");
 
             // Assert
-            Assert.Equal(ProcessingResult.Transitioned, result2);
+            Assert.Equal(ProcessingResult.Transitioned, resultTransitioned);
         }
 
         [Fact]
@@ -112,7 +111,7 @@ namespace Machinery
             // Arrange
             TestContext context = new();
             ReentrantTestState initialState = new("Initial");
-            StateMachine<TestContext, string, ReentrantTestState> stateMachine = new(context, initialState);
+            var stateMachine = StateMachine<string>.Create(context, initialState);
 
             // Set the state machine reference in the state
             initialState.StateMachine = stateMachine;
@@ -131,11 +130,10 @@ namespace Machinery
         {
             // Arrange
             TestContext context = new();
-            TestState initialState = new("Initial");
             TestState nextState = new("Next");
-            initialState.NextState = nextState;
+            TestState initialState = new("Initial") { NextState = nextState };
 
-            StateMachine<TestContext, string, TestState> stateMachine = new(context, initialState);
+            var stateMachine = StateMachine<string>.Create(context, initialState);
 
             // Act
             stateMachine.ProcessEvent("Change");
@@ -152,7 +150,7 @@ namespace Machinery
         public void StateMachine_WithValueTypes_ShouldWorkCorrectly()
         {
             // Arrange - Create a state machine with value types
-            StateMachine<int, char, ValueState> stateMachine = new(42, new ValueState('A'));
+            var stateMachine = StateMachine<char>.Create(42, new ValueState('A'));
 
             // Act - Process an event
             var result = stateMachine.ProcessEvent('B');
@@ -174,7 +172,7 @@ namespace Machinery
             public TestState(string name) => Name = name;
 
             private string Name { get; }
-            public TestState? NextState { get; set; }
+            public TestState? NextState { get; init; }
 
             public int OnRemainCallCount { get; private set; }
             public int OnExitingCallCount { get; private set; }
@@ -306,11 +304,13 @@ namespace Machinery
             }
 
             public void OnExiting(int context, char ev, ValueState newState) { }
+
             public void OnExited(int context, char ev, ValueState newState) { }
 
             public void OnRemain(int context, char ev) { }
 
             public void OnEntering(int context, char ev, ValueState oldState) { }
+
             public void OnEntered(int context, char ev, ValueState oldState) { }
         }
     }
