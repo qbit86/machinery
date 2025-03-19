@@ -23,12 +23,24 @@ namespace Machinery
             new(context, initialState);
     }
 
+    /// <summary>
+    /// Represents a state machine that manages transitions between states based on events.
+    /// </summary>
+    /// <typeparam name="TContext">The type of the context maintained by the state machine.</typeparam>
+    /// <typeparam name="TEvent">The type of events that trigger state transitions.</typeparam>
+    /// <typeparam name="TState">The type of states in the state machine.</typeparam>
     public sealed class StateMachine<TContext, TEvent, TState>
         where TState : IState<TContext, TEvent, TState>
     {
         private TState _currentState;
         private int _lock;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateMachine{TContext, TEvent, TState}" /> class with the specified context and initial state.
+        /// </summary>
+        /// <param name="context">The context for the state machine.</param>
+        /// <param name="initialState">The initial state of the state machine.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="initialState" /> is null.</exception>
         public StateMachine(TContext context, TState initialState)
         {
             if (initialState is null)
@@ -38,8 +50,14 @@ namespace Machinery
             _currentState = initialState;
         }
 
+        /// <summary>
+        /// Gets the context of the state machine.
+        /// </summary>
         public TContext Context { get; }
 
+        /// <summary>
+        /// Gets the current state of the state machine.
+        /// </summary>
         public TState CurrentState => _currentState;
 
         /// <summary>
