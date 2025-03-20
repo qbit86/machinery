@@ -1,6 +1,6 @@
 ---
 description: Header Spacing Rule
-globs: *.md
+globs: *.md,*.mdc
 alwaysApply: true
 ---
 # Header Spacing Rule
