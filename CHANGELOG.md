@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- `ProcessEvent()` method to `StateMachine<TContext, TEvent, TState>` and `DisposableStateMachine<TContext, TEvent, TState>`
+- `ProcessEventAsync()` method to `AsyncStateMachine<TContext, TEvent, TState>`
+- `ProcessingResult` enum to represent the outcome of processing an event (NotProcessed, Remained, Transitioned)
+
 ## [0.9.0] - 2023-10-05
 
 ### Added
