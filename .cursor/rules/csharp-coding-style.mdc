@@ -1,0 +1,81 @@
+---
+description: C# Coding Style
+globs: *.cs
+alwaysApply: true
+---
+# C# Coding Style
+
+## Using target-typed `new` expressions
+
+✔️ When creating an object with a constructor in a field or local variable declaration, **DO** use target-typed `new`.
+
+```csharp
+// ❌ Avoid type specification for constructors
+var names = new List<string>(57);
+```
+
+```csharp
+// ✔️
+List<string> names = new(57);
+```
+
+✔️ When creating an object to pass to a function, **DO** use target-typed `new`.
+
+```csharp
+// ❌ Avoid type specification for constructors
+using var xmlReader = XmlReader.Create(inputReader, new XmlReaderSettings { IgnoreWhitespace = true });
+```
+
+```csharp
+// ✔️
+using var xmlReader = XmlReader.Create(inputReader, new() { IgnoreWhitespace = true });
+```
+
+## XML Documentation Formatting
+
+### Self-closing elements
+
+Always include a space before the closing slash in self-closing XML documentation elements:
+
+```csharp
+// ✔️ Correct
+/// <paramref name="parameterName" />
+
+// ❌ Incorrect
+/// <paramref name="parameterName"/>
+```
+
+Applies to all self-closing XML doc elements including:
+- `<paramref>`
+- `<see>`
+- `<inheritdoc>`
+
+## Prefer sealed classes
+
+✔️ When a class is not designed for inheritance, **DO** declare it as `sealed`.
+
+```csharp
+// ❌ Class not intended for inheritance but left unsealed
+private class TestContext
+{
+    // Implementation
+}
+```
+
+```csharp
+// ✔️
+private sealed class TestContext
+{
+    // Implementation
+}
+```
+
+✔️ Classes in test projects should generally be `sealed` unless specifically designed for inheritance.
+
+Benefits of sealing classes:
+- Prevents unintended inheritance
+- Communicates design intent clearly
+- May enable runtime optimizations
+- Reduces the testing surface
+
+The C# compiler will warn about classes that can be sealed (CA1852), which is a good indication that sealing is appropriate.
