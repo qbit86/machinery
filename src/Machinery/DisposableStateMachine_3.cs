@@ -119,7 +119,7 @@ namespace Machinery
         /// A <see cref="ProcessingResult" /> indicating the outcome of the event processing:
         /// NotProcessed - The state machine is already processing another event.
         /// Remained - The event was processed but the state didn't change.
-        /// Transitioned - The event was processed and the state changed.
+        /// Transitioned - The event was processed, and the state changed.
         /// </returns>
         /// <exception cref="ObjectDisposedException">Thrown when the state machine has been disposed.</exception>
         public ProcessingResult ProcessEvent(TEvent ev)

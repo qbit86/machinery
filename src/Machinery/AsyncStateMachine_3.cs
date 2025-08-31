@@ -94,7 +94,7 @@ namespace Machinery
         /// A task that represents the asynchronous operation. The task result is a <see cref="ProcessingResult" /> indicating the outcome of the event processing:
         /// NotProcessed - The state machine is already processing another event.
         /// Remained - The event was processed but the state didn't change.
-        /// Transitioned - The event was processed and the state changed.
+        /// Transitioned - The event was processed, and the state changed.
         /// </returns>
         public async Task<ProcessingResult> ProcessEventAsync(TEvent ev)
         {

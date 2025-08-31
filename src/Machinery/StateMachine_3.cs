@@ -72,7 +72,7 @@ namespace Machinery
 
             try
             {
-                TryProcessEventUnchecked(ev);
+                _ = TryProcessEventUnchecked(ev);
             }
             finally
             {
@@ -90,7 +90,7 @@ namespace Machinery
         /// A <see cref="ProcessingResult" /> indicating the outcome of the event processing:
         /// NotProcessed - The state machine is already processing another event.
         /// Remained - The event was processed but the state didn't change.
-        /// Transitioned - The event was processed and the state changed.
+        /// Transitioned - The event was processed, and the state changed.
         /// </returns>
         public ProcessingResult ProcessEvent(TEvent ev)
         {

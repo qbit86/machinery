@@ -16,7 +16,10 @@ namespace Machinery
         /// </summary>
         /// <param name="context">The context of the state machine.</param>
         /// <param name="ev">The event triggering the potential state transition.</param>
-        /// <param name="newState">When this method returns, contains the new state if a transition should occur, or default value if no transition should occur.</param>
+        /// <param name="newState">
+        /// When this method returns, contains the new state if a transition should occur,
+        /// or a default value if no transition should occur.
+        /// </param>
         /// <returns>true if a transition to a new state should occur; otherwise, false.</returns>
         bool TryCreateNewState(TContext context, TEvent ev, [MaybeNullWhen(false)] out TState newState);
 
