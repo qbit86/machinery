@@ -1,7 +1,6 @@
 ---
-description: Centralize Package Versions Rule
-globs: *.csproj,*.props
-alwaysApply: false
+inclusion: fileMatch
+fileMatchPattern: ['*.csproj', '*.props']
 ---
 # Centralize Package Versions Rule
 
