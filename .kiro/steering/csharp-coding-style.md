@@ -1,7 +1,5 @@
 ---
-description: C# Coding Style
-globs: *.cs
-alwaysApply: true
+inclusion: always
 ---
 # C# Coding Style
 
